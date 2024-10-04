@@ -4,21 +4,17 @@
  */
 package academia;
 
-public class Cliente extends Pessoa {
-    // Atributos específicos do Cliente podem ser adicionados aqui, se necessário.
+/**
+ * A classe Cliente representa um cliente da academia.
+ * Ela herda os atributos e comportamentos da classe abstrata Pessoa.
+ */
 
-    // Construtor que utiliza o construtor da classe Pessoa
+public class Cliente extends Pessoa {
+
     public Cliente(String nome, String cpf, String endereco, String telefone, String email) {
         super(nome, cpf, endereco, telefone, email);
     }
 
-    // Implementação do método abstrato
-    @Override
-    public String obterTipo() {
-        return "Cliente"; // Retorna o tipo como "Cliente"
-    }
-
-    // Sobrescrita do método toString() para incluir mais detalhes se necessário
     @Override
     public String toString() {
         return "Cliente -> " + super.toString();
