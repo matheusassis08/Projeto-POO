@@ -17,11 +17,6 @@ public class Recepcionista extends Pessoa {
         this.turno = turno;
     }
 
-    @Override
-    public String obterTipo() {
-        return "Recepcionista";
-    }
-
     public String getTurno() {
         return turno;
     }
