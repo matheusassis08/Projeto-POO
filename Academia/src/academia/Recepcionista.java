@@ -12,6 +12,17 @@ package academia;
 public class Recepcionista extends Pessoa {
     private String turno;
 
+        /**
+     * Construtor da classe Recepcionista.
+     * 
+     * @param nome      O nome completo do vendedor.
+     * @param cpf       O CPF do vendedor.
+     * @param endereco  O endereço residencial do vendedor.
+     * @param telefone  O número de telefone do vendedor.
+     * @param email     O endereço de email do vendedor.
+     * @param turno     O turno do recepcionista.
+     */
+    
     public Recepcionista(String nome, String cpf, String endereco, String telefone, String email, String turno, double salario) {
         super(nome, cpf, endereco, telefone, email);
         this.turno = turno;
