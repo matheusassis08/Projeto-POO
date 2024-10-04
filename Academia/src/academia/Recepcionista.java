@@ -4,22 +4,24 @@
  */
 package academia;
 
-public class Recepcionista extends Pessoa {
-    private String turno; // Turno de trabalho (manhã, tarde, noite)
+/**
+ * A classe Recepcionista representa um recepcionista que trabalha na academia.
+ * Ela herda os atributos e comportamentos da classe abstrata Pessoa.
+ */
 
-    // Construtor que utiliza o construtor da classe Pessoa e adiciona atributos específicos do recepcionista
+public class Recepcionista extends Pessoa {
+    private String turno;
+
     public Recepcionista(String nome, String cpf, String endereco, String telefone, String email, String turno, double salario) {
-        super(nome, cpf, endereco, telefone, email); // Chama o construtor da superclasse Pessoa
+        super(nome, cpf, endereco, telefone, email);
         this.turno = turno;
     }
 
-    // Implementação do método abstrato
     @Override
     public String obterTipo() {
-        return "Recepcionista"; // Retorna o tipo como "Recepcionista"
+        return "Recepcionista";
     }
 
-    // Getters e Setters para os atributos específicos do Recepcionista
     public String getTurno() {
         return turno;
     }
@@ -28,7 +30,6 @@ public class Recepcionista extends Pessoa {
         this.turno = turno;
     }
 
-    // Sobrescrita do método toString() para incluir turno e salário
     @Override
     public String toString() {
         return "Recepcionista -> " + super.toString() + ", Turno: " + turno;
