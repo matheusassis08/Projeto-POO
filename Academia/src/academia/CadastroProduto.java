@@ -8,6 +8,6 @@ package academia;
  *
  * @author Leona
  */
-public class CadastroProduto {
+public class CadastroProduto implements Cadastro{
     
 }

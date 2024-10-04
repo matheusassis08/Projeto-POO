@@ -8,6 +8,6 @@ package academia;
  *
  * @author Leonardo
  */
-public class Cadastro {
+public interface Cadastro {
     
 }
