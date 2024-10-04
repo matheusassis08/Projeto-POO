@@ -10,4 +10,27 @@ package academia;
  */
 public class CadastroProduto implements Cadastro{
     
+    /** 
+     Cadastra um novo produto no sistema
+     */
+    @Override
+    public void realizarCadastro(){
+        
+    }
+    /** 
+     Altera os dados de algum produto cadastro
+     
+     */
+    @Override
+    public void alterarCadastro(){
+        
+    }
+    /** 
+     Apagar cadastro do Produto
+     
+     */
+    @Override
+    public void apagarCadastro(){
+        
+    }
 }
