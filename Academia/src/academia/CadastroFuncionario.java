@@ -9,5 +9,27 @@ package academia;
  * @author Leona
  */
 public class CadastroFuncionario implements Cadastro {
-    
+        /** 
+     Cadastra um novo funcionário no sistema
+     */
+    @Override
+    public void realizarCadastro(){
+        
+    }
+    /** 
+     Altera os dados de algum funcionário cadastrado
+     
+     */
+    @Override
+    public void alterarCadastro(){
+        
+    }
+    /** 
+     Apagar cadastro de um funcionário
+     
+     */
+    @Override
+    public void apagarCadastro(){
+        
+    }
 }

@@ -9,5 +9,7 @@ package academia;
  * @author Leonardo
  */
 public interface Cadastro {
-    
+    void realizarCadastro();
+    void alterarCadastro();
+    void apagarCadastro();
 }
