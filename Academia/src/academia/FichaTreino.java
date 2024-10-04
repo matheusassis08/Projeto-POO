@@ -78,6 +78,11 @@ public class FichaTreino {
     public void setListaExercicio(String listaExercicio) {
         this.listaExercicio = listaExercicio;
     }
+
+    @Override
+    public String toString() {
+        return "FichaTreino{" + "nomeCliente=" + nomeCliente + ", data=" + data + ", numeroFicha=" + numeroFicha + ", nomeInstrutor=" + nomeInstrutor + ", listaExercicio=" + listaExercicio + '}';
+    }
     
     
 }
