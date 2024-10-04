@@ -6,13 +6,12 @@ package academia;
 
 public class Instrutor extends Pessoa {
     private String cargo;
-    private double salario;
 
     // Construtor que utiliza o construtor da classe Pessoa e adiciona atributos específicos do instrutor
     public Instrutor(String nome, String cpf, String endereco, String telefone, String email, String cargo, double salario) {
         super(nome, cpf, endereco, telefone, email); // Chama o construtor da superclasse Pessoa
         this.cargo = cargo;
-        this.salario = salario;
+
     }
 
     // Implementação do método abstrato
@@ -30,17 +29,9 @@ public class Instrutor extends Pessoa {
         this.cargo = cargo;
     }
 
-    public double getSalario() {
-        return salario;
-    }
-
-    public void setSalario(double salario) {
-        this.salario = salario;
-    }
-
     // Sobrescrita do método toString() para incluir cargo e salário
     @Override
     public String toString() {
-        return "Instrutor -> " + super.toString() + ", Cargo: " + cargo + ", Salario: " + salario;
+        return "Instrutor -> " + super.toString() + ", Cargo: " + cargo;
     }
 }
