@@ -4,6 +4,11 @@
  */
 package academia;
 
+/**
+ * A classe abstrata Pessoa representa uma pessoa genérica que pode ser herdada por diferentes tipos de pessoas,
+ * como Cliente, Instrutor e Recepcionista. Ela contém os atributos e métodos comuns a todas as pessoas.
+ */
+
 public abstract class Pessoa {
     private String nome;
     private String cpf;
@@ -11,7 +16,16 @@ public abstract class Pessoa {
     private String telefone;
     private String email;
 
-    // Construtor
+    /**
+     * Construtor da classe Pessoa.
+     * 
+     * @param nome      O nome completo da pessoa.
+     * @param cpf       O CPF da pessoa.
+     * @param endereco  O endereço residencial da pessoa.
+     * @param telefone  O número de telefone da pessoa.
+     * @param email     O endereço de email da pessoa.
+     */
+    
     public Pessoa(String nome, String cpf, String endereco, String telefone, String email) {
         this.nome = nome;
         this.cpf = cpf;
@@ -20,7 +34,6 @@ public abstract class Pessoa {
         this.email = email;
     }
 
-    // Getters e Setters
     public String getNome() {
         return nome;
     }
@@ -60,11 +73,7 @@ public abstract class Pessoa {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    // Método abstrato (opcional) que deve ser implementado nas subclasses
-    public abstract String obterTipo(); // Exemplo: "Cliente" ou "Instrutor"
-
-    // Sobrescrita do método toString() para exibir informações básicas da pessoa
+    
     @Override
     public String toString() {
         return "Nome: " + nome + ", CPF: " + cpf + ", Telefone: " + telefone + ", Email: " + email;
