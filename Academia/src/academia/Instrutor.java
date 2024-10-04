@@ -4,23 +4,20 @@
  */
 package academia;
 
+/**
+ * A classe Instrutor representa um instrutor que trabalha na academia.
+ * Ela herda os atributos e comportamentos da classe abstrata Pessoa.
+ */
+
 public class Instrutor extends Pessoa {
     private String cargo;
 
-    // Construtor que utiliza o construtor da classe Pessoa e adiciona atributos específicos do instrutor
     public Instrutor(String nome, String cpf, String endereco, String telefone, String email, String cargo, double salario) {
-        super(nome, cpf, endereco, telefone, email); // Chama o construtor da superclasse Pessoa
+        super(nome, cpf, endereco, telefone, email);
         this.cargo = cargo;
 
     }
 
-    // Implementação do método abstrato
-    @Override
-    public String obterTipo() {
-        return "Instrutor"; // Retorna o tipo como "Instrutor"
-    }
-
-    // Getters e Setters para os atributos específicos do Instrutor
     public String getCargo() {
         return cargo;
     }
@@ -29,7 +26,6 @@ public class Instrutor extends Pessoa {
         this.cargo = cargo;
     }
 
-    // Sobrescrita do método toString() para incluir cargo e salário
     @Override
     public String toString() {
         return "Instrutor -> " + super.toString() + ", Cargo: " + cargo;
