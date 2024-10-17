@@ -19,7 +19,7 @@ public class CadastroCliente implements Cadastro {
     /**
      * Atributo estático para definir o caminho da pasta para salvar em json a lista de clientes.
      */
-    private static final String ARQUIVO_CLIENTES = "C:\\Users\\Leona\\Documents\\Projeto-POO\\Academia\\src\\arquivo";
+    private static final String ARQUIVO_CLIENTES = "C:\\Projeto-POO\\Academia\\src\\arquivo";
         /** 
      Cadastra um novo cliente no sistema
      */
