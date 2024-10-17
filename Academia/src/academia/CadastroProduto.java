@@ -18,7 +18,7 @@ public class CadastroProduto implements Cadastro{
         
     }
     /** 
-     Altera os dados de algum produto cadastro.
+     Altera os dados de algum produto cadastro
      
      */
     @Override
