@@ -19,7 +19,7 @@ public class CadastroCliente implements Cadastro {
     /**
      * Atributo estático para definir o caminho da pasta para salvar em json a lista de clientes.
      */
-    private static final String ARQUIVO_CLIENTES = "H:\\Epic HD\\Projeto-POO\\Academia\\src\\arquivos\\clientes.json";
+    private static final String FILE_CLIENTES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\clientes.json";
         /** 
      Cadastra um novo cliente no sistema
      */
@@ -27,7 +27,7 @@ public class CadastroCliente implements Cadastro {
     public void realizarCadastro() {
         Scanner scanner = new Scanner(System.in);
         List<Cliente> clientes = new ArrayList<>();
-        File arquivo = new File(ARQUIVO_CLIENTES);
+        File arquivo = new File(FILE_CLIENTES);
         ObjectMapper mapper = new ObjectMapper();
 
         if (arquivo.exists()) {
@@ -78,31 +78,28 @@ public class CadastroCliente implements Cadastro {
     public void alterarCadastro(){
         Scanner scanner = new Scanner(System.in);
         ObjectMapper mapper = new ObjectMapper();
-        File arquivo = new File(ARQUIVO_CLIENTES);
+        File arquivo = new File(FILE_CLIENTES);
         List<Cliente> clientes;
 
-        // Verifica se o arquivo existe
         if (!arquivo.exists()) {
             System.out.println("Nenhum cliente cadastrado.");
             return;
         }
 
         try {
-            // Lê os clientes do arquivo
             clientes = mapper.readValue(arquivo, new TypeReference<List<Cliente>>() {});
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
 
-        // Exibe a lista de clientes com nome e telefone para o usuário escolher qual alterar
         System.out.println("Selecione o cliente que deseja alterar:");
         for (int i = 0; i < clientes.size(); i++) {
             System.out.println((i + 1) + ". Nome: " + clientes.get(i).getNome() + " | Telefone: " + clientes.get(i).getTelefone());
         }
         
         int indice = scanner.nextInt() - 1;
-        scanner.nextLine(); // Consumir a quebra de linha
+        scanner.nextLine();
 
         if (indice < 0 || indice >= clientes.size()) {
             System.out.println("Cliente não encontrado.");
@@ -111,7 +108,6 @@ public class CadastroCliente implements Cadastro {
 
         Cliente cliente = clientes.get(indice);
 
-        // Apresenta as opções de alteração sem mostrar os valores atuais
         boolean alterar = true;
         while (alterar) {
             System.out.println("O que você deseja alterar?");
@@ -123,7 +119,7 @@ public class CadastroCliente implements Cadastro {
             System.out.println("6. Finalizar alterações");
             
             int opcao = scanner.nextInt();
-            scanner.nextLine(); // Consumir a quebra de linha
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1 -> {
@@ -159,7 +155,6 @@ public class CadastroCliente implements Cadastro {
             }
         }
 
-        // Salva a lista de clientes alterada no arquivo JSON
         try {
             mapper.writeValue(arquivo, clientes);
             System.out.println("Cadastro do cliente alterado com sucesso.");
@@ -177,7 +172,7 @@ public class CadastroCliente implements Cadastro {
         ObjectMapper mapper = new ObjectMapper();
         List<Cliente> clientes = new ArrayList<>();
 
-        File arquivo = new File(ARQUIVO_CLIENTES);
+        File arquivo = new File(FILE_CLIENTES);
 
         // Carregar os clientes existentes, se houver
         if (arquivo.exists()) {
