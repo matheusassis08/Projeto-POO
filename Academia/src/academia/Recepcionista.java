@@ -4,11 +4,11 @@
  */
 package academia;
 
+
 /**
  * A classe Recepcionista representa um recepcionista que trabalha na academia.
  * Ela herda os atributos e comportamentos da classe abstrata Pessoa.
  */
-
 public class Recepcionista extends Pessoa {
     private String turno;
     private double salario;

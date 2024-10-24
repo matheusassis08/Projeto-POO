@@ -126,7 +126,7 @@ public class Academia {
                     }
                 }
                 case 7 -> {
-                    System.out.println("1. Cadastrar Funcionário\n2. Alterar dados de Funcionário\n3. Excluir cadastro de Funcionário\n4. Voltar ao menu principal");
+                    System.out.println("1. Cadastrar Funcionário\n2. Alterar cadastro de Funcionário\n3. Excluir cadastro de Funcionário\n4. Voltar ao menu principal");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
@@ -134,7 +134,8 @@ public class Academia {
                             cadastroFuncionario.realizarCadastro();
                         }
                         case 2 -> {
-                            // Lógica para alterar ficha
+                            CadastroFuncionario cadastroFuncionario = new CadastroFuncionario();
+                            cadastroFuncionario.alterarCadastro();
                         }
                         case 3 -> {
                             // Lógica para excluir ficha

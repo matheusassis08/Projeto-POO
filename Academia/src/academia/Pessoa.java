@@ -3,12 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package academia;
-
 /**
  * A classe abstrata Pessoa representa uma pessoa genérica que pode ser herdada por diferentes tipos de pessoas,
  * como Cliente, Instrutor e Recepcionista. Ela contém os atributos e métodos comuns a todas as pessoas.
  */
-
 public abstract class Pessoa {
     private String nome;
     private String cpf;
