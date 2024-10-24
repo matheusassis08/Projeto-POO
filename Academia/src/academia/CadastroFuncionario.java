@@ -269,11 +269,102 @@ public class CadastroFuncionario implements Cadastro {
     }
     }
     /** 
-     Apagar cadastro de um funcionário
+     Exibe a lista de possiveis funcionários e da a opção de apagar o cadastro de algum selecionado.
      
      */
     @Override
     public void apagarCadastro(){
-        
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Qual o tipo de funcionário deseja apagar?\n1. Recepcionista\n2. Instrutor\n3. Vendedor\n4. Gerente\n5. Voltar ao inicio");
+        int num = scanner.nextInt();
+        scanner.nextLine(); // Consumir nova linha
+
+        List<? extends Pessoa> funcionarios = new ArrayList<>();
+        File arquivo = null;
+        ObjectMapper mapper = new ObjectMapper();
+
+        switch (num) {
+            case 1 -> {
+                arquivo = new File(FILE_RECEPCIONISTAS);
+                try {
+                    funcionarios = arquivo.exists() ? mapper.readValue(arquivo, new TypeReference<List<Recepcionista>>() {}) : new ArrayList<>();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+            case 2 -> {
+                arquivo = new File(FILE_INSTRUTORES);
+                try {
+                    funcionarios = arquivo.exists() ? mapper.readValue(arquivo, new TypeReference<List<Instrutor>>() {}) : new ArrayList<>();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+            case 3 -> {
+                arquivo = new File(FILE_VENDEDORES);
+                try {
+                    funcionarios = arquivo.exists() ? mapper.readValue(arquivo, new TypeReference<List<Vendedor>>() {}) : new ArrayList<>();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+            case 4 -> {
+                arquivo = new File(FILE_GERENTES);
+                try {
+                    funcionarios = arquivo.exists() ? mapper.readValue(arquivo, new TypeReference<List<Gerente>>() {}) : new ArrayList<>();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+            case 5 -> {
+                System.out.println("Voltando ao menu inicial...");
+                return;
+            }
+            default -> {
+                System.out.println("Opção inválida.");
+                return;
+            }
+        }
+
+        if (funcionarios.isEmpty()) {
+            System.out.println("Nenhum funcionário encontrado.");
+            return;
+        }
+
+        System.out.println("Funcionários disponíveis:");
+        for (int i = 0; i < funcionarios.size(); i++) {
+            Pessoa funcionario = funcionarios.get(i);
+            System.out.println((i + 1) + ". Nome: " + funcionario.getNome() + ", Email: " + funcionario.getEmail());
+        }
+
+        System.out.print("Digite o número do funcionário que deseja apagar: ");
+        int indice = scanner.nextInt() - 1;
+        scanner.nextLine();
+
+        if (indice < 0 || indice >= funcionarios.size()) {
+            System.out.println("Funcionário inválido.");
+            return;
+        }
+
+        Pessoa funcionario = funcionarios.get(indice);
+        System.out.println("Tem certeza que deseja apagar o funcionário: " + funcionario.getNome() + " (s/n)?");
+        String confirmacao = scanner.nextLine();
+
+        if (confirmacao.equalsIgnoreCase("s")) {
+            funcionarios.remove(indice);
+
+            try {
+                mapper.writeValue(arquivo, funcionarios);
+                System.out.println("Funcionário apagado com sucesso.");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Operação cancelada.");
+        }
     }
 }

@@ -174,7 +174,6 @@ public class CadastroCliente implements Cadastro {
 
         File arquivo = new File(FILE_CLIENTES);
 
-        // Carregar os clientes existentes, se houver
         if (arquivo.exists()) {
             try {
                 clientes = mapper.readValue(arquivo, new TypeReference<List<Cliente>>() {});
@@ -184,11 +183,9 @@ public class CadastroCliente implements Cadastro {
             }
         }
 
-        // Solicitar o CPF do cliente a ser removido
         System.out.print("Digite o CPF do cliente que deseja remover: ");
         String cpf = scanner.nextLine();
 
-        // Verificar se o cliente existe na lista
         boolean clienteRemovido = false;
         for (int i = 0; i < clientes.size(); i++) {
             if (clientes.get(i).getCpf().equals(cpf)) {
@@ -200,7 +197,6 @@ public class CadastroCliente implements Cadastro {
 
         if (clienteRemovido) {
             try {
-                // Atualizar o arquivo com a lista de clientes sem o cliente removido
                 mapper.writeValue(arquivo, clientes);
                 System.out.println("Cliente removido com sucesso.");
             } catch (IOException e) {

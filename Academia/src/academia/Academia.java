@@ -138,10 +138,11 @@ public class Academia {
                             cadastroFuncionario.alterarCadastro();
                         }
                         case 3 -> {
-                            // Lógica para excluir ficha
+                            CadastroFuncionario cadastroFuncionario = new CadastroFuncionario();
+                            cadastroFuncionario.apagarCadastro();
                         }
                         case 4 -> {
-                            // Volta ao menu principal
+                            
                         }
                         default -> System.out.println("Opção inválida.");
                     }
