@@ -10,24 +10,50 @@ package academia;
  */
 
 public class Instrutor extends Pessoa {
-    private String cargo;
+    private String cref;
+    private double salario;
 
-    public Instrutor(String nome, String cpf, String endereco, String telefone, String email, String cargo, double salario) {
+    
+    /**
+     * @param nome O nome do instrutor
+     * @param cpf O cpf do instrutor
+     * @param endereco O endereço do instrutor
+     * @param telefone O telefone para contato do instrutor
+     * @param email O email do instrutor
+     * @param cref O registro cref do instrutor
+     * @param salario O salário do instrutor
+     */
+    public Instrutor(String nome, String cpf, String endereco, String telefone, String email, String cref, double salario) {
         super(nome, cpf, endereco, telefone, email);
-        this.cargo = cargo;
-
+        this.cref = cref;
+        this.salario = salario;
+    }
+    public Instrutor() {
+        super("", "", "", "", "");
     }
 
-    public String getCargo() {
-        return cargo;
+    public String getCref() {
+        return cref;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public void setCref(String cref) {
+        this.cref = cref;
     }
 
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+
+    
+    
     @Override
     public String toString() {
-        return "Instrutor -> " + super.toString() + ", Cargo: " + cargo;
+        return "Instrutor{" + "cref=" + cref + ", salario=" + salario + '}';
     }
+
+    
 }

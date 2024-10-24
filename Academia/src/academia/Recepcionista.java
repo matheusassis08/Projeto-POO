@@ -11,6 +11,7 @@ package academia;
 
 public class Recepcionista extends Pessoa {
     private String turno;
+    private double salario;
 
         /**
      * Construtor da classe Recepcionista.
@@ -21,13 +22,18 @@ public class Recepcionista extends Pessoa {
      * @param telefone  O número de telefone do vendedor.
      * @param email     O endereço de email do vendedor.
      * @param turno     O turno do recepcionista.
+     * @param salario   O salario do recepcionista.
      */
-    
     public Recepcionista(String nome, String cpf, String endereco, String telefone, String email, String turno, double salario) {
         super(nome, cpf, endereco, telefone, email);
         this.turno = turno;
+        this.salario = salario;
     }
-
+    
+        public Recepcionista() {
+        super("", "", "", "", "");
+    }
+    
     public String getTurno() {
         return turno;
     }
@@ -36,8 +42,16 @@ public class Recepcionista extends Pessoa {
         this.turno = turno;
     }
 
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+    
     @Override
     public String toString() {
-        return "Recepcionista -> " + super.toString() + ", Turno: " + turno;
+        return "Recepcionista{" + "turno=" + turno + ", salario=" + salario + '}';
     }
 }

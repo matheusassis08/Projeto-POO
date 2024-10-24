@@ -18,7 +18,8 @@ public class Academia {
             System.out.println("4. Agendamentos");
             System.out.println("5. Relatórios");
             System.out.println("6. Instrutor");
-            System.out.println("7. Sair");
+            System.out.println("7. Funcionários");
+            System.out.println("8. Sair");
             
             int n = scanner.nextInt();
 
@@ -125,6 +126,26 @@ public class Academia {
                     }
                 }
                 case 7 -> {
+                    System.out.println("1. Cadastrar Funcionário\n2. Alterar dados de Funcionário\n3. Excluir cadastro de Funcionário\n4. Voltar ao menu principal");
+                    n = scanner.nextInt();
+                    switch (n) {
+                        case 1 -> {
+                            CadastroFuncionario cadastroFuncionario = new CadastroFuncionario();
+                            cadastroFuncionario.realizarCadastro();
+                        }
+                        case 2 -> {
+                            // Lógica para alterar ficha
+                        }
+                        case 3 -> {
+                            // Lógica para excluir ficha
+                        }
+                        case 4 -> {
+                            // Volta ao menu principal
+                        }
+                        default -> System.out.println("Opção inválida.");
+                    }
+                }
+                case 8 -> {
                     System.out.println("Encerrando o sistema...");
                     continuar = false;
                 }

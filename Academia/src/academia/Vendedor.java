@@ -10,7 +10,8 @@ package academia;
  */
 public class Vendedor extends Pessoa {
 
-    private String setor;
+    private double salario;
+    private String sala;
 
     /**
      * Construtor da classe Vendedor.
@@ -20,23 +21,37 @@ public class Vendedor extends Pessoa {
      * @param endereco  O endereço residencial do vendedor.
      * @param telefone  O número de telefone do vendedor.
      * @param email     O endereço de email do vendedor.
-     * @param setor     O setor onde o vendedor atua.
+     * @param sala     O sala onde o vendedor atua.
+     * @param salario O salario do vendedor
      */
-    public Vendedor(String nome, String cpf, String endereco, String telefone, String email, String setor) {
+    public Vendedor(String nome, String cpf, String endereco, String telefone, String email, String sala, double salario) {
         super(nome, cpf, endereco, telefone, email);
-        this.setor = setor;
+        this.sala = sala;
+        this.salario = salario;
+    }
+    
+    public Vendedor(){
+        super("", "", "", "", "");
     }
 
-    public String getSetor() {
-        return setor;
+    public double getSalario() {
+        return salario;
     }
 
-    public void setSetor(String setor) {
-        this.setor = setor;
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+
+    public String getSala() {
+        return sala;
+    }
+
+    public void setSala(String sala) {
+        this.sala = sala;
     }
 
     @Override
     public String toString() {
-        return "Vendedor -> " + super.toString() + ", Setor: " + setor;
+        return "Vendedor{" + "salario=" + salario + ", sala=" + sala + '}';
     }
 }

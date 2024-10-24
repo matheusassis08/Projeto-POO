@@ -11,7 +11,8 @@ package academia;
  */
 public class Gerente extends Pessoa {
 
-    private String departamento;
+    private String senha;
+    private double salario;
 
     /**
      * Construtor da classe Gerente.
@@ -21,24 +22,40 @@ public class Gerente extends Pessoa {
      * @param endereco   O endereço residencial do gerente.
      * @param telefone   O número de telefone do gerente.
      * @param email      O endereço de email do gerente.
-     * @param departamento O departamento onde o gerente atua.
+     * @param senha A senha de acesso do gerente.
+     * @param salario O salario do gerente
      */
-    public Gerente(String nome, String cpf, String endereco, String telefone, String email, String departamento) {
+    public Gerente(String nome, String cpf, String endereco, String telefone, String email, String senha, double salario) {
         super(nome, cpf, endereco, telefone, email); // Chama o construtor da superclasse Pessoa
-        this.departamento = departamento;
+        this.senha = senha;
+        this.salario = salario;
+    }
+    
+    public Gerente() {
+        super("", "", "", "", "");
     }
 
-    public String getDepartamento() {
-        return departamento;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    
+    
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
     }
 
     @Override
     public String toString() {
-        return "Gerente -> " + super.toString() + ", Departamento: " + departamento;
+        return "Gerente{" + "senha=" + senha + ", salario=" + salario + '}';
     }
 }
 

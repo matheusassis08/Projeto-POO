@@ -73,9 +73,9 @@ public abstract class Pessoa {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     @Override
     public String toString() {
-        return "Nome: " + nome + ", CPF: " + cpf + ", Telefone: " + telefone + ", Email: " + email;
+        return "Pessoa{" + "nome=" + nome + ", cpf=" + cpf + ", endereco=" + endereco + ", telefone=" + telefone + ", email=" + email + '}';
     }
 }
