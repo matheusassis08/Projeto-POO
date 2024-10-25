@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Leona
+ * Classe para o cadastro, alteração e remoção de algum produto dentro do sistema.
  */
 public class CadastroProduto implements Cadastro{
     /** 
@@ -22,6 +22,7 @@ public class CadastroProduto implements Cadastro{
      */
     @Override
     public void realizarCadastro(){
+        
     }
     /** 
      Altera os dados de algum produto cadastro

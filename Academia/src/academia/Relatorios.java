@@ -6,7 +6,7 @@ package academia;
 
 /**
  *
- * @author mathe
+ * Classe para gerenciar todos os relátorios, balanços, e notas do sistema.
  */
 public class Relatorios {
     

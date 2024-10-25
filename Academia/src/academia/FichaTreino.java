@@ -6,7 +6,7 @@ package academia;
 
 /**
  *
- * @author Leona
+ * 
  */
 public class FichaTreino {
     private String nomeCliente;
@@ -15,7 +15,7 @@ public class FichaTreino {
     private String nomeInstrutor;
     private String listaExercicio;
     /** Usado para iniciar um cadastro de ficha de treino para algum aluno*/
-    void gerarFicha(){
+    void gerarFicha(){ 
         
     };
     /** Altera os exercicios de alguma ficha já cadastrada */

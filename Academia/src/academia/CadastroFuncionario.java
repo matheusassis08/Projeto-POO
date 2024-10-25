@@ -12,17 +12,16 @@ import java.util.List;
 import java.util.Scanner;
 /**
  *
- * @author Leona
+ * Classe para o cadastro, alteração e remoção de algum funcionário dentro do sistema.
  */
 public class CadastroFuncionario implements Cadastro {
     private final String FILE_RECEPCIONISTAS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\recepcionistas.json";
     private final String FILE_INSTRUTORES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\instrutores.json";
     private final String FILE_VENDEDORES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\vendedores.json";
     private final String FILE_GERENTES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\gerentes.json";
-        /** 
-     Cadastra um novo funcionário no sistema
-     * As opções para cadastro são 1. Recepcionista, 2. Instrutor, 3. Vendedor, 4. Gerente.
-     */
+    /** 
+      Cadastra um novo funcionário no sistema. As opções para cadastro são 1. Recepcionista, 2. Instrutor, 3. Vendedor, 4. Gerente.
+    */
     @Override
     public void realizarCadastro() {
     Scanner scanner = new Scanner(System.in);

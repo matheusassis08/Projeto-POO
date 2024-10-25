@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Leona
+ * Classe para o cadastro, alteração e remoção de algum cliente dentro do sistema.
  */
 public class CadastroCliente implements Cadastro {
     /**

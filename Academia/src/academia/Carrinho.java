@@ -5,7 +5,7 @@
 package academia;
 
 /**
- * Classe para instanciar os produtos para realizar as vendas.
+ * Classe para armazenar os produtos para realizar as vendas.
  * @author Leona
  */
 public class Carrinho {

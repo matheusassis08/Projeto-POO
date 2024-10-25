@@ -5,7 +5,7 @@
 package academia;
 
 /**
- * A classe Produto representa um produto disponível no estoque.
+ * A classe Produto representa um produto para ser vendido na loja.
  */
 public class Produto {
 
