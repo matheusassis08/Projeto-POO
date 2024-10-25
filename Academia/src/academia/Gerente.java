@@ -4,7 +4,9 @@
  */
 package academia;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 /**
  * A classe Gerente representa um gerente que trabalha na academia.
  * Ela herda os atributos e comportamentos da classe abstrata Pessoa.

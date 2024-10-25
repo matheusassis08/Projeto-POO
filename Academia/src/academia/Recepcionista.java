@@ -4,6 +4,9 @@
  */
 package academia;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 /**
  * A classe Recepcionista representa um recepcionista que trabalha na academia.

@@ -11,7 +11,7 @@ public class Produto {
 
     private String nome;
 
-    private int quantidade;
+    private int quantidadeEstoque;
 
     private String codigo;
 
@@ -19,38 +19,51 @@ public class Produto {
 
     private String tipo;
 
+    
+     public Produto() {
+         
+    }
+    
     /**
      * Construtor da classe Produto.
      * 
      * @param nome          O nome do produto.
-     * @param quantidade     A quantidade do produto.
+     * @param quantidadeEstoque    A quantidade do produto.
      * @param codigo        O código do produto.
      * @param prazoValidade O prazo de validade do produto.
      * @param tipo          O tipo do produto.
      */
-    public Produto(String nome, int quantidade, String codigo, String prazoValidade, String tipo) {
+    public Produto(String nome, int quantidadeEstoque, String codigo, String prazoValidade, String tipo) {
         this.nome = nome;
-        this.quantidade = quantidade;
+        this.quantidadeEstoque = quantidadeEstoque;
         this.codigo = codigo;
         this.prazoValidade = prazoValidade;
         this.tipo = tipo;
     }
-
+    
 
     public String getNome() {
         return nome;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public int getQuantidadeEstoque() {
+        return quantidadeEstoque;
+    }
+
+    public void setQuantidadeEstoque(int quantidadeEstoque) {
+        this.quantidadeEstoque = quantidadeEstoque;
     }
 
     public String getCodigo() {
         return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getPrazoValidade() {
@@ -69,10 +82,12 @@ public class Produto {
         this.tipo = tipo;
     }
 
+    
+
     @Override
     public String toString() {
         return "Produto [Nome: " + nome + 
-               ", Quantidade: " + quantidade + 
+               ", Quantidade: " + quantidadeEstoque + 
                ", Código: " + codigo + 
                ", Prazo de Validade: " + prazoValidade + 
                ", Tipo: " + tipo + "]";

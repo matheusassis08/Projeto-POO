@@ -4,6 +4,9 @@
  */
 package academia;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 /**
  * A classe Instrutor representa um instrutor que trabalha na academia.
  * Ela herda os atributos e comportamentos da classe abstrata Pessoa.

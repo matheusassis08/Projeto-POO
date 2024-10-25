@@ -5,6 +5,7 @@
 package academia;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,57 +25,73 @@ public class CadastroFuncionario implements Cadastro {
     */
     @Override
     public void realizarCadastro() {
-    Scanner scanner = new Scanner(System.in);
-    System.out.println("Qual o tipo de funcionário deseja cadastrar?\n1. Recepcionista\n2. Instrutor\n3. Vendedor\n4. Gerente\n5. Voltar ao inicio");
-    int num = scanner.nextInt();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Qual o tipo de funcionário deseja cadastrar?\n1. Recepcionista\n2. Instrutor\n3. Vendedor\n4. Gerente\n5. Voltar ao inicio");
+        int num = scanner.nextInt();
+        scanner.nextLine();
 
-    switch (num) {
-        case 1 -> cadastrarFuncionario(scanner, FILE_RECEPCIONISTAS, Recepcionista.class);
-        case 2 -> cadastrarFuncionario(scanner, FILE_INSTRUTORES, Instrutor.class);
-        case 3 -> cadastrarFuncionario(scanner, FILE_VENDEDORES, Vendedor.class);
-        case 4 -> cadastrarFuncionario(scanner, FILE_GERENTES, Gerente.class);
-        case 5 -> {
-            // Voltar ao menu inicial
+        switch (num) {
+            case 1 -> cadastrarFuncionario(scanner, Recepcionista.class, FILE_RECEPCIONISTAS);
+            case 2 -> cadastrarFuncionario(scanner, Instrutor.class, FILE_INSTRUTORES);
+            case 3 -> cadastrarFuncionario(scanner, Vendedor.class, FILE_VENDEDORES);
+            case 4 -> cadastrarFuncionario(scanner, Gerente.class, FILE_GERENTES);
+            case 5 -> {
+                // Voltar ao menu inicial
+            }
+            default -> System.out.println("Opção inválida.");
         }
-        default -> System.out.println("Opção inválida.");
     }
-}
 
-    private <T> void cadastrarFuncionario(Scanner scanner, String filePath, Class<T> funcionarioClass) {
+    private <T> void cadastrarFuncionario(Scanner scanner, Class<T> funcionarioClass, String filePath) {
         List<T> funcionarios = carregarFuncionarios(filePath, funcionarioClass);
-
         String continuar;
         do {
             T funcionario = criarFuncionario(scanner, funcionarioClass);
-            funcionarios.add(funcionario);
+            if (funcionario != null) {
+                funcionarios.add(funcionario);
+            }
 
             System.out.print("Deseja adicionar outro " + funcionarioClass.getSimpleName().toLowerCase() + "? (s/n): ");
             continuar = scanner.nextLine();
-            if (continuar.isEmpty()) continuar = scanner.nextLine();
-
         } while (continuar.equalsIgnoreCase("s"));
 
-        salvarFuncionarios(filePath, funcionarios);
+        salvarFuncionarios(funcionarios, filePath);
     }
 
     private <T> List<T> carregarFuncionarios(String filePath, Class<T> funcionarioClass) {
         ObjectMapper mapper = new ObjectMapper();
         File arquivo = new File(filePath);
 
-        if (arquivo.exists()) {
-            try {
-                return mapper.readValue(arquivo, new TypeReference<List<T>>() {});
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (!arquivo.exists()) {
+            return new ArrayList<>(); // Retorna uma lista vazia se o arquivo não existir
         }
+
+        try {
+            return mapper.readValue(arquivo, mapper.getTypeFactory().constructCollectionType(List.class, funcionarioClass));
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar funcionários: " + e.getMessage());
+            e.printStackTrace();
+        }
+
         return new ArrayList<>();
+    }
+
+    private <T> void salvarFuncionarios(List<T> funcionarios, String filePath) {
+        ObjectMapper mapper = new ObjectMapper();
+        File arquivo = new File(filePath);
+
+        try {
+            mapper.writeValue(arquivo, funcionarios);
+            System.out.println("Funcionários salvos no arquivo: " + arquivo.getAbsolutePath());
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar funcionários: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private <T> T criarFuncionario(Scanner scanner, Class<T> funcionarioClass) {
         System.out.print("Digite o nome: ");
         String nome = scanner.nextLine();
-        if (nome.isEmpty()) nome = scanner.nextLine();
 
         System.out.print("Digite o CPF: ");
         String cpf = scanner.nextLine();
@@ -94,6 +111,7 @@ public class CadastroFuncionario implements Cadastro {
 
             System.out.print("Digite o salário: ");
             double salario = scanner.nextDouble();
+            scanner.nextLine();
             return (T) new Recepcionista(nome, cpf, endereco, telefone, email, turno, salario);
 
         } else if (funcionarioClass.equals(Instrutor.class)) {
@@ -102,6 +120,7 @@ public class CadastroFuncionario implements Cadastro {
 
             System.out.print("Digite o salário: ");
             double salario = scanner.nextDouble();
+            scanner.nextLine();
             return (T) new Instrutor(nome, cpf, endereco, telefone, email, cref, salario);
 
         } else if (funcionarioClass.equals(Vendedor.class)) {
@@ -110,6 +129,7 @@ public class CadastroFuncionario implements Cadastro {
 
             System.out.print("Digite o salário: ");
             double salario = scanner.nextDouble();
+            scanner.nextLine();
             return (T) new Vendedor(nome, cpf, endereco, telefone, email, sala, salario);
 
         } else if (funcionarioClass.equals(Gerente.class)) {
@@ -118,23 +138,11 @@ public class CadastroFuncionario implements Cadastro {
 
             System.out.print("Digite o salário: ");
             double salario = scanner.nextDouble();
+            scanner.nextLine();
             return (T) new Gerente(nome, cpf, endereco, telefone, email, senha, salario);
         }
 
         return null;
-        
-    }
-
-    private <T> void salvarFuncionarios(String filePath, List<T> funcionarios) {
-        ObjectMapper mapper = new ObjectMapper();
-        File arquivo = new File(filePath);
-
-        try {
-            mapper.writeValue(arquivo, funcionarios);
-            System.out.println("Funcionários salvos no arquivo: " + arquivo.getAbsolutePath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     /** 
      Exibe todos os Funcionários e pergunta se deseja alterar algum dado.

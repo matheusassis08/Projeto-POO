@@ -49,18 +49,30 @@ public class Academia {
                 case 2 -> {
                     System.out.println("1. Adicionar Produto\n2. Alterar Produto\n3. Apagar Produto\n4. Verificar Estoque\n5. Voltar ao menu principal");
                     n = scanner.nextInt();
+                    scanner.nextLine();
                     switch (n) {
                         case 1 -> {
-                            // Lógica para adicionar produto
+                            CadastroProduto cadastroProduto = new CadastroProduto();
+                            cadastroProduto.realizarCadastro();
                         }
                         case 2 -> {
-                            // Lógica para alterar produto
+                            CadastroProduto cadastroProduto = new CadastroProduto();
+                            cadastroProduto.alterarCadastro();
                         }
                         case 3 -> {
-                            // Lógica para apagar produto
+                            CadastroProduto cadastroProduto = new CadastroProduto();
+                            cadastroProduto.apagarCadastro();
                         }
                         case 4 -> {
-                            // Lógica para verificar estoque
+                            CadastroProduto cadastroProduto = new CadastroProduto();
+                            System.out.println("Informe o codigo do produto que deseja saber a quantidade em estoque: ");
+                            int j;
+                            do{
+                            String c = scanner.nextLine();
+                            cadastroProduto.verificarEstoque(c);
+                            System.out.println("Pressione 0 para voltar.");
+                            j = scanner.nextInt();
+                            } while(j!=0);
                         }
                         case 5 -> {
                             // Volta ao menu principal
