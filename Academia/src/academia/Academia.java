@@ -75,29 +75,29 @@ public class Academia {
                             } while(j!=0);
                         }
                         case 5 -> {
-                            // Volta ao menu principal
+                            
                         }
                         default -> System.out.println("Opção inválida.");
                     }
                 }
                 case 3 -> {
-                    // Lógica para realizar venda
+                    
                 }
                 case 4 -> {
                     System.out.println("1. Agendar Horário\n2. Verificar Horários\n3. Cancelar Agendamento\n4. Voltar ao menu principal");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
-                            // Lógica para agendar horário
+                            
                         }
                         case 2 -> {
-                            // Lógica para verificar horários
+                            
                         }
                         case 3 -> {
-                            // Lógica para cancelar agendamento
+                            
                         }
                         case 4 -> {
-                            // Volta ao menu principal
+                            
                         }
                         default -> System.out.println("Opção inválida.");
                     }
@@ -107,13 +107,13 @@ public class Academia {
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
-                            // Lógica para verificar relatórios
+                            
                         }
                         case 2 -> {
-                            // Lógica para balanços
+                            
                         }
                         case 3 -> {
-                            // Volta ao menu principal
+                            
                         }
                         default -> System.out.println("Opção inválida.");
                     }
@@ -123,16 +123,16 @@ public class Academia {
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
-                            // Lógica para gerar ficha
+                            
                         }
                         case 2 -> {
-                            // Lógica para alterar ficha
+                            
                         }
                         case 3 -> {
-                            // Lógica para excluir ficha
+                            
                         }
                         case 4 -> {
-                            // Volta ao menu principal
+                            
                         }
                         default -> System.out.println("Opção inválida.");
                     }

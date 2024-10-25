@@ -36,7 +36,7 @@ public class CadastroFuncionario implements Cadastro {
             case 3 -> cadastrarFuncionario(scanner, Vendedor.class, FILE_VENDEDORES);
             case 4 -> cadastrarFuncionario(scanner, Gerente.class, FILE_GERENTES);
             case 5 -> {
-                // Voltar ao menu inicial
+                
             }
             default -> System.out.println("Opção inválida.");
         }
@@ -63,7 +63,7 @@ public class CadastroFuncionario implements Cadastro {
         File arquivo = new File(filePath);
 
         if (!arquivo.exists()) {
-            return new ArrayList<>(); // Retorna uma lista vazia se o arquivo não existir
+            return new ArrayList<>();
         }
 
         try {
