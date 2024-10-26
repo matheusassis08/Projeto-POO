@@ -92,30 +92,51 @@ public class Academia {
                     }
                 }
                 case 3 -> {
-                    System.out.println("1. Adicionar Produto ao Carrinho\n2. Remover Produto Do Carrinho\n3. Cancelar venda\n4. Finalizar Venda\n5. Voltar ao menu principal");
+                    boolean finalizar = true;
+                    Carrinho carrinho = new Carrinho();
+                    List<Carrinho> carrinhos = new ArrayList<>();
+                    
+                    do{
+                    System.out.println("""
+                                       1. Adicionar Produto ao Carrinho
+                                       2. Remover Produto Do Carrinho
+                                       3. Verificar Valor Total Do Pedido
+                                       4. Verificar Produtos no Carrinho
+                                       5. Cancelar Venda
+                                       6. Finalizar Venda
+                                       7. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     scanner.nextLine();
-                    List<Carrinho> carrinhos = new ArrayList<>();
                     switch (n) {
                         case 1 -> {
-                            Carrinho carrinho = new Carrinho();
-                            carrinho.adicionarProduto(carrinhos);
-                            System.out.println("O valor total foi de: " + carrinho.somarPedido(carrinhos));
+                            carrinhos = carrinho.adicionarProduto(carrinhos);
                         }
                         case 2 -> {
-                            
+                            System.out.println("Qual o código do produto deseja remover do carrinho? ");
+                            int codigoRemover = scanner.nextInt();
+                            scanner.nextLine();
+
+                            carrinhos.removeIf(carrinhoItem -> carrinhoItem.getCodigoItem() == codigoRemover);
+                            System.out.println("Produto removido do carrinho.");
                         }
                         case 3 -> {
-                            
+                            System.out.println("O valor total dos produtos é de: " + carrinho.somarPedido(carrinhos));
+                            scanner.nextLine();
                         }
                         case 4 -> {
-                            
+                            System.out.println("Produtos no carrinho: " + carrinhos);
                         }
                         case 5 -> {
+                            finalizar = false;
+                        }
+                        case 6 -> {
+                            finalizar = false;
+                        }
+                        case 7 -> {
                             
                         }
                         default -> System.out.println("Opção inválida.");
-                    }
+                    }} while(finalizar==true);
                     /*//Observador
                     Relatorios relatorios = new Relatorios();
                     //Observado
