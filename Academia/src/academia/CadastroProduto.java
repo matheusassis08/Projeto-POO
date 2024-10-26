@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- *
  * Classe para o cadastro, alteração e remoção de algum produto dentro do sistema.
  */
 public class CadastroProduto implements Cadastro{
@@ -50,12 +49,14 @@ public class CadastroProduto implements Cadastro{
 
             System.out.print("Digite o valor do produto: ");
             double valor = scanner.nextDouble();
-
-            System.out.print("Digite o codigo do produto: ");
-            String codigo = scanner.nextLine();
+            scanner.nextLine();
 
             System.out.print("Digite o prazo de validade do produto(dd/MM/yyyy): ");
             String prazoValidade = converterDataParaString(solicitarDataValida(scanner));
+            
+            System.out.print("Digite o codigo do produto: ");
+            int codigo = scanner.nextInt();
+            scanner.nextLine();
 
             System.out.print("Digite o tipo de produto(Alimentício, Suplementação, Acessório): ");
             String tipo = scanner.nextLine();
@@ -145,7 +146,8 @@ public class CadastroProduto implements Cadastro{
                 }
                 case 4 -> {
                     System.out.println("Digite o novo codigo:");
-                    String novoCodigo = scanner.nextLine();
+                    int novoCodigo = scanner.nextInt();
+                    scanner.nextLine();
                     produto.setCodigo(novoCodigo);
                 }
                 case 5 -> {
@@ -200,11 +202,12 @@ public class CadastroProduto implements Cadastro{
         }
         
         System.out.print("Digite o código do produto que deseja remover: ");
-        String codigo = scanner.nextLine();
+        int codigo = scanner.nextInt();
+        scanner.nextLine();
         
         boolean clienteRemovido = false;
         for (int i = 0; i < produtos.size(); i++) {
-            if (produtos.get(i).getCodigo().equals(codigo)) {
+            if (produtos.get(i).getCodigo()==codigo) {
                 produtos.remove(i);
                 clienteRemovido = true;
                 break;
@@ -227,7 +230,7 @@ public class CadastroProduto implements Cadastro{
      * Verifica o estoque de algum produto a partir do seu codigo fornecido.
      * @param codigo
      */
-    public void verificarEstoque(String codigo){
+    public void verificarEstoque(int codigo){
         ObjectMapper mapper = new ObjectMapper();
         List<Produto> produtos = new ArrayList<>();
         
@@ -243,7 +246,7 @@ public class CadastroProduto implements Cadastro{
         }
 
         for (Produto produto : produtos) {
-            if (produto.getCodigo().equals(codigo)) {
+            if (produto.getCodigo()==codigo) {
                 System.out.println("Produto: " + produto.getNome() + ", Estoque: " + produto.getQuantidadeEstoque());
                 return;
             }

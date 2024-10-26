@@ -24,8 +24,8 @@ import java.util.List;
 public class Carrinho extends Observable{
     private String nomeItem;
     private int codigoItem;
-    private int valorItem;
-    private int valorTotalPedido;
+    private double valorItem;
+    private double valorTotalPedido;
     private String nomeVendedor;
     private int numeroPedido;
     
@@ -34,14 +34,18 @@ public class Carrinho extends Observable{
     private Scanner scanner = new Scanner(System.in);
     File arquivo2 = new File(FILE_CARRINHO);
     public void adicionarProduto(){
-        System.out.println("Qual o codigo do produto que voce deseja adicionar ao carrinho? ");
-        String codigoProduto = scanner.nextLine();
+        ObjectMapper mapper = new ObjectMapper();
         CadastroProduto cadastroProduto = new CadastroProduto();
         String FILE_PRODUTOS = cadastroProduto.getFILE_PRODUTOS();
         File arquivo = new File(FILE_PRODUTOS);
         List<Produto> produtos;
-        List<Carrinho> produtosCarrinho;
-        ObjectMapper mapper = new ObjectMapper();
+        List<Carrinho> produtosCarrinho = new ArrayList<>();
+        
+        String continuar = "s";
+        do{
+        System.out.println("Qual o codigo do produto que voce deseja adicionar ao carrinho? ");
+        int codigoProduto = scanner.nextInt();
+        scanner.nextLine();
 
         if (!arquivo.exists()) {
             System.out.println("Nenhum produto cadastrado.");
@@ -56,12 +60,18 @@ public class Carrinho extends Observable{
         }
         Produto produtoAdicionado = null;
         for(Produto produto: produtos){
-            if (produto.getCodigo().equalsIgnoreCase(codigoProduto)) {
+            if (produto.getCodigo()==codigoProduto) {
                 produtoAdicionado = produto;
             }
         }
-        
-        //produtosCarrinho.add(new Carrinho(produtoAdicionado.getNome(), produtoAdicionado.getCodigo(), produtoAdicionado.g));
+        System.out.println("Digite o numero do pedido.");
+        int numeroPedidoAtual = scanner.nextInt();
+        scanner.nextLine();
+        produtosCarrinho.add(new Carrinho(produtoAdicionado.getNome(),produtoAdicionado.getCodigo(),produtoAdicionado.getValor(),0,"nomevendedor(vazio)",numeroPedidoAtual));
+        System.out.println("Deseja continuar(s/n)?");
+        continuar = scanner.nextLine().trim();
+        } while(continuar.equalsIgnoreCase("s"));
+        System.out.println(produtosCarrinho);
     }
     void somarPedido(){
     
@@ -91,7 +101,7 @@ public class Carrinho extends Observable{
         
     }
 
-    public Carrinho(String nomeItem, int codigoItem, int valorItem, int valorTotalPedido, String nomeVendedor, int numeroPedido) {
+    public Carrinho(String nomeItem, int codigoItem, double valorItem, double valorTotalPedido, String nomeVendedor, int numeroPedido) {
         this.nomeItem = nomeItem;
         this.codigoItem = codigoItem;
         this.valorItem = valorItem;
@@ -116,19 +126,19 @@ public class Carrinho extends Observable{
         this.codigoItem = codigoItem;
     }
 
-    public int getValorItem() {
+    public double getValorItem() {
         return valorItem;
     }
 
-    public void setValorItem(int valorItem) {
+    public void setValorItem(double valorItem) {
         this.valorItem = valorItem;
     }
 
-    public int getValorTotalPedido() {
+    public double getValorTotalPedido() {
         return valorTotalPedido;
     }
 
-    public void setValorTotalPedido(int valorTotalPedido) {
+    public void setValorTotalPedido(double valorTotalPedido) {
         this.valorTotalPedido = valorTotalPedido;
     }
 

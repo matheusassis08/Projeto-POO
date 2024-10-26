@@ -14,7 +14,7 @@ public class Produto {
     private String nome;
     private int quantidadeEstoque;
     private double valor;
-    private String codigo;
+    private int codigo;
     private String prazoValidade;
     private String tipo;
     
@@ -33,7 +33,7 @@ public class Produto {
      * @param prazoValidade O prazo de validade do produto.
      * @param tipo          O tipo do produto.
      */
-    public Produto(String nome, int quantidadeEstoque, double valor, String codigo, String prazoValidade, String tipo) {
+    public Produto(String nome, int quantidadeEstoque, double valor, int codigo, String prazoValidade, String tipo) {
         this.nome = nome;
         this.quantidadeEstoque = quantidadeEstoque;
         this.valor = valor;
@@ -61,11 +61,11 @@ public class Produto {
     
     
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 

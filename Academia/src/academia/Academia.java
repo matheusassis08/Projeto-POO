@@ -76,7 +76,8 @@ public class Academia {
                             System.out.println("Informe o codigo do produto que deseja saber a quantidade em estoque: ");
                             int j;
                             do{
-                            String c = scanner.nextLine();
+                            int c = scanner.nextInt();
+                            scanner.nextLine();
                             cadastroProduto.verificarEstoque(c);
                             System.out.println("Pressione 0 para voltar.");
                             j = scanner.nextInt();
