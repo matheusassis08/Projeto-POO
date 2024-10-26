@@ -48,6 +48,9 @@ public class CadastroProduto implements Cadastro{
             int quantidadeEstoque = scanner.nextInt();
             scanner.nextLine();
 
+            System.out.print("Digite o valor do produto: ");
+            double valor = scanner.nextDouble();
+
             System.out.print("Digite o codigo do produto: ");
             String codigo = scanner.nextLine();
 
@@ -57,7 +60,7 @@ public class CadastroProduto implements Cadastro{
             System.out.print("Digite o tipo de produto(Alimentício, Suplementação, Acessório): ");
             String tipo = scanner.nextLine();
 
-            Produto produto = new Produto(nome, quantidadeEstoque, codigo, prazoValidade, tipo);
+            Produto produto = new Produto(nome, quantidadeEstoque, valor, codigo, prazoValidade, tipo);
             produtos.add(produto);
 
             System.out.print("Deseja adicionar outro produto? (s/n): ");
@@ -115,10 +118,11 @@ public class CadastroProduto implements Cadastro{
             System.out.println("O que você deseja alterar?");
             System.out.println("1. Nome");
             System.out.println("2. Estoque");
-            System.out.println("3. Código");
-            System.out.println("4. Prazo de Validade");
-            System.out.println("5. Tipo");
-            System.out.println("6. Finalizar alterações");
+            System.out.println("3. Valor");
+            System.out.println("4. Código");
+            System.out.println("5. Prazo de Validade");
+            System.out.println("6. Tipo");
+            System.out.println("7. Finalizar alterações");
             
             int opcao = scanner.nextInt();
             scanner.nextLine();
@@ -135,11 +139,16 @@ public class CadastroProduto implements Cadastro{
                     produto.setQuantidadeEstoque(novoEstoque);
                 }
                 case 3 -> {
+                    System.out.println("Digite o novo valor:");
+                    Double novoValor = scanner.nextDouble();
+                    produto.setValor(novoValor);
+                }
+                case 4 -> {
                     System.out.println("Digite o novo codigo:");
                     String novoCodigo = scanner.nextLine();
                     produto.setCodigo(novoCodigo);
                 }
-                case 4 -> {
+                case 5 -> {
                     LocalDate data = null;
                     String novoPrazoValidade = null;
                     while (data == null) {
@@ -149,12 +158,12 @@ public class CadastroProduto implements Cadastro{
                     }
                     produto.setPrazoValidade(novoPrazoValidade);
                 }
-                case 5 -> {
+                case 6 -> {
                     System.out.println("Digite o novo tipo do produto:");
                     String novoTipo = scanner.nextLine();
                     produto.setTipo(novoTipo);
                 }
-                case 6 -> {
+                case 7 -> {
                     alterar = false;
                     System.out.println("Alterações finalizadas.");
                 }
@@ -271,4 +280,15 @@ public class CadastroProduto implements Cadastro{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return data.format(formatter);
     }
+
+    public String getFILE_PRODUTOS() {
+        return FILE_PRODUTOS;
+    }
+    
+    @Override
+    public String toString() {
+        return "CadastroProduto{" + "FILE_PRODUTOS=" + FILE_PRODUTOS + '}';
+    }
+    
+    
 }

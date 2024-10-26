@@ -89,7 +89,37 @@ public class Academia {
                     }
                 }
                 case 3 -> {
+                    System.out.println("1. Adicionar Produto ao Carrinho\n2. Remover Produto Do Carrinho\n3. Cancelar venda\n4. Finalizar Venda\n5. Voltar ao menu principal");
+                    n = scanner.nextInt();
+                    scanner.nextLine();
+                    switch (n) {
+                        case 1 -> {
+                            Carrinho carrinho = new Carrinho();
+                            carrinho.adicionarProduto();
+                        }
+                        case 2 -> {
+                            
+                        }
+                        case 3 -> {
+                            
+                        }
+                        case 4 -> {
+                            
+                        }
+                        case 5 -> {
+                            
+                        }
+                        default -> System.out.println("Opção inválida.");
+                    }
+                    /*//Observador
+                    Relatorios relatorios = new Relatorios();
+                    //Observado
+                    Carrinho carrinho = new Carrinho();
                     
+                    //adicionando o observador ao observado
+                    carrinho.addObserver(relatorios);
+                    
+                    carrinho.finalizarPedido();*/
                 }
                 case 4 -> {
                     System.out.println("1. Agendar Horário\n2. Verificar Horários\n3. Cancelar Agendamento\n4. Voltar ao menu principal");

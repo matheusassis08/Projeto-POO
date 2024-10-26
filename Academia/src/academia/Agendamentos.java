@@ -79,7 +79,6 @@ public class Agendamentos {
         return horario;
     }
     
-    
     /**
      * Solicita a data no formato (dd/mm/yyyy) e retorna no formato LocalDate.
      * @return LocalDate
