@@ -21,21 +21,26 @@ public class Academia {
         boolean continuar = true;
 
         while (continuar) {
-            System.out.println("\nQual opção você deseja acessar?");
-            System.out.println("1. Clientes");
-            System.out.println("2. Produtos");
-            System.out.println("3. Realizar Venda");
-            System.out.println("4. Agendamentos");
-            System.out.println("5. Relatórios");
-            System.out.println("6. Instrutor");
-            System.out.println("7. Funcionários");
-            System.out.println("8. Sair");
+            System.out.println("""
+                               Qual opção você deseja acessar?
+                               1. Clientes
+                               2. Produtos
+                               3. Realizar Venda
+                               4. Agendamentos
+                               5. Relatórios
+                               6. Instrutor
+                               7. Funcionários
+                               8. Sair""");
             
             int n = scanner.nextInt();
 
             switch (n) {
                 case 1 -> {
-                    System.out.println("1. Adicionar Cliente\n2. Alterar Cliente\n3. Apagar Cliente\n4. Voltar ao menu principal");
+                    System.out.println("""
+                                       1. Adicionar Cliente
+                                       2. Alterar Cliente
+                                       3. Apagar Cliente
+                                       4. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
@@ -57,7 +62,12 @@ public class Academia {
                     }
                 }
                 case 2 -> {
-                    System.out.println("1. Adicionar Produto\n2. Alterar Produto\n3. Apagar Produto\n4. Verificar Estoque\n5. Voltar ao menu principal");
+                    System.out.println("""
+                                        1. Adicionar Produto
+                                        2. Alterar Produto
+                                        3. Apagar Produto
+                                        4. Verificar Estoque
+                                        5. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     scanner.nextLine();
                     switch (n) {
@@ -148,7 +158,11 @@ public class Academia {
                     carrinho.finalizarPedido();*/
                 }
                 case 4 -> {
-                    System.out.println("1. Agendar Horário\n2. Verificar Horários\n3. Cancelar Agendamento\n4. Voltar ao menu principal");
+                    System.out.println("""
+                                       1. Agendar Horário
+                                       2. Verificar Horários
+                                       3. Cancelar Agendamento
+                                       4. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
@@ -168,7 +182,10 @@ public class Academia {
                     }
                 }
                 case 5 -> {
-                    System.out.println("1. Verificar Relatórios\n2. Balanços\n3. Voltar ao menu principal");
+                    System.out.println("""
+                                       1. Verificar Relatórios
+                                       2. Balanços
+                                       3. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
@@ -184,7 +201,11 @@ public class Academia {
                     }
                 }
                 case 6 -> {
-                    System.out.println("1. Gerar Ficha\n2. Alterar Ficha\n3. Excluir Ficha\n4. Voltar ao menu principal");
+                    System.out.println("""
+                                       1. Gerar Ficha
+                                       2. Alterar Ficha
+                                       3. Excluir Ficha
+                                       4. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
@@ -203,7 +224,11 @@ public class Academia {
                     }
                 }
                 case 7 -> {
-                    System.out.println("1. Cadastrar Funcionário\n2. Alterar cadastro de Funcionário\n3. Excluir cadastro de Funcionário\n4. Voltar ao menu principal");
+                    System.out.println("""
+                                       1. Cadastrar Funcionário\n
+                                       2. Alterar cadastro de Funcionário\n
+                                       3. Excluir cadastro de Funcionário\n
+                                       4. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
