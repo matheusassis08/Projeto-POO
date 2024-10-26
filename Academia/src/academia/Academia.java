@@ -5,6 +5,8 @@
 package academia;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Academia {
     
@@ -93,10 +95,12 @@ public class Academia {
                     System.out.println("1. Adicionar Produto ao Carrinho\n2. Remover Produto Do Carrinho\n3. Cancelar venda\n4. Finalizar Venda\n5. Voltar ao menu principal");
                     n = scanner.nextInt();
                     scanner.nextLine();
+                    List<Carrinho> carrinhos = new ArrayList<>();
                     switch (n) {
                         case 1 -> {
                             Carrinho carrinho = new Carrinho();
-                            carrinho.adicionarProduto();
+                            carrinho.adicionarProduto(carrinhos);
+                            System.out.println("O valor total foi de: " + carrinho.somarPedido(carrinhos));
                         }
                         case 2 -> {
                             

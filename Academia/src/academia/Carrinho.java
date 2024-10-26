@@ -32,14 +32,14 @@ public class Carrinho extends Observable{
     private final String FILE_CARRINHO = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\carrinho.json";
     
     private Scanner scanner = new Scanner(System.in);
-    File arquivo2 = new File(FILE_CARRINHO);
-    public void adicionarProduto(){
-        ObjectMapper mapper = new ObjectMapper();
-        CadastroProduto cadastroProduto = new CadastroProduto();
-        String FILE_PRODUTOS = cadastroProduto.getFILE_PRODUTOS();
-        File arquivo = new File(FILE_PRODUTOS);
-        List<Produto> produtos;
-        List<Carrinho> produtosCarrinho = new ArrayList<>();
+    private ObjectMapper mapper = new ObjectMapper();
+    private CadastroProduto cadastroProduto = new CadastroProduto();
+    private String FILE_PRODUTOS = cadastroProduto.getFILE_PRODUTOS();
+    private File arquivo = new File(FILE_PRODUTOS);
+    private List<Produto> produtos;
+    private List<Carrinho> produtosCarrinho = new ArrayList<>();
+    
+    public List<Carrinho> adicionarProduto(List<Carrinho> Carrinho){
         
         String continuar = "s";
         do{
@@ -49,14 +49,12 @@ public class Carrinho extends Observable{
 
         if (!arquivo.exists()) {
             System.out.println("Nenhum produto cadastrado.");
-            return;
         }
 
         try {
             produtos = mapper.readValue(arquivo, new TypeReference<List<Produto>>() {});
         } catch (IOException e) {
             e.printStackTrace();
-            return;
         }
         Produto produtoAdicionado = null;
         for(Produto produto: produtos){
@@ -71,16 +69,21 @@ public class Carrinho extends Observable{
         System.out.println("Deseja continuar(s/n)?");
         continuar = scanner.nextLine().trim();
         } while(continuar.equalsIgnoreCase("s"));
-        System.out.println(produtosCarrinho);
+        return produtosCarrinho;
     }
-    void somarPedido(){
     
+    public double somarPedido(List<Carrinho> somaProdutosCarrinho){
+        double valorTotalSomado = 0;
+        for (Carrinho carrinho : produtosCarrinho) {
+            valorTotalSomado += carrinho.getValorItem();
+        }
+        return valorTotalSomado;
     }
     void cancelarPedido(){
-    
+        
     }
     String venda = "";
-    void finalizarPedido(){
+    public void finalizarPedido(){
         venda = "Feita";
         System.out.println("Foi concluida a venda: ///" + venda);
         this.mudaEstado();
