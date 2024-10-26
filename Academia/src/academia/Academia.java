@@ -3,9 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package academia;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Academia {
+    
+    /**
+     Atributo para definir a formatação das datas(dd/MM/yyyy).
+     */
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean continuar = true;
@@ -169,4 +176,10 @@ public class Academia {
 
         scanner.close();
     }
+
+    public static DateTimeFormatter getDATE_FORMATTER() {
+        return DATE_FORMATTER;
+    }
+    
+    
 }

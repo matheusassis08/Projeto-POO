@@ -3,22 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package academia;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 /**
  * A classe Produto representa um produto para ser vendido na loja.
  */
 public class Produto {
 
     private String nome;
-
     private int quantidadeEstoque;
-
     private String codigo;
-
-    private String prazoValidade;
-
+    private LocalDate prazoValidade;
     private String tipo;
-
+    
     
      public Produto() {
          
@@ -37,7 +35,7 @@ public class Produto {
         this.nome = nome;
         this.quantidadeEstoque = quantidadeEstoque;
         this.codigo = codigo;
-        this.prazoValidade = prazoValidade;
+        this.prazoValidade = LocalDate.parse(prazoValidade, Academia.getDATE_FORMATTER());
         this.tipo = tipo;
     }
     
@@ -67,12 +65,14 @@ public class Produto {
     }
 
     public String getPrazoValidade() {
-        return prazoValidade;
+        return prazoValidade.format(Academia.getDATE_FORMATTER());
     }
 
     public void setPrazoValidade(String prazoValidade) {
-        this.prazoValidade = prazoValidade;
+        this.prazoValidade = LocalDate.parse(prazoValidade, Academia.getDATE_FORMATTER());
     }
+
+    
 
     public String getTipo() {
         return tipo;

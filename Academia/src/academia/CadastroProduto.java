@@ -8,6 +8,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -43,13 +46,13 @@ public class CadastroProduto implements Cadastro{
 
             System.out.print("Digite a quantidade de estoque do produto: ");
             int quantidadeEstoque = scanner.nextInt();
-            scanner.nextLine(); // Consome a quebra de linha restante
+            scanner.nextLine();
 
             System.out.print("Digite o codigo do produto: ");
             String codigo = scanner.nextLine();
 
-            System.out.print("Digite o prazo de validade do produto: ");
-            String prazoValidade = scanner.nextLine();
+            System.out.print("Digite o prazo de validade do produto(dd/MM/yyyy): ");
+            String prazoValidade = converterDataParaString(solicitarDataValida(scanner));
 
             System.out.print("Digite o tipo de produto(Alimentício, Suplementação, Acessório): ");
             String tipo = scanner.nextLine();
@@ -101,7 +104,7 @@ public class CadastroProduto implements Cadastro{
         scanner.nextLine();
 
         if (indice < 0 || indice >= produtos.size()) {
-            System.out.println("Cliente não encontrado.");
+            System.out.println("Produto não encontrado.");
             return;
         }
 
@@ -137,8 +140,13 @@ public class CadastroProduto implements Cadastro{
                     produto.setCodigo(novoCodigo);
                 }
                 case 4 -> {
-                    System.out.println("Digite o novo prazo de validade:");
-                    String novoPrazoValidade = scanner.nextLine();
+                    LocalDate data = null;
+                    String novoPrazoValidade = null;
+                    while (data == null) {
+                        System.out.println("Digite o novo prazo de validade(dd/MM/yyyy):");
+                        novoPrazoValidade = scanner.nextLine();
+                        data = parseData(novoPrazoValidade);
+                    }
                     produto.setPrazoValidade(novoPrazoValidade);
                 }
                 case 5 -> {
@@ -206,8 +214,11 @@ public class CadastroProduto implements Cadastro{
         }
     }
     
+    /**
+     * Verifica o estoque de algum produto a partir do seu codigo fornecido.
+     * @param codigo
+     */
     public void verificarEstoque(String codigo){
-        Scanner scanner = new Scanner(System.in);
         ObjectMapper mapper = new ObjectMapper();
         List<Produto> produtos = new ArrayList<>();
         
@@ -229,5 +240,35 @@ public class CadastroProduto implements Cadastro{
             }
         }
         System.out.println("Produto com código " + codigo + " não encontrado.");
+    }
+    /**
+     * Metodo para tratar exceções com relação a digitação incorreta do formato das data.
+     * @param dataStr
+     * @return 
+     */
+    private static LocalDate parseData(String dataStr) {
+        try {
+            return LocalDate.parse(dataStr, Academia.getDATE_FORMATTER());
+        } catch (DateTimeParseException e) {
+            System.out.println("Data inválida. Use o formato dd/MM/yyyy.");
+            return null; // Retorna null para sinalizar erro
+        }
+    }
+    
+    private static LocalDate solicitarDataValida(Scanner scanner) {
+        LocalDate data = null;
+        while (data == null) {
+            System.out.print("Digite o prazo de validade do produto (dd/MM/yyyy): ");
+            String inputDate = scanner.nextLine();
+            data = parseData(inputDate);
+        }
+        return data;
+    }
+    /**
+     * Metodo apenas converter a data para String
+     */
+    private static String converterDataParaString(LocalDate data) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return data.format(formatter);
     }
 }
