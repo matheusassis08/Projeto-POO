@@ -111,10 +111,9 @@ public class Academia {
                                        1. Adicionar Produto ao Carrinho
                                        2. Remover Produto Do Carrinho
                                        3. Verificar Valor Total Do Pedido
-                                       4. Verificar Produtos no Carrinho
-                                       5. Cancelar Venda
-                                       6. Finalizar Venda
-                                       7. Voltar ao menu principal""");
+                                       4. Verificar Produtos no Pedido
+                                       5. Cancelar Pedido
+                                       6. Finalizar Pedido""");
                     n = scanner.nextInt();
                     scanner.nextLine();
                     switch (n) {
@@ -140,9 +139,8 @@ public class Academia {
                             finalizar = false;
                         }
                         case 6 -> {
-                            finalizar = false;
-                        }
-                        case 7 -> {
+                            GerenciarPagamentos gerenciarPagamento = new GerenciarPagamentos();
+                            gerenciarPagamento.solicitarPagamento(carrinho.somarPedido(carrinhos));
                             
                         }
                         default -> System.out.println("Opção inválida.");
