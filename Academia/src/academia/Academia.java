@@ -12,6 +12,7 @@ public class Academia {
      Atributo para definir a formatação das datas(dd/MM/yyyy).
      */
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
     
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -95,7 +96,8 @@ public class Academia {
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
-                            
+                            Agendamentos agendamentos = new Agendamentos();
+                            agendamentos.realizarAgendamento();
                         }
                         case 2 -> {
                             
@@ -179,6 +181,10 @@ public class Academia {
 
     public static DateTimeFormatter getDATE_FORMATTER() {
         return DATE_FORMATTER;
+    }
+
+    public static DateTimeFormatter getTIME_FORMATTER() {
+        return TIME_FORMATTER;
     }
     
     

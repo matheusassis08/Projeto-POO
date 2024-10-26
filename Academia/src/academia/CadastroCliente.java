@@ -16,7 +16,7 @@ import java.util.Scanner;
  * Classe para o cadastro, alteração e remoção de algum cliente dentro do sistema.
  */
 public class CadastroCliente implements Cadastro {
-    private final String FILE_CLIENTES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\clientes.json";
+    private static final String FILE_CLIENTES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\clientes.json";
         /** 
      Cadastra um novo cliente no sistema
      */
@@ -204,6 +204,14 @@ public class CadastroCliente implements Cadastro {
         }
     }
 
+    
+    
     public CadastroCliente() {
     }
+
+    static public String getFILE_CLIENTES() {
+        return FILE_CLIENTES;
+    }
+    
+    
 }
