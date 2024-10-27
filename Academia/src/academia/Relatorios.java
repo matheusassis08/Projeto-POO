@@ -30,7 +30,7 @@ import java.util.Scanner;
     
     
     void gerarRelatorioVenda(){
-        System.out.println("\nRelatório feito.");
+        System.out.println("\nRelatório feito..");
     }
     /*
     public void gerarRelatorioPedido(){
