@@ -14,6 +14,7 @@ public class FichaTreino {
     private int numeroFicha;
     private String nomeInstrutor;
     private String listaExercicio;
+    
     /** Usado para iniciar um cadastro de ficha de treino para algum aluno*/
     void gerarFicha(){ 
         

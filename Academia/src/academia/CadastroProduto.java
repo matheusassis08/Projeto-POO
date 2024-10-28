@@ -18,7 +18,7 @@ import java.util.Scanner;
 /**
  * Classe para o cadastro, alteração e remoção de algum produto dentro do sistema.
  */
-public class CadastroProduto implements Cadastro{
+public class CadastroProduto implements Cadastro, PadraoObserver {
     private final String FILE_PRODUTOS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\produtos.json";
     /** 
      Cadastra um novo produto no sistema
@@ -61,7 +61,7 @@ public class CadastroProduto implements Cadastro{
             System.out.print("Digite o tipo de produto(Alimentício, Suplementação, Acessório): ");
             String tipo = scanner.nextLine();
 
-            Produto produto = new Produto(nome, quantidadeEstoque, valor, codigo, prazoValidade, tipo);
+            Produto produto = new Produto(nome, quantidadeEstoque, valor, codigo, prazoValidade, tipo, 0);
             produtos.add(produto);
 
             System.out.print("Deseja adicionar outro produto? (s/n): ");
@@ -283,9 +283,15 @@ public class CadastroProduto implements Cadastro{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return data.format(formatter);
     }
+    
 
     public String getFILE_PRODUTOS() {
         return FILE_PRODUTOS;
+    }
+    
+    @Override
+    public void update(PadraoObservable o, Object arg){
+        
     }
     
     @Override

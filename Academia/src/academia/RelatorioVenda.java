@@ -1,22 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package academia;
 
+import java.time.format.DateTimeFormatter;
+
 /**
- *
- * @author Leona
+ * Classe para representar um relatório de venda dentro do sistema.
  */
 public class RelatorioVenda extends Relatorios{
-    int numeroPedido;
-    double valorTotalPedido;
-    String nomeCliente;
-    String nomeProdutos;
-    double valorUnitarioItemsPedido;
-    int codigoProdutosPedido;
+    
+    private int numeroPedido;
+    private double valorTotalPedido;
+    private String nomeCliente;
+    private String nomeProdutos;
+    private double valorUnitarioItemsPedido;
+    private int codigoProdutosPedido;
+    
+    private final String FILE_RELATORIOVENDA = "C:\\POO\\Projeto-POO\\Academia\\src\\relatorios\\relatoriosVenda.json";
 
-    public RelatorioVenda(int numeroPedido, double valorTotalPedido, String nomeCliente, String nomeProdutos, double valorUnitarioItemsPedido, int codigoProdutosPedido) {
+    public RelatorioVenda(String nome, String dataDeRealizacao, String horarioDeRealizacao, int idRelatorio,int numeroPedido, double valorTotalPedido, String nomeCliente, String nomeProdutos, double valorUnitarioItemsPedido, int codigoProdutosPedido) {
+        super(nome, dataDeRealizacao, horarioDeRealizacao, idRelatorio);
         this.numeroPedido = numeroPedido;
         this.valorTotalPedido = valorTotalPedido;
         this.nomeCliente = nomeCliente;
@@ -24,10 +25,13 @@ public class RelatorioVenda extends Relatorios{
         this.valorUnitarioItemsPedido = valorUnitarioItemsPedido;
         this.codigoProdutosPedido = codigoProdutosPedido;
     }
-
-    @Override
-    public String toString() {
-        return "RelatorioVenda{" + "numeroPedido=" + numeroPedido + ", valorTotalPedido=" + valorTotalPedido + ", nomeCliente=" + nomeCliente + ", nomeProdutos=" + nomeProdutos + ", valorUnitarioItemsPedido=" + valorUnitarioItemsPedido + ", codigoProdutosPedido=" + codigoProdutosPedido + '}';
+    
+    public RelatorioVenda() {
+        super("", "", "", 0);
     }
     
+    @Override
+    public String toString() {
+        return "RelatorioVenda{" + "numeroPedido=" + numeroPedido + ", valorTotalPedido=" + valorTotalPedido + ", nomeCliente=" + nomeCliente + ", nomeProdutos=" + nomeProdutos + ", valorUnitarioItemsPedido=" + valorUnitarioItemsPedido + ", codigoProdutosPedido=" + codigoProdutosPedido + super.toString() + '}';
+    }
 }

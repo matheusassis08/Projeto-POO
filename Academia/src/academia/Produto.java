@@ -17,6 +17,7 @@ public class Produto {
     private int codigo;
     private String prazoValidade;
     private String tipo;
+    private int filaEspera;
     
     
      public Produto() {
@@ -32,14 +33,16 @@ public class Produto {
      * @param codigo        O código do produto.
      * @param prazoValidade O prazo de validade do produto.
      * @param tipo          O tipo do produto.
+     * @param filaEspera Exibe quantos clientes estão na fila de espera por esse produto.
      */
-    public Produto(String nome, int quantidadeEstoque, double valor, int codigo, String prazoValidade, String tipo) {
+    public Produto(String nome, int quantidadeEstoque, double valor, int codigo, String prazoValidade, String tipo, int filaEspera) {
         this.nome = nome;
         this.quantidadeEstoque = quantidadeEstoque;
         this.valor = valor;
         this.codigo = codigo;
         this.prazoValidade = prazoValidade;
         this.tipo = tipo;
+        this.filaEspera = filaEspera;
     }
     
     
@@ -94,10 +97,18 @@ public class Produto {
         this.tipo = tipo;
     }
 
-    @Override
-    public String toString() {
-        return "Produto{" + "nome=" + nome + ", quantidadeEstoque=" + quantidadeEstoque + ", valor=" + valor + ", codigo=" + codigo + ", prazoValidade=" + prazoValidade + ", tipo=" + tipo + '}';
+    public int getFilaEspera() {
+        return filaEspera;
     }
 
+    public void setFilaEspera(int filaEspera) {
+        this.filaEspera = filaEspera;
+    }
+
+    @Override
+    public String toString() {
+        return "Produto{" + "nome=" + nome + ", quantidadeEstoque=" + quantidadeEstoque + ", valor=" + valor + ", codigo=" + codigo + ", prazoValidade=" + prazoValidade + ", tipo=" + tipo + ", filaEspera=" + filaEspera + '}';
+    }
+    
     
 }

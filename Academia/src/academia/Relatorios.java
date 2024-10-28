@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package academia;
 
 /**
@@ -12,7 +8,7 @@ public abstract class Relatorios {
     private String nome;
     private String dataDeRealizacao;
     private String horarioDeRealizacao;
-    private String idRelatorio;
+    private int idRelatorio;
 
     public String getNome() {
         return nome;
@@ -38,11 +34,20 @@ public abstract class Relatorios {
         this.horarioDeRealizacao = horarioDeRealizacao;
     }
 
-    public String getIdRelatorio() {
+    public int getIdRelatorio() {
         return idRelatorio;
     }
 
-    public void setIdRelatorio(String idRelatorio) {
+    public void setIdRelatorio(int idRelatorio) {
+        this.idRelatorio = idRelatorio;
+    }
+
+    
+
+    public Relatorios(String nome, String dataDeRealizacao, String horarioDeRealizacao, int idRelatorio) {
+        this.nome = nome;
+        this.dataDeRealizacao = dataDeRealizacao;
+        this.horarioDeRealizacao = horarioDeRealizacao;
         this.idRelatorio = idRelatorio;
     }
 

@@ -44,15 +44,15 @@ public class Academia {
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
-                            CadastroCliente cadastroCliente = new CadastroCliente();
+                            GerenciarCliente cadastroCliente = new GerenciarCliente();
                             cadastroCliente.realizarCadastro();
                         }
                         case 2 -> {
-                            CadastroCliente cadastroCliente = new CadastroCliente();
+                            GerenciarCliente cadastroCliente = new GerenciarCliente();
                             cadastroCliente.alterarCadastro();
                         }
                         case 3 -> {
-                            CadastroCliente cadastroCliente = new CadastroCliente();
+                            GerenciarCliente cadastroCliente = new GerenciarCliente();
                             cadastroCliente.apagarCadastro();
                         }
                         case 4 -> {

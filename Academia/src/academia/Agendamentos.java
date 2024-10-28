@@ -101,7 +101,7 @@ public class Agendamentos {
      * @return ArrayList
      */
     private List<Cliente> carregarClientes() {
-        File arquivo = new File(CadastroCliente.getFILE_CLIENTES());
+        File arquivo = new File(GerenciarCliente.getFILE_CLIENTES());
         try {
             if (arquivo.exists() && arquivo.length() > 0) {
                 return mapper.readValue(arquivo, new TypeReference<List<Cliente>>() {});
