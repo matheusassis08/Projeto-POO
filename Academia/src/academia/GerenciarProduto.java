@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package academia;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -18,8 +14,10 @@ import java.util.Scanner;
 /**
  * Classe para o cadastro, alteração e remoção de algum produto dentro do sistema.
  */
-public class CadastroProduto implements Cadastro, PadraoObserver {
-    private final String FILE_PRODUTOS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\produtos.json";
+public class GerenciarProduto implements Cadastro, PadraoObserver{
+    private static final String FILE_PRODUTOS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\produtos.json";
+    private String cadastroNovo;
+    
     /** 
      Cadastra um novo produto no sistema
      */
@@ -75,6 +73,7 @@ public class CadastroProduto implements Cadastro, PadraoObserver {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
     }
     /** 
      Altera os dados de algum produto cadastro
@@ -86,19 +85,19 @@ public class CadastroProduto implements Cadastro, PadraoObserver {
         ObjectMapper mapper = new ObjectMapper();
         File arquivo = new File(FILE_PRODUTOS);
         List<Produto> produtos;
-
+        
         if (!arquivo.exists()) {
             System.out.println("Nenhum produto cadastrado.");
             return;
         }
-
+        
         try {
             produtos = mapper.readValue(arquivo, new TypeReference<List<Produto>>() {});
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
-
+        
         System.out.println("Selecione o produto que deseja alterar(0 caso não queria mais alterar nenhuma informação):");
         for (int i = 0; i < produtos.size(); i++) {
             System.out.println((i + 1) + ". Nome: " + produtos.get(i).getNome());
@@ -111,9 +110,9 @@ public class CadastroProduto implements Cadastro, PadraoObserver {
             System.out.println("Produto não encontrado.");
             return;
         }
-
+        
         Produto produto = produtos.get(indice);
-
+        
         boolean alterar = true;
         while (alterar) {
             System.out.println("O que você deseja alterar?");
@@ -135,7 +134,7 @@ public class CadastroProduto implements Cadastro, PadraoObserver {
                     produto.setNome(novoNome);
                 }
                 case 2 -> {
-                    System.out.println("Digite a nova quantidade em estoque:");
+                    System.out.println("Qual a quantidade nova no estoque?");
                     int novoEstoque = scanner.nextInt();
                     produto.setQuantidadeEstoque(novoEstoque);
                 }
@@ -266,7 +265,9 @@ public class CadastroProduto implements Cadastro, PadraoObserver {
             return null; // Retorna null para sinalizar erro
         }
     }
-    
+    /**
+     * Metódo para verificar se data está valida.
+     */
     private static LocalDate solicitarDataValida(Scanner scanner) {
         LocalDate data = null;
         while (data == null) {
@@ -285,19 +286,121 @@ public class CadastroProduto implements Cadastro, PadraoObserver {
     }
     
 
-    public String getFILE_PRODUTOS() {
-        return FILE_PRODUTOS;
+    /**
+     * Método para adicionar um cliente na fila de espera para alteração no estoque de um produto que ele deseja.
+     */
+    public void adicionarClienteFila() {
+        Scanner scanner = new Scanner(System.in);
+        ObjectMapper mapper = new ObjectMapper();
+        List<Cliente> clientes = new ArrayList<>();
+        List<Produto> produtos = new ArrayList<>();
+
+        File arquivoClientes = new File(GerenciarCliente.getFILE_CLIENTES());
+        File arquivoProdutos = new File(GerenciarProduto.FILE_PRODUTOS);
+        File arquivoListaEspera = new File("C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\listaEspera.json");
+
+        if (arquivoClientes.exists()) {
+            try {
+                clientes = mapper.readValue(arquivoClientes, new TypeReference<List<Cliente>>() {});
+            } catch (IOException e) {
+                System.out.println("Erro ao carregar lista de clientes.");
+                e.printStackTrace();
+                return;
+            }
+        } else {
+            System.out.println("Arquivo de clientes não encontrado.");
+            return;
+        }
+
+        System.out.print("Digite o E-Mail do cliente que deseja adicionar à lista de espera: ");
+        String email = scanner.nextLine();
+        Cliente clienteEncontrado = clientes.stream()
+            .filter(cliente -> cliente.getEmail().equals(email))
+            .findFirst()
+            .orElse(null);
+
+        if (clienteEncontrado == null) {
+            System.out.println("Cliente não encontrado.");
+            return;
+        }
+
+        if (arquivoProdutos.exists()) {
+            try {
+                produtos = mapper.readValue(arquivoProdutos, new TypeReference<List<Produto>>() {});
+            } catch (IOException e) {
+                System.out.println("Erro ao carregar lista de produtos.");
+                e.printStackTrace();
+                return;
+            }
+        } else {
+            System.out.println("Arquivo de produtos não encontrado.");
+            return;
+        }
+
+        System.out.print("Digite o código do produto que o cliente deseja: ");
+        int codigoProduto = scanner.nextInt();
+        Produto produtoEncontrado = produtos.stream()
+            .filter(produto -> produto.getCodigo() == codigoProduto)
+            .findFirst()
+            .orElse(null);
+
+        if (produtoEncontrado == null) {
+            System.out.println("Produto não encontrado.");
+            return;
+        }
+        //para incrementar o filaEspera de cliente!
+        produtoEncontrado.setFilaEspera(produtoEncontrado.getFilaEspera() + 1);
+
+        try {
+            mapper.writeValue(arquivoProdutos, produtos);
+        } catch (IOException e) {
+            System.out.println("Erro ao atualizar a fila de espera no arquivo de produtos.");
+            e.printStackTrace();
+            return;
+        }
+
+        List<ListaEspera> listasEspera = new ArrayList<>();
+        if (arquivoListaEspera.exists()) {
+            try {
+                listasEspera = mapper.readValue(arquivoListaEspera, new TypeReference<List<ListaEspera>>() {});
+            } catch (IOException e) {
+                System.out.println("Erro ao carregar lista de espera.");
+                e.printStackTrace();
+                return;
+            }
+        }
+
+        ListaEspera novaListaEspera = new ListaEspera(clienteEncontrado.getEmail(), produtoEncontrado.getCodigo());
+        listasEspera.add(novaListaEspera);
+
+        try {
+            mapper.writeValue(arquivoListaEspera, listasEspera);
+            System.out.println("Cliente " + clienteEncontrado.getNome() + " adicionado à lista de espera para o produto " + produtoEncontrado.getNome() + " com sucesso.");
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar lista de espera.");
+            e.printStackTrace();
+        }
+    }
+    
+    public void RemoverProdutosEstoque(){
+        System.out.println("\nProdutos removidos do estoque\n");
     }
     
     @Override
     public void update(PadraoObservable o, Object arg){
-        
+        Carrinho carrinho = (Carrinho)o;
+        String venda = String.valueOf(arg);
+        if(venda.equals("Feita")){
+            this.RemoverProdutosEstoque();
+        }
+     }
+    
+    public String getFILE_PRODUTOS() {
+        return FILE_PRODUTOS;
     }
     
     @Override
     public String toString() {
         return "CadastroProduto{" + "FILE_PRODUTOS=" + FILE_PRODUTOS + '}';
     }
-    
-    
 }

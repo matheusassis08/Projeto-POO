@@ -14,7 +14,7 @@ import java.util.Scanner;
  *
  * Classe para o cadastro, alteração e remoção de algum funcionário dentro do sistema.
  */
-public class CadastroFuncionario implements Cadastro {
+public class GerenciarFuncionario implements Cadastro, PadraoObserver {
     private final String FILE_RECEPCIONISTAS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\recepcionistas.json";
     private final String FILE_INSTRUTORES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\instrutores.json";
     private final String FILE_VENDEDORES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\vendedores.json";
@@ -373,4 +373,24 @@ public class CadastroFuncionario implements Cadastro {
             System.out.println("Operação cancelada.");
         }
     }
+    
+    private void alterarComissaoVenda(){
+        System.out.println("\nA comissão de venda do funcionário foi atualizada.\n");
+    }
+    
+    @Override
+    public void update(PadraoObservable o, Object arg){
+        Carrinho carrinho = (Carrinho)o;
+        String venda = String.valueOf(arg);
+        if(venda.equals("Feita")){
+            this.alterarComissaoVenda();
+        }
+     }
+    
+    @Override
+    public String toString() {
+        return "GerenciarFuncionario{" + '}';
+    }
+    
+    
 }

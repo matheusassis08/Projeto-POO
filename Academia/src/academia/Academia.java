@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package academia;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -67,24 +63,26 @@ public class Academia {
                                         2. Alterar Produto
                                         3. Apagar Produto
                                         4. Verificar Estoque
-                                        5. Voltar ao menu principal""");
+                                        5. Adicionar Cliente a Fila de Espera de Produto
+                                        6. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     scanner.nextLine();
                     switch (n) {
                         case 1 -> {
-                            CadastroProduto cadastroProduto = new CadastroProduto();
-                            cadastroProduto.realizarCadastro();
+                            /*GerenciarProduto cadastroProduto = new GerenciarProduto();
+                            cadastroProduto.realizarCadastro();*/
+                            
                         }
                         case 2 -> {
-                            CadastroProduto cadastroProduto = new CadastroProduto();
+                            GerenciarProduto cadastroProduto = new GerenciarProduto();
                             cadastroProduto.alterarCadastro();
                         }
                         case 3 -> {
-                            CadastroProduto cadastroProduto = new CadastroProduto();
+                            GerenciarProduto cadastroProduto = new GerenciarProduto();
                             cadastroProduto.apagarCadastro();
                         }
                         case 4 -> {
-                            CadastroProduto cadastroProduto = new CadastroProduto();
+                            GerenciarProduto cadastroProduto = new GerenciarProduto();
                             System.out.println("Informe o codigo do produto que deseja saber a quantidade em estoque: ");
                             int j;
                             do{
@@ -96,6 +94,10 @@ public class Academia {
                             } while(j!=0);
                         }
                         case 5 -> {
+                            GerenciarProduto cadastroProduto = new GerenciarProduto();
+                            cadastroProduto.adicionarClienteFila();
+                        }
+                        case 6 -> {
                             
                         }
                         default -> System.out.println("Opção inválida.");
@@ -141,6 +143,15 @@ public class Academia {
                         case 6 -> {
                             GerenciarPagamentos gerenciarPagamento = new GerenciarPagamentos();
                             gerenciarPagamento.solicitarPagamento(carrinho.somarPedido(carrinhos));
+                            GerenciarProduto gerenciarProduto = new GerenciarProduto();
+                            GerenciarRelatorios gerenciarRelatorios = new GerenciarRelatorios();
+                            GerenciarFuncionario gerenciarFuncionario = new GerenciarFuncionario();
+                            
+                            carrinho.adicionarObserver(gerenciarProduto);
+                            carrinho.adicionarObserver(gerenciarRelatorios);
+                            carrinho.adicionarObserver(gerenciarFuncionario);
+                            
+                            carrinho.finalizarPedido();
                             
                         }
                         default -> System.out.println("Opção inválida.");
@@ -230,15 +241,15 @@ public class Academia {
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
-                            CadastroFuncionario cadastroFuncionario = new CadastroFuncionario();
+                            GerenciarFuncionario cadastroFuncionario = new GerenciarFuncionario();
                             cadastroFuncionario.realizarCadastro();
                         }
                         case 2 -> {
-                            CadastroFuncionario cadastroFuncionario = new CadastroFuncionario();
+                            GerenciarFuncionario cadastroFuncionario = new GerenciarFuncionario();
                             cadastroFuncionario.alterarCadastro();
                         }
                         case 3 -> {
-                            CadastroFuncionario cadastroFuncionario = new CadastroFuncionario();
+                            GerenciarFuncionario cadastroFuncionario = new GerenciarFuncionario();
                             cadastroFuncionario.apagarCadastro();
                         }
                         case 4 -> {
@@ -256,6 +267,9 @@ public class Academia {
         }
 
         scanner.close();
+    }
+
+    public Academia() {
     }
 
     public static DateTimeFormatter getDATE_FORMATTER() {

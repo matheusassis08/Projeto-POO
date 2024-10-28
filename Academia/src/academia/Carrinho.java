@@ -8,7 +8,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Observable;
 import java.util.Scanner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
@@ -21,7 +20,7 @@ import java.util.List;
  * Classe para armazenar os produtos para realizar as vendas.
  * @author Leona
  */
-public class Carrinho extends Observable{
+public class Carrinho extends PadraoObservable{
     private String nomeItem;
     private int codigoItem;
     private double valorItem;
@@ -33,7 +32,7 @@ public class Carrinho extends Observable{
     
     private Scanner scanner = new Scanner(System.in);
     private ObjectMapper mapper = new ObjectMapper();
-    private CadastroProduto cadastroProduto = new CadastroProduto();
+    private GerenciarProduto cadastroProduto = new GerenciarProduto();
     private String FILE_PRODUTOS = cadastroProduto.getFILE_PRODUTOS();
     private File arquivo = new File(FILE_PRODUTOS);
     private List<Produto> produtos;
@@ -85,13 +84,13 @@ public class Carrinho extends Observable{
     String venda = "";
     public void finalizarPedido(){
         venda = "Feita";
-        System.out.println("Foi concluida a venda: ///" + venda);
+        System.out.println("\nFoi concluida a venda.");
         this.mudaEstado();
     }
     
     public void mudaEstado(){
-        setChanged();
-        notifyObservers(venda);
+        foiAlterado();
+        notificarObservers(venda);
     }
     
     /** Inicia o carrinho para realizar vend

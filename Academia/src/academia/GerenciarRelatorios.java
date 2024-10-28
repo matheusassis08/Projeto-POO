@@ -8,15 +8,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Scanner;
 
 /**
  *
  * Classe para gerenciar todos os relátorios, balanços, e notas do sistema.
  */
-    public class GerenciarRelatorios implements Observer{
+    public class GerenciarRelatorios implements PadraoObserver{
     private String FILE_RELATORIOSDIARIO = "C:\\POO\\Projeto-POO\\Academia\\src\\relatorios\\relatoriosDiarios.json";
     private Scanner scanner = new Scanner(System.in);
     private File arquivo = new File(FILE_RELATORIOSDIARIO);
@@ -42,13 +40,23 @@ import java.util.Scanner;
         
     }
     
+    public void GerarRelatorioVenda(){
+        System.out.println("Relatório de venda gerado.");
+    }
     
+    public void GerarRelatorioCancelamentoVenda(){
+        System.out.println("Relatório de venda cancelada gerado.\n");
+    }
     
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(PadraoObservable o, Object arg){
+        Carrinho carrinho = (Carrinho)o;
         String venda = String.valueOf(arg);
         if(venda.equals("Feita")){
-            this.gerarRelatorioVenda();
+            this.GerarRelatorioVenda();
         }
-    }
+        if(venda.equals("Cancelada")){
+            this.GerarRelatorioCancelamentoVenda();
+        }
+     }
 }

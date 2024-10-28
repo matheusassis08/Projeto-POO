@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package academia;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,7 +11,7 @@ import java.util.Scanner;
  *
  * Classe para o cadastro, alteração e remoção de algum cliente dentro do sistema.
  */
-public class GerenciarCliente extends PadraoObservable implements Cadastro {
+public class GerenciarCliente implements Cadastro{
     private static final String FILE_CLIENTES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\clientes.json";
         /** 
      Cadastra um novo cliente no sistema
@@ -168,9 +164,9 @@ public class GerenciarCliente extends PadraoObservable implements Cadastro {
         Scanner scanner = new Scanner(System.in);
         ObjectMapper mapper = new ObjectMapper();
         List<Cliente> clientes = new ArrayList<>();
-
+        
         File arquivo = new File(FILE_CLIENTES);
-
+        
         if (arquivo.exists()) {
             try {
                 clientes = mapper.readValue(arquivo, new TypeReference<List<Cliente>>() {});
@@ -179,10 +175,10 @@ public class GerenciarCliente extends PadraoObservable implements Cadastro {
                 return;
             }
         }
-
+        
         System.out.print("Digite o CPF do cliente que deseja remover: ");
         String cpf = scanner.nextLine();
-
+        
         boolean clienteRemovido = false;
         for (int i = 0; i < clientes.size(); i++) {
             if (clientes.get(i).getCpf().equals(cpf)) {
@@ -191,7 +187,7 @@ public class GerenciarCliente extends PadraoObservable implements Cadastro {
                 break;
             }
         }
-
+        
         if (clienteRemovido) {
             try {
                 mapper.writeValue(arquivo, clientes);
@@ -203,15 +199,11 @@ public class GerenciarCliente extends PadraoObservable implements Cadastro {
             System.out.println("Cliente com o CPF " + cpf + " não encontrado.");
         }
     }
-
-    
     
     public GerenciarCliente() {
     }
-
+    
     static public String getFILE_CLIENTES() {
         return FILE_CLIENTES;
     }
-    
-    
 }

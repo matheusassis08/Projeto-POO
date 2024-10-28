@@ -26,6 +26,10 @@ public class RelatorioVenda extends Relatorios{
         this.codigoProdutosPedido = codigoProdutosPedido;
     }
     
+    public void GerarRelatorio(){
+        System.out.println("O relatorio foi gerado.");
+    }
+    
     public RelatorioVenda() {
         super("", "", "", 0);
     }

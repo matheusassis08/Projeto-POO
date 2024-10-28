@@ -4,7 +4,7 @@ package academia;
  *
  * Classe para realizar ou gerenciar pagamentos.
  */
-public class GerenciarPagamentos {
+public class GerenciarPagamentos{
     
     public void autenticarPagamento(Double valor){
         System.out.println("Pagamento no valor de " + valor + " confirmado.");
@@ -21,7 +21,9 @@ public class GerenciarPagamentos {
 
     public GerenciarPagamentos() {
     }
-
+    
+    
+    
     @Override
     public String toString() {
         return "GerenciarPagamentos{" + '}';
