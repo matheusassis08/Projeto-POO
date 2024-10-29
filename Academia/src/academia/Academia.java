@@ -152,19 +152,9 @@ public class Academia {
                             carrinho.adicionarObserver(gerenciarFuncionario);
                             
                             carrinho.finalizarPedido();
-                            
                         }
                         default -> System.out.println("Opção inválida.");
                     }} while(finalizar==true);
-                    /*//Observador
-                    Relatorios relatorios = new Relatorios();
-                    //Observado
-                    Carrinho carrinho = new Carrinho();
-                    
-                    //adicionando o observador ao observado
-                    carrinho.addObserver(relatorios);
-                    
-                    carrinho.finalizarPedido();*/
                 }
                 case 4 -> {
                     System.out.println("""

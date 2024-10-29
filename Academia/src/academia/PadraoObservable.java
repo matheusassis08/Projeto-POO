@@ -1,30 +1,28 @@
 package academia;
-
 import java.util.Vector;
 
 /**
  *
  * Classe para utilizar o Observable do padrão de projeto.
  */
-@SuppressWarnings("doclint:reference")
 public class PadraoObservable {
     private boolean mudado = false;
-    private Vector<PadraoObserver> obs;
+    private Vector<PadraoObserver> observers;
     
     public PadraoObservable() {
-        obs = new Vector<>();
+        observers = new Vector<>();
     }
     //addObserver
     public synchronized void adicionarObserver(PadraoObserver o) {
         if (o == null)
             throw new NullPointerException();
-        if (!obs.contains(o)) {
-            obs.addElement(o);
+        if (!observers.contains(o)) {
+            observers.addElement(o);
         }
     }
     //deleteObserver
     public synchronized void removerObserver(PadraoObserver o) {
-        obs.removeElement(o);
+        observers.removeElement(o);
     }
     //notifyObservers
     public void notificarObservers() {
@@ -37,7 +35,7 @@ public class PadraoObservable {
         synchronized (this) {
                 if (!mudado)
                 return;
-            arrLocal = obs.toArray();
+            arrLocal = observers.toArray();
             limparAlteracao();
         }
 
@@ -46,7 +44,7 @@ public class PadraoObservable {
     }
     //deleteObservers
     public synchronized void apagarOberservers() {
-        obs.removeAllElements();
+        observers.removeAllElements();
     }
     //setChanged
     protected synchronized void foiAlterado() {
@@ -62,6 +60,6 @@ public class PadraoObservable {
     }
     //countObservers
     public synchronized int contadorObservers() {
-        return obs.size();
+        return observers.size();
     }
 }
