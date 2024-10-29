@@ -393,6 +393,4 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
     public String toString() {
         return "GerenciarFuncionario{" + '}';
     }
-    
-    
 }

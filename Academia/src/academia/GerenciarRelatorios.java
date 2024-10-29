@@ -16,7 +16,7 @@ import java.util.Scanner;
  */
     public class GerenciarRelatorios implements PadraoObserver{
         
-    private String FILE_RELATORIOSDIARIO = "C:\\POO\\Projeto-POO\\Academia\\src\\relatorios\\relatoriosDiarios.json";
+    private final String FILE_RELATORIOSDIARIO = "C:\\POO\\Projeto-POO\\Academia\\src\\relatorios\\relatoriosDiarios.json";
     //só essa^
     
     
@@ -24,11 +24,6 @@ import java.util.Scanner;
     private File arquivo = new File(FILE_RELATORIOSDIARIO);
     private ObjectMapper mapper = new ObjectMapper();
     
-    
-    
-    void gerarRelatorioVenda(){
-        System.out.println("\nRelatório feito..");
-    }
     /*
     public void gerarRelatorioPedido(){
         if (arquivo.exists()) {
@@ -44,7 +39,7 @@ import java.util.Scanner;
         
     }
     
-    public void GerarRelatorioVenda(){
+    public void gerarRelotorioVenda(){
         System.out.println("Relatório de venda gerado.");
     }
     
@@ -57,7 +52,7 @@ import java.util.Scanner;
         Carrinho carrinho = (Carrinho)o;
         String venda = String.valueOf(arg);
         if(venda.equals("Feita")){
-            this.GerarRelatorioVenda();
+            this.gerarRelotorioVenda();
         }
         if(venda.equals("Cancelada")){
             this.GerarRelatorioCancelamentoVenda();
