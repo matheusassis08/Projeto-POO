@@ -15,7 +15,11 @@ import java.util.Scanner;
  * Classe para gerenciar todos os relátorios, balanços, e notas do sistema.
  */
     public class GerenciarRelatorios implements PadraoObserver{
+        
     private String FILE_RELATORIOSDIARIO = "C:\\POO\\Projeto-POO\\Academia\\src\\relatorios\\relatoriosDiarios.json";
+    //só essa^
+    
+    
     private Scanner scanner = new Scanner(System.in);
     private File arquivo = new File(FILE_RELATORIOSDIARIO);
     private ObjectMapper mapper = new ObjectMapper();

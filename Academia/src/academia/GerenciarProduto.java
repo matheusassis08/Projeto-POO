@@ -15,8 +15,12 @@ import java.util.Scanner;
  * Classe para o cadastro, alteração e remoção de algum produto dentro do sistema.
  */
 public class GerenciarProduto implements Cadastro, PadraoObserver{
+    
     private static final String FILE_PRODUTOS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\produtos.json";
     private String cadastroNovo;
+    //as duas
+    
+    
     
     /** 
      Cadastra um novo produto no sistema

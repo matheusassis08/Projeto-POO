@@ -27,16 +27,17 @@ public class Carrinho extends PadraoObservable{
     private double valorTotalPedido;
     private String nomeVendedor;
     private int numeroPedido;
-    
     private final String FILE_CARRINHO = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\carrinho.json";
+    //as de cimas apenas
     
+    
+    private List<Produto> produtos;
+    private List<Carrinho> produtosCarrinho = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
     private ObjectMapper mapper = new ObjectMapper();
     private GerenciarProduto cadastroProduto = new GerenciarProduto();
     private String FILE_PRODUTOS = cadastroProduto.getFILE_PRODUTOS();
     private File arquivo = new File(FILE_PRODUTOS);
-    private List<Produto> produtos;
-    private List<Carrinho> produtosCarrinho = new ArrayList<>();
     
     public List<Carrinho> adicionarProduto(List<Carrinho> Carrinho){
         
