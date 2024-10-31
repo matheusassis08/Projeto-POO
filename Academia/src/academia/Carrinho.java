@@ -15,6 +15,7 @@ import java.time.format.DateTimeParseException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Classe para armazenar os produtos para realizar as vendas.
@@ -62,9 +63,7 @@ public class Carrinho extends PadraoObservable{
                 produtoAdicionado = produto;
             }
         }
-        System.out.println("Digite o numero do pedido.");
-        int numeroPedidoAtual = scanner.nextInt();
-        scanner.nextLine();
+        int numeroPedidoAtual = 0;
         produtosCarrinho.add(new Carrinho(produtoAdicionado.getNome(),produtoAdicionado.getCodigo(),produtoAdicionado.getValor(),0,"nomevendedor(vazio)",numeroPedidoAtual));
         System.out.println("Deseja continuar(s/n)?");
         continuar = scanner.nextLine().trim();
@@ -79,19 +78,44 @@ public class Carrinho extends PadraoObservable{
         }
         return valorTotalSomado;
     }
+    
+    /**
+     * Metodo para gerar um novo número para cada pedido, garantindo que não haverá repetição com os existentes.
+     * @return int numeroPedido
+     */
+    public int gerarNumeroPedido(){
+        Random random = new Random();
+        GerenciarRelatorios gerenciarRelatorios = new GerenciarRelatorios();
+        List<RelatorioVenda> relatoriosVenda = new ArrayList<>();
+        relatoriosVenda = gerenciarRelatorios.carregarJSONRelatorioVenda(relatoriosVenda);
+        
+        int numeroPedido;
+        List<Integer> numerosPedidos = new ArrayList<>();
+        
+        for (RelatorioVenda relatorio : relatoriosVenda) {
+            numerosPedidos.add(relatorio.getNumeroPedido());
+        }
+        
+        do {
+            numeroPedido = random.nextInt(100000);
+        } while (numerosPedidos.contains(numeroPedido));
+        
+        return numeroPedido;
+    }
+    
     void cancelarPedido(){
         
     }
-    String venda = "";
+    String estado = "";
     public void finalizarPedido(){
-        venda = "Feita";
+        estado = "Feita";
         System.out.println("\nFoi concluida a venda.");
         this.mudaEstado();
     }
     
     public void mudaEstado(){
         foiAlterado();
-        notificarObservers(venda);
+        notificarObservers(estado);
     }
     
     /** Inicia o carrinho para realizar vend

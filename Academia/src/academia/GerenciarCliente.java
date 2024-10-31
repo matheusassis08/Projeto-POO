@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 /**
@@ -13,23 +14,18 @@ import java.util.Scanner;
  */
 public class GerenciarCliente implements Cadastro{
     private static final String FILE_CLIENTES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\clientes.json";
+    private final File arquivoCliente = new File(FILE_CLIENTES);
+    Scanner scanner = new Scanner(System.in);
+    ObjectMapper mapper = new ObjectMapper();
+    
         /** 
      Cadastra um novo cliente no sistema
      */
     @Override
     public void realizarCadastro() {
-        Scanner scanner = new Scanner(System.in);
         List<Cliente> clientes = new ArrayList<>();
-        File arquivo = new File(FILE_CLIENTES);
-        ObjectMapper mapper = new ObjectMapper();
 
-        if (arquivo.exists()) {
-            try {
-                clientes = mapper.readValue(arquivo, new TypeReference<List<Cliente>>() {});
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        clientes = carregarJSONClientes(clientes);
 
         String continuar;
         do {
@@ -56,35 +52,16 @@ public class GerenciarCliente implements Cadastro{
 
         } while (continuar.equalsIgnoreCase("s"));
 
-        try {
-            mapper.writeValue(arquivo, clientes);
-            System.out.println("Clientes salvos no arquivo: " + arquivo.getAbsolutePath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        salvarJSONRelatorioVenda(clientes);
     }
     /** 
-     Altera os dados de algum cliente
-     
+     * Altera os dados de algum cliente
      */
     @Override
     public void alterarCadastro(){
-        Scanner scanner = new Scanner(System.in);
-        ObjectMapper mapper = new ObjectMapper();
-        File arquivo = new File(FILE_CLIENTES);
-        List<Cliente> clientes;
+        List<Cliente> clientes = new ArrayList<>();
 
-        if (!arquivo.exists()) {
-            System.out.println("Nenhum cliente cadastrado.");
-            return;
-        }
-
-        try {
-            clientes = mapper.readValue(arquivo, new TypeReference<List<Cliente>>() {});
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
+        clientes = carregarJSONClientes(clientes);
 
         System.out.println("Selecione o cliente que deseja alterar:");
         for (int i = 0; i < clientes.size(); i++) {
@@ -147,13 +124,7 @@ public class GerenciarCliente implements Cadastro{
                 default -> System.out.println("Opção inválida, tente novamente.");
             }
         }
-
-        try {
-            mapper.writeValue(arquivo, clientes);
-            System.out.println("Cadastro do cliente alterado com sucesso.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        salvarJSONRelatorioVenda(clientes);
     }
     /** 
      Apagar cadastro de um cliente por meio do seu cpf cadastrado
@@ -161,20 +132,8 @@ public class GerenciarCliente implements Cadastro{
      */
     @Override
     public void apagarCadastro(){
-        Scanner scanner = new Scanner(System.in);
-        ObjectMapper mapper = new ObjectMapper();
         List<Cliente> clientes = new ArrayList<>();
-        
-        File arquivo = new File(FILE_CLIENTES);
-        
-        if (arquivo.exists()) {
-            try {
-                clientes = mapper.readValue(arquivo, new TypeReference<List<Cliente>>() {});
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
-        }
+        clientes = carregarJSONClientes(clientes);
         
         System.out.print("Digite o CPF do cliente que deseja remover: ");
         String cpf = scanner.nextLine();
@@ -189,15 +148,46 @@ public class GerenciarCliente implements Cadastro{
         }
         
         if (clienteRemovido) {
-            try {
-                mapper.writeValue(arquivo, clientes);
-                System.out.println("Cliente removido com sucesso.");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            salvarJSONRelatorioVenda(clientes);
         } else {
             System.out.println("Cliente com o CPF " + cpf + " não encontrado.");
         }
+    }
+    /**
+     * Método para carregar todos os clientes salvos em JSON.
+     * 
+     * @param clientes
+     * @return clientes;
+     */
+    public List<Cliente> carregarJSONClientes(List<Cliente> clientes){
+        if (arquivoCliente.exists()) {
+            try {
+                clientes = mapper.readValue(arquivoCliente, new TypeReference<List<Cliente>>() {});
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return clientes;
+    }
+    
+    /**
+     * 
+     * Método para salvar um novo JSON com todos os relatorios de venda.
+     * @param clientes
+     */
+    public void salvarJSONRelatorioVenda(List<Cliente> clientes){
+        try {
+            mapper.writeValue(arquivoCliente, clientes);
+            System.out.println("Produtos salvos no arquivo: " + arquivoCliente.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public Optional<Cliente> buscarClientePorEmail(List<Cliente> clientes, String email) {
+        return clientes.stream()
+                .filter(cliente -> cliente.getEmail().equalsIgnoreCase(email))
+                .findFirst();
     }
     
     public GerenciarCliente() {

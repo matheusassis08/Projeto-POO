@@ -19,6 +19,7 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
     private final String FILE_INSTRUTORES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\instrutores.json";
     private final String FILE_VENDEDORES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\vendedores.json";
     private final String FILE_GERENTES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\gerentes.json";
+    String estado;
     //todos 4
     
     /** 
@@ -383,8 +384,8 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
     @Override
     public void update(PadraoObservable o, Object arg){
         Carrinho carrinho = (Carrinho)o;
-        String venda = String.valueOf(arg);
-        if(venda.equals("Feita")){
+        estado = String.valueOf(arg);
+        if(estado.equals("Feita")){
             this.alterarComissaoVenda();
         }
      }

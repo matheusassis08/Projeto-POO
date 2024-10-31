@@ -1,8 +1,11 @@
 package academia;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Academia {
     
@@ -69,8 +72,8 @@ public class Academia {
                     scanner.nextLine();
                     switch (n) {
                         case 1 -> {
-                            /*GerenciarProduto cadastroProduto = new GerenciarProduto();
-                            cadastroProduto.realizarCadastro();*/
+                            GerenciarProduto cadastroProduto = new GerenciarProduto();
+                            cadastroProduto.realizarCadastro();
                             
                         }
                         case 2 -> {
@@ -106,7 +109,25 @@ public class Academia {
                 case 3 -> {
                     boolean finalizar = true;
                     Carrinho carrinho = new Carrinho();
+                    List<String> nomeProdutos = new ArrayList<>();
+                    List<Double> valorUnitarioItemsPedido = new ArrayList<>();
+                    List<Integer> codigoProdutosPedido = new ArrayList<>();
                     List<Carrinho> carrinhos = new ArrayList<>();
+                    GerenciarRelatorios gerenciarRelatorios = new GerenciarRelatorios();
+                    GerenciarCliente gerenciarCliente = new GerenciarCliente();
+                    
+                    
+                    System.out.println("Qual o email do cliente que está comprando.");
+                    scanner.nextLine();
+                    String emailCliente = scanner.nextLine();
+                    List<Cliente> clientes = new ArrayList<>();
+                    clientes = gerenciarCliente.carregarJSONClientes(clientes);
+                    Optional<Cliente> cliente = gerenciarCliente.buscarClientePorEmail(clientes, emailCliente);
+                    if (cliente.isPresent()) {
+                        System.out.println("Cliente encontrado: " + cliente.get().getNome());
+                    } else {
+                        System.out.println("Cliente não encontrado.");
+                    }
                     
                     do{
                     System.out.println("""
@@ -121,12 +142,19 @@ public class Academia {
                     switch (n) {
                         case 1 -> {
                             carrinhos = carrinho.adicionarProduto(carrinhos);
+                            for (Carrinho item : carrinhos) {
+                                if (!nomeProdutos.contains(item.getNomeItem()) || !codigoProdutosPedido.contains(item.getCodigoItem())) {
+                                    nomeProdutos.add(item.getNomeItem());
+                                    valorUnitarioItemsPedido.add(item.getValorItem());
+                                    codigoProdutosPedido.add(item.getCodigoItem());
+                                }
+                            }
                         }
                         case 2 -> {
                             System.out.println("Qual o código do produto deseja remover do carrinho? ");
                             int codigoRemover = scanner.nextInt();
                             scanner.nextLine();
-
+                            
                             carrinhos.removeIf(carrinhoItem -> carrinhoItem.getCodigoItem() == codigoRemover);
                             System.out.println("Produto removido do carrinho.");
                         }
@@ -143,15 +171,29 @@ public class Academia {
                         case 6 -> {
                             GerenciarPagamentos gerenciarPagamento = new GerenciarPagamentos();
                             gerenciarPagamento.solicitarPagamento(carrinho.somarPedido(carrinhos));
-                            GerenciarProduto gerenciarProduto = new GerenciarProduto();
-                            GerenciarRelatorios gerenciarRelatorios = new GerenciarRelatorios();
-                            GerenciarFuncionario gerenciarFuncionario = new GerenciarFuncionario();
                             
+                            
+                            GerenciarProduto gerenciarProduto = new GerenciarProduto();
+                            GerenciarFuncionario gerenciarFuncionario = new GerenciarFuncionario();
+                            //padrao de projeto observer
                             carrinho.adicionarObserver(gerenciarProduto);
-                            carrinho.adicionarObserver(gerenciarRelatorios);
                             carrinho.adicionarObserver(gerenciarFuncionario);
                             
+                            LocalTime horaAtual = LocalTime.now();
+                            //hora formatada para hora:minuto:segundo
+                            String horarioDeRealizacao = horaAtual.format(TIME_FORMATTER);
+                            
+                            LocalDate dataAtual = LocalDate.now();
+                            //Formata a data para (dia/mes/ano)
+                            String dataDeRealizacao = dataAtual.format(DATE_FORMATTER);
+                            
+                            int numeroPedido = carrinho.gerarNumeroPedido();
+                            int idRelatorio = gerenciarRelatorios.gerarIdRelatorio();
+                            gerenciarRelatorios.gerarRelotorioVenda("Relatório de Venda", dataDeRealizacao, horarioDeRealizacao, idRelatorio, numeroPedido, carrinho.somarPedido(carrinhos), cliente.get().getNome(), cliente.get().getEmail(), nomeProdutos, valorUnitarioItemsPedido, codigoProdutosPedido);
+                            System.out.println("\nO numero de observadores é de: " + carrinho.contadorObservers() + ".\n");
                             carrinho.finalizarPedido();
+                            
+                            finalizar= false;
                         }
                         default -> System.out.println("Opção inválida.");
                     }} while(finalizar==true);
@@ -269,6 +311,4 @@ public class Academia {
     public static DateTimeFormatter getTIME_FORMATTER() {
         return TIME_FORMATTER;
     }
-    
-    
 }

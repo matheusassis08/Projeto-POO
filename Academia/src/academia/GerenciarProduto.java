@@ -18,6 +18,7 @@ public class GerenciarProduto implements Cadastro, PadraoObserver{
     
     private static final String FILE_PRODUTOS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\produtos.json";
     private String cadastroNovo;
+    String estado;
     //as duas
     
     
@@ -31,7 +32,7 @@ public class GerenciarProduto implements Cadastro, PadraoObserver{
         List<Produto> produtos = new ArrayList<>();
         File arquivo = new File(FILE_PRODUTOS);
         ObjectMapper mapper = new ObjectMapper();
-
+        
         if (arquivo.exists()) {
             try {
                 produtos = mapper.readValue(arquivo, new TypeReference<List<Produto>>() {});
@@ -39,7 +40,7 @@ public class GerenciarProduto implements Cadastro, PadraoObserver{
                 e.printStackTrace();
             }
         }
-
+        
         String continuar;
         do {
             System.out.print("Digite o nome do produto: ");
@@ -53,22 +54,40 @@ public class GerenciarProduto implements Cadastro, PadraoObserver{
             double valor = scanner.nextDouble();
             scanner.nextLine();
 
-            System.out.print("Digite o prazo de validade do produto(dd/MM/yyyy): ");
             String prazoValidade = converterDataParaString(solicitarDataValida(scanner));
             
             System.out.print("Digite o codigo do produto: ");
             int codigo = scanner.nextInt();
             scanner.nextLine();
 
-            System.out.print("Digite o tipo de produto(Alimentício, Suplementação, Acessório): ");
-            String tipo = scanner.nextLine();
-
+            System.out.print("""
+                             Digite o tipo de produto
+                                    1. Alimentício
+                                    2. Suplementação, 
+                                    3. Acessório 
+                                    4. Material""");
+            String tipo = "";
+            int n = scanner.nextInt();
+            scanner.nextLine();
+            switch (n) {
+            case(1) -> {
+                tipo = "Alimentício";
+            }
+            case(2) -> {
+                tipo = "Suplementação";
+            }
+            case(3) -> {
+                tipo = "Acessório";
+            }
+            default -> System.out.println("Opção inválida.");
+            }
+            
             Produto produto = new Produto(nome, quantidadeEstoque, valor, codigo, prazoValidade, tipo, 0);
             produtos.add(produto);
-
+            
             System.out.print("Deseja adicionar outro produto? (s/n): ");
             continuar = scanner.nextLine();
-
+            
         } while (continuar.equalsIgnoreCase("s"));
 
         try {
@@ -109,7 +128,7 @@ public class GerenciarProduto implements Cadastro, PadraoObserver{
         
         int indice = scanner.nextInt() - 1;
         scanner.nextLine();
-
+        
         if (indice < 0 || indice >= produtos.size()) {
             System.out.println("Produto não encontrado.");
             return;
@@ -130,7 +149,7 @@ public class GerenciarProduto implements Cadastro, PadraoObserver{
             
             int opcao = scanner.nextInt();
             scanner.nextLine();
-
+            
             switch (opcao) {
                 case 1 -> {
                     System.out.println("Digite o novo nome:");
@@ -393,8 +412,8 @@ public class GerenciarProduto implements Cadastro, PadraoObserver{
     @Override
     public void update(PadraoObservable o, Object arg){
         Carrinho carrinho = (Carrinho)o;
-        String venda = String.valueOf(arg);
-        if(venda.equals("Feita")){
+        estado = String.valueOf(arg);
+        if(estado.equals("Feita")){
             this.RemoverProdutosEstoque();
         }
      }
