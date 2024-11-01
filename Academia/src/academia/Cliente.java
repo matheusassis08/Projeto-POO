@@ -6,8 +6,20 @@ package academia;
  */
 
 public class Cliente extends Pessoa {
+    private int idCliente;
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+    
+    
+    
     public Cliente() {
-        super("", "", "", "", ""); // Chama o construtor da superclasse com valores vazios
+        super("", "", "", "", "");
     }
     /**
      * O construtor de um novo cliente.
@@ -17,14 +29,15 @@ public class Cliente extends Pessoa {
      * @param telefone O telefone do cliente.
      * @param email    O email do cliente.
      */
-    public Cliente(String nome, String cpf, String endereco, String telefone, String email) {
+    public Cliente(String nome, String cpf, String endereco, String telefone, String email, int idCliente) {
         super(nome, cpf, endereco, telefone, email);
+        this.idCliente = idCliente;
     }
 
     
     @Override
     public String toString() {
-        return "Cliente -> " + super.toString();
+        return "Cliente{" + "idCliente=" + idCliente + super.toString();
     }
 }
 

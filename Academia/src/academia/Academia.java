@@ -30,7 +30,8 @@ public class Academia {
                                6. Instrutor
                                7. Funcionários
                                8. Despesas
-                               9. Sair""");
+                               9. Balanços
+                               10. Sair""");
             
             int n = scanner.nextInt();
 
@@ -208,7 +209,7 @@ public class Academia {
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
-                            Agendamentos agendamentos = new Agendamentos();
+                            GerenciarAgendamentos agendamentos = new GerenciarAgendamentos();
                             agendamentos.realizarAgendamento();
                         }
                         case 2 -> {
@@ -378,6 +379,39 @@ public class Academia {
                     }
                 }
                 case 9 -> {
+                    //Balanços
+                    System.out.println("""
+                                       1. Balanço Mensal
+                                       2. Balanço Mensal com estatísticas
+                                       3. Voltar ao menu principal""");
+                    n = scanner.nextInt();
+                    switch (n) {
+                        case 1 -> {
+                            double receitasTotal;
+                            double despesasTotal;
+                            
+                            System.out.println("Qual o ano desejado para o balanço?");
+                            int ano = scanner.nextInt();
+                            System.out.println("Qual o mês desejado para o balanço?");
+                            int mes = scanner.nextInt();
+                            
+                            GerenciarRelatorios gerenciarRelatorios = new GerenciarRelatorios();
+                            GerenciarDespesas gerenciarDespesas = new GerenciarDespesas();
+                            
+                        }
+                        case 2 -> {
+                            
+                        }
+                        case 3 -> {
+                            
+                        }
+                        case 4 -> {
+                            
+                        }
+                        default -> System.out.println("Opção inválida.");
+                    }
+                }
+                case 10 -> {
                     System.out.println("Encerrando o sistema...");
                     continuar = false;
                 }
@@ -386,9 +420,6 @@ public class Academia {
         }
 
         scanner.close();
-    }
-
-    public Academia() {
     }
 
     public static DateTimeFormatter getDATE_FORMATTER() {

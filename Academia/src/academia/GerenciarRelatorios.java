@@ -117,6 +117,10 @@ import java.util.stream.Collectors;
                 .collect(Collectors.toList());
     }
     
+    public void GerarRelatorioPagamentoAgendamento(){
+        System.out.println("Relatório de venda cancelada gerado.\n");
+    }
+    
     public void GerarRelatorioCancelamentoVenda(){
         System.out.println("Relatório de venda cancelada gerado.\n");
     }

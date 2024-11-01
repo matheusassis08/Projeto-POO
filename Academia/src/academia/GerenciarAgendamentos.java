@@ -14,7 +14,7 @@ import java.util.Scanner;
 /**
  * Classe para administrar os agendamentos das aulas
  */
-public class Agendamentos {
+public class GerenciarAgendamentos {
     private static final String FILE_AGENDAMENTOS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\agendamentos.json";
 
     private String data;
@@ -23,8 +23,8 @@ public class Agendamentos {
     private String emailCliente;
     private String nomeInstrutor;
     
-    private Scanner scanner = new Scanner(System.in);
-    private ObjectMapper mapper = new ObjectMapper();
+    private final Scanner scanner = new Scanner(System.in);
+    private final ObjectMapper mapper = new ObjectMapper();
 
     /** 
      * Para agendar um horário para um aluno ter aula
@@ -44,9 +44,9 @@ public class Agendamentos {
         
         LocalTime horarioIn = solicitarHorario();
         
-        List<Agendamentos> agendamentos = carregarAgendamentos();
+        List<GerenciarAgendamentos> agendamentos = carregarAgendamentos();
 
-        Agendamentos agendamento = new Agendamentos(
+        GerenciarAgendamentos agendamento = new GerenciarAgendamentos(
                 dataIn.format(Academia.getDATE_FORMATTER()),
                 horarioIn.format(Academia.getTIME_FORMATTER()),
                 cliente.getNome(),
@@ -131,11 +131,11 @@ public class Agendamentos {
      * Carrega o arquivo com todos os agendamentos.
      * @return ArrayList
      */
-    private List<Agendamentos> carregarAgendamentos() {
+    private List<GerenciarAgendamentos> carregarAgendamentos() {
         File arquivo = new File(FILE_AGENDAMENTOS);
         try {
             if (arquivo.exists() && arquivo.length() > 0) {
-                return mapper.readValue(arquivo, new TypeReference<List<Agendamentos>>() {});
+                return mapper.readValue(arquivo, new TypeReference<List<GerenciarAgendamentos>>() {});
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -147,7 +147,7 @@ public class Agendamentos {
      * Salva a lista de agendamentos realizados.
      * @param agendamentos
      */
-    private void salvarAgendamentos(List<Agendamentos> agendamentos) {
+    private void salvarAgendamentos(List<GerenciarAgendamentos> agendamentos) {
         File arquivo = new File(FILE_AGENDAMENTOS);
         try {
             mapper.writeValue(arquivo, agendamentos);
@@ -159,7 +159,7 @@ public class Agendamentos {
     /**
      * Construtor padrão da classe Agendamentos.
      */
-    public Agendamentos() {
+    public GerenciarAgendamentos() {
         
     }
     /**
@@ -170,7 +170,7 @@ public class Agendamentos {
      * @param emailCliente
      * @param nomeInstrutor
      */
-    public Agendamentos(String data, String horario, String nomeCliente, String emailCliente, String nomeInstrutor) {
+    public GerenciarAgendamentos(String data, String horario, String nomeCliente, String emailCliente, String nomeInstrutor) {
         this.data = data;
         this.horario = horario;
         this.nomeCliente = nomeCliente;

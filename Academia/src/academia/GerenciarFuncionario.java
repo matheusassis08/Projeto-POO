@@ -8,8 +8,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 /**
  *
  * Classe para o cadastro, alteração e remoção de algum funcionário dentro do sistema.
@@ -20,6 +23,11 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
     private final String FILE_VENDEDORES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\vendedores.json";
     private final String FILE_GERENTES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\gerentes.json";
     String estado;
+    Scanner scanner = new Scanner(System.in);
+    ObjectMapper mapper = new ObjectMapper();
+    private static final Set<Integer> idsGerados = new HashSet<>();
+    private static final Random random = new Random();
+    private static final int LIMITE_SUPERIOR_ID = 100000;
     //todos 4
     
     /** 
@@ -27,7 +35,6 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
     */
     @Override
     public void realizarCadastro() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Qual o tipo de funcionário deseja cadastrar?\n1. Recepcionista\n2. Instrutor\n3. Vendedor\n4. Gerente\n5. Voltar ao inicio");
         int num = scanner.nextInt();
         scanner.nextLine();
@@ -61,7 +68,6 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
     }
 
     private <T> List<T> carregarFuncionarios(String filePath, Class<T> funcionarioClass) {
-        ObjectMapper mapper = new ObjectMapper();
         File arquivo = new File(filePath);
 
         if (!arquivo.exists()) {
@@ -79,7 +85,6 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
     }
 
     private <T> void salvarFuncionarios(List<T> funcionarios, String filePath) {
-        ObjectMapper mapper = new ObjectMapper();
         File arquivo = new File(filePath);
 
         try {
@@ -123,7 +128,7 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
             System.out.print("Digite o salário: ");
             double salario = scanner.nextDouble();
             scanner.nextLine();
-            return (T) new Instrutor(nome, cpf, endereco, telefone, email, cref, salario);
+            return (T) new Instrutor(nome, cpf, endereco, telefone, email, cref, salario, gerarIdFuncionario());
 
         } else if (funcionarioClass.equals(Vendedor.class)) {
             System.out.print("Digite a sala: ");
@@ -152,14 +157,12 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
      */
     @Override
     public void alterarCadastro(){
-        Scanner scanner = new Scanner(System.in);
     System.out.println("Qual o tipo de funcionário deseja alterar?\n1. Recepcionista\n2. Instrutor\n3. Vendedor\n4. Gerente\n5. Voltar ao inicio");
     int num = scanner.nextInt();
     scanner.nextLine();
     
     List<? extends Pessoa> funcionarios = new ArrayList<>();
     File arquivo = null;
-    ObjectMapper mapper = new ObjectMapper();
 
     switch (num) {
         case 1 -> {
@@ -283,14 +286,12 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
      */
     @Override
     public void apagarCadastro(){
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Qual o tipo de funcionário deseja apagar?\n1. Recepcionista\n2. Instrutor\n3. Vendedor\n4. Gerente\n5. Voltar ao inicio");
         int num = scanner.nextInt();
         scanner.nextLine(); // Consumir nova linha
 
         List<? extends Pessoa> funcionarios = new ArrayList<>();
         File arquivo = null;
-        ObjectMapper mapper = new ObjectMapper();
 
         switch (num) {
             case 1 -> {
@@ -377,6 +378,17 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
         }
     }
     
+    
+    private static int gerarIdFuncionario() {
+        int novoId;
+        do {
+            novoId = random.nextInt(LIMITE_SUPERIOR_ID);
+        } while (idsGerados.contains(novoId)); // Gera um novo ID enquanto houver repetição
+        
+        idsGerados.add(novoId); // Adiciona o novo ID ao conjunto para evitar duplicatas
+        return novoId;
+    }
+    
     private void alterarComissaoVenda(){
         System.out.println("\nA comissão de venda do funcionário foi atualizada.\n");
     }
@@ -389,9 +401,4 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
             this.alterarComissaoVenda();
         }
      }
-    
-    @Override
-    public String toString() {
-        return "GerenciarFuncionario{" + '}';
-    }
 }

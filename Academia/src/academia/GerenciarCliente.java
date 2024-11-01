@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -43,8 +44,10 @@ public class GerenciarCliente implements Cadastro{
 
             System.out.print("Digite o e-mail do cliente: ");
             String email = scanner.nextLine();
+            
+            int idCliente = gerarIdCliente();
 
-            Cliente cliente = new Cliente(nome, cpf, endereco, telefone, email);
+            Cliente cliente = new Cliente(nome, cpf, endereco, telefone, email, idCliente);
             clientes.add(cliente);
 
             System.out.print("Deseja adicionar outro cliente? (s/n): ");
@@ -52,7 +55,7 @@ public class GerenciarCliente implements Cadastro{
 
         } while (continuar.equalsIgnoreCase("s"));
 
-        salvarJSONRelatorioVenda(clientes);
+        salvarJSONClientes(clientes);
     }
     /** 
      * Altera os dados de algum cliente
@@ -124,7 +127,7 @@ public class GerenciarCliente implements Cadastro{
                 default -> System.out.println("Opção inválida, tente novamente.");
             }
         }
-        salvarJSONRelatorioVenda(clientes);
+        salvarJSONClientes(clientes);
     }
     /** 
      Apagar cadastro de um cliente por meio do seu cpf cadastrado
@@ -148,7 +151,7 @@ public class GerenciarCliente implements Cadastro{
         }
         
         if (clienteRemovido) {
-            salvarJSONRelatorioVenda(clientes);
+            salvarJSONClientes(clientes);
         } else {
             System.out.println("Cliente com o CPF " + cpf + " não encontrado.");
         }
@@ -175,7 +178,7 @@ public class GerenciarCliente implements Cadastro{
      * Método para salvar um novo JSON com todos os relatorios de venda.
      * @param clientes
      */
-    public void salvarJSONRelatorioVenda(List<Cliente> clientes){
+    public void salvarJSONClientes(List<Cliente> clientes){
         try {
             mapper.writeValue(arquivoCliente, clientes);
             System.out.println("Produtos salvos no arquivo: " + arquivoCliente.getAbsolutePath());
@@ -188,6 +191,26 @@ public class GerenciarCliente implements Cadastro{
         return clientes.stream()
                 .filter(cliente -> cliente.getEmail().equalsIgnoreCase(email))
                 .findFirst();
+    }
+    
+    public int gerarIdCliente(){
+        Random random = new Random();
+        List<Cliente> clientes = new ArrayList<>();
+        GerenciarCliente gerenciarCliente = new GerenciarCliente();
+        clientes = gerenciarCliente.carregarJSONClientes(clientes);
+
+        int idCliente;
+        List<Integer> numerosPedidos = new ArrayList<>();
+        
+        for (Cliente cliente : clientes) {
+            numerosPedidos.add(cliente.getIdCliente());
+        }
+
+        do {
+            idCliente = random.nextInt(100000);
+        } while (numerosPedidos.contains(idCliente));
+
+        return idCliente;
     }
     
     public GerenciarCliente() {
