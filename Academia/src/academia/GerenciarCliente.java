@@ -173,6 +173,21 @@ public class GerenciarCliente implements Cadastro{
     }
     
     /**
+     * Método para buscar cliente pelo ID
+     * 
+     * @param clientes
+     * @return clientes;
+     */
+      // Método para buscar cliente pelo ID
+    public Optional<Cliente> buscarClientePorId(List<Cliente> clientes, int id) {
+        
+        return clientes.stream()
+                .filter(cliente -> cliente.getIdCliente() == id)
+                .findFirst();
+    }
+
+    
+    /**
      * 
      * Método para salvar um novo JSON com todos os relatorios de venda.
      * @param clientes

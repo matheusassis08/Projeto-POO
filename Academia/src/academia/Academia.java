@@ -31,7 +31,8 @@ public class Academia {
                                7. Funcionários
                                8. Despesas
                                9. Balanços
-                               10. Sair""");
+                               10. Catraca
+                               11. Sair""");
             
             int n = scanner.nextInt();
 
@@ -413,7 +414,40 @@ public class Academia {
                         default -> System.out.println("Opção inválida.");
                     }
                 }
+                
                 case 10 -> {
+                    
+                    {                                                 
+
+                        Catraca catraca = new Catraca();
+
+                        System.out.println("=== Sistema de Acesso da Academia ===");
+
+                        while (true) {
+                            System.out.print("Digite o ID do cliente para acesso (ou 0 para encerrar): ");
+                            int entrada = scanner.nextInt();
+
+                            if (entrada==(0)) {
+                                System.out.println("Encerrando sistema...");
+                                break;
+                            }
+
+                         
+                            if (catraca.validarAcessoPorId(entrada)) {
+                                catraca.abrirCatraca();
+                                break;
+                            } else {
+                                catraca.negarAcesso();
+                                break;
+                            }
+                        }
+
+                        
+                }
+                    
+                }
+                
+                case 11 -> {
                     System.out.println("Encerrando o sistema...");
                     continuar = false;
                 }
