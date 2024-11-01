@@ -29,7 +29,8 @@ public class Academia {
                                5. Relatórios
                                6. Instrutor
                                7. Funcionários
-                               8. Sair""");
+                               8. Despesas
+                               9. Sair""");
             
             int n = scanner.nextInt();
 
@@ -224,13 +225,46 @@ public class Academia {
                 }
                 case 5 -> {
                     System.out.println("""
-                                       1. Verificar Relatórios
+                                       1. Verificar Relatórios de Vendas
                                        2. Balanços
                                        3. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
-                            
+                           System.out.println("""
+                                       Qual tipo de relátorio voce deseja?
+                                       1. Vendas Diária
+                                       2. Vendas Mensal
+                                       3. Voltar ao menu principal""");
+                            n = scanner.nextInt();
+                            switch (n) {
+                                case 1 -> {
+                                    GerenciarRelatorios gerenciarRelatorios =  new GerenciarRelatorios();
+                                    List<RelatorioVenda> relatoriosVenda = new ArrayList<>();
+                                    relatoriosVenda = gerenciarRelatorios.carregarJSONRelatorioVenda(relatoriosVenda);
+                                    System.out.println("Informe o dia:");
+                                    scanner.nextLine();
+                                    LocalDate diaSolicitado = LocalDate.parse(scanner.nextLine(), DATE_FORMATTER);
+                                    //formatando de LocalDate para String
+                                    String diaSolicitadoFormatado = diaSolicitado.format(DATE_FORMATTER);
+                                    List<RelatorioVenda> relatoriosVendaDiario = gerenciarRelatorios.buscarRelatoriosPorDia(relatoriosVenda, diaSolicitadoFormatado);
+                                    System.out.println("o relatorio: " + relatoriosVendaDiario);
+                                }
+                                case 2 -> {
+                                    GerenciarRelatorios gerenciarRelatorios =  new GerenciarRelatorios();
+                                    List<RelatorioVenda> relatoriosVenda = new ArrayList<>();
+                                    relatoriosVenda = gerenciarRelatorios.carregarJSONRelatorioVenda(relatoriosVenda);
+                                    System.out.println("Informe o mes:");
+                                    scanner.nextLine();
+                                    int mesSolicitado = scanner.nextInt();
+                                    System.out.println("Informe o ano:");
+                                    scanner.nextLine();
+                                    int anoSolicitado = scanner.nextInt();
+                                    relatoriosVenda = gerenciarRelatorios.buscarRelatorioVendaMensal(relatoriosVenda, mesSolicitado, anoSolicitado);
+                                    System.out.println(relatoriosVenda);
+                                }
+                                default -> System.out.println("Opção inválida.");
+                            }
                         }
                         case 2 -> {
                             
@@ -291,6 +325,28 @@ public class Academia {
                     }
                 }
                 case 8 -> {
+                    System.out.println("""
+                                       1. Lançar Despesa
+                                       2. Verificar Despesas Diárias
+                                       3. Voltar ao menu principal""");
+                    n = scanner.nextInt();
+                    switch (n) {
+                        case 1 -> {
+                            
+                        }
+                        case 2 -> {
+                            
+                        }
+                        case 3 -> {
+                            
+                        }
+                        case 4 -> {
+                            
+                        }
+                        default -> System.out.println("Opção inválida.");
+                    }
+                }
+                case 9 -> {
                     System.out.println("Encerrando o sistema...");
                     continuar = false;
                 }
