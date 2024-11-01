@@ -328,20 +328,48 @@ public class Academia {
                     System.out.println("""
                                        1. Lançar Despesa
                                        2. Verificar Despesas Diárias
-                                       3. Voltar ao menu principal""");
+                                       3. Verificar Despesas Mensais
+                                       4. Remover Despesa
+                                       . Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
-                            
+                            GerenciarDespesas gerenciarDespesas = new GerenciarDespesas();
+                            gerenciarDespesas.gerarNovaDespesa();
                         }
                         case 2 -> {
-                            
+                            GerenciarDespesas gerenciarDespesas = new GerenciarDespesas();
+                            List<RegistroDespesas> registrosDespesa = new ArrayList<>();
+                            registrosDespesa = gerenciarDespesas.carregarJSONRegistroDespesas(registrosDespesa);
+                            System.out.println("Qual a data que voce deseja receber as despesas? ");
+                            scanner.nextLine();
+                            LocalDate diaSolicitado = LocalDate.parse(scanner.nextLine(), DATE_FORMATTER);
+                            //formatando de LocalDate para String
+                            String diaSolicitadoFormatado = diaSolicitado.format(DATE_FORMATTER);
+                            List<RegistroDespesas> registrosDespesaDiario = gerenciarDespesas.buscarDespesasDiarias(registrosDespesa, diaSolicitadoFormatado);
+                            System.out.println("as despesas: " + registrosDespesaDiario);
+                            System.out.println("O valor total das despesas do dia "+ diaSolicitado.format(DATE_FORMATTER) + ", foi de: " + gerenciarDespesas.calcularTotalDespesas(registrosDespesa));
                         }
                         case 3 -> {
-                            
+                            GerenciarDespesas gerenciarDespesas = new GerenciarDespesas();
+                            List<RegistroDespesas> registrosDespesa = new ArrayList<>();
+                            registrosDespesa = gerenciarDespesas.carregarJSONRegistroDespesas(registrosDespesa);
+                            System.out.println("Informe o mes:");
+                            scanner.nextLine();
+                            int mesSolicitado = scanner.nextInt();
+                            System.out.println("Informe o ano:");
+                            scanner.nextLine();
+                            int anoSolicitado = scanner.nextInt();
+                            registrosDespesa = gerenciarDespesas.buscarDespesasMensais(registrosDespesa, mesSolicitado, anoSolicitado);
+                            System.out.println(registrosDespesa);
+                            System.out.println("O valor total de despesas no mês "+ mesSolicitado + " foi de: " + gerenciarDespesas.calcularTotalDespesas(registrosDespesa));
                         }
                         case 4 -> {
-                            
+                            GerenciarDespesas gerenciarDespesas = new GerenciarDespesas();
+                            System.out.println("Qual o id da despesa que você deseja remover? ");
+                            int id = scanner.nextInt();
+                            gerenciarDespesas.apagarDespesa(id);
+                            System.out.println("Despesa removida com sucesso");
                         }
                         default -> System.out.println("Opção inválida.");
                     }
