@@ -20,29 +20,25 @@ import java.util.stream.Collectors;
     public class GerenciarRelatorios implements PadraoObserver{
         
     private final String FILE_RELATORIOSVENDA = "C:\\POO\\Projeto-POO\\Academia\\src\\relatorios\\relatoriosVenda.json";
+    private final String FILE_RELATORIOSAGENDAMENTO = "C:\\POO\\Projeto-POO\\Academia\\src\\relatorios\\relatoriosAgendamento.json";
     String estado;
     //só essa^
     
     
     private final Scanner scanner = new Scanner(System.in);
     private final File arquivoRelatoriosVenda = new File(FILE_RELATORIOSVENDA);
+    private final File arquivoRelatoriosAgendamento = new File(FILE_RELATORIOSAGENDAMENTO);
     private final ObjectMapper mapper = new ObjectMapper();
     
-    /*
-    public void gerarRelatorioPedido(){
-        if (arquivoRelatoriosVenda.exists()) {
-            try {
-                clientes = mapper.readValue(arquivoRelatoriosVenda, new TypeReference<List<Cliente>>() {});
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
 
     public GerenciarRelatorios() {
         
     }
-    
+    /**
+     * Metodo para carrega a lista de todos RelatorioVenda
+     * @param relatoriosVenda
+     * @return List RelatorioVenda
+     */
     public List<RelatorioVenda> carregarJSONRelatorioVenda(List<RelatorioVenda> relatoriosVenda){
         if (arquivoRelatoriosVenda.exists()) {
             try {
@@ -53,18 +49,11 @@ import java.util.stream.Collectors;
         }
         return relatoriosVenda;
     }
-    /*
-    public List<RelatorioVenda> carregarJSONRelatorioVenda(List<RelatorioVenda> relatoriosVenda){
-        if (arquivoRelatoriosVenda.exists()) {
-            try {
-                relatoriosVenda = mapper.readValue(arquivoRelatoriosVenda, new TypeReference<List<RelatorioVenda>>() {});
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return relatoriosVenda;
-    }*/
     
+    /**
+     * Método para salvar o JSON dos relatorios de venda.
+     * @param relatoriosVenda
+     */
     public void salvarJSONRelatorioVenda(List<RelatorioVenda> relatoriosVenda){
         try {
             mapper.writeValue(arquivoRelatoriosVenda, relatoriosVenda);
@@ -100,8 +89,9 @@ import java.util.stream.Collectors;
      * Método que busca e retorna todos relátorios de determinada dia.
      * @param relatorios
      * @param data
+     * @return List RelatorioVenda
      */
-    public List<RelatorioVenda> buscarRelatoriosPorDia(List<RelatorioVenda> relatorios, String data) {
+    public List<RelatorioVenda> buscarRelatoriosVendaPorDia(List<RelatorioVenda> relatorios, String data) {
         return relatorios.stream()
                 .filter(relatorio -> relatorio.getDataDeRealizacao().equals(data))
                 .collect(Collectors.toList());
@@ -127,12 +117,57 @@ import java.util.stream.Collectors;
                 })
                 .collect(Collectors.toList());
     }
-    
-    public void gerarRelatorioPagamentoAgendamento(){
+    /**
+     * Método para gerar o relatorio de Pagamento de Um Agendamento.
+     * @param nomeCliente
+     * @param idCliente
+     * @param nomeInstrutor
+     * @param idInstrutor
+     * @param tipoAula
+     * @param valor
+     * @param nome
+     * @param dataDeRealizacao
+     * @param horarioDeRealizacao
+     * @param idRelatorio
+     * @return List RelatorioAgendamento
+     */
+    public List<RelatorioAgendamento> gerarRelatorioPagamentoAgendamento(String nomeCliente, int idCliente, String nomeInstrutor, int idInstrutor, String tipoAula, double valor, String nome, String dataDeRealizacao, String horarioDeRealizacao, int idRelatorio){
         List<RelatorioAgendamento> relatoriosAgendamentos = new ArrayList<>();
+        relatoriosAgendamentos = carregarJSONRelatorioAgendamento(relatoriosAgendamentos);
         
+        RelatorioAgendamento relatorioAgendamento = new RelatorioAgendamento(nomeCliente, idCliente, nomeInstrutor, idInstrutor, tipoAula, valor, nome, dataDeRealizacao, horarioDeRealizacao, idRelatorio);
+        relatoriosAgendamentos.add(relatorioAgendamento);
+        salvarJSONRelatorioAgendamento(relatoriosAgendamentos);
+        
+        return relatoriosAgendamentos;
     }
-    
+    /**
+     * Método para carregar todos os JSONs de Relatorios de Agendamento
+     * @param relatoriosAgendamentos
+     * @return List RelatorioAgendamento
+     */
+    public List<RelatorioAgendamento> carregarJSONRelatorioAgendamento(List<RelatorioAgendamento> relatoriosAgendamentos){
+        if (arquivoRelatoriosVenda.exists()) {
+            try {
+                relatoriosAgendamentos = mapper.readValue(arquivoRelatoriosAgendamento, new TypeReference<List<RelatorioAgendamento>>() {});
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return relatoriosAgendamentos;
+    }
+    /**
+     * Método para salvar os JSONs dos Relatorios de Agendamento.
+     * @param relatoriosAgendamentos
+     */
+    public void salvarJSONRelatorioAgendamento(List<RelatorioAgendamento> relatoriosAgendamentos){
+        try {
+            mapper.writeValue(arquivoRelatoriosAgendamento, relatoriosAgendamentos);
+            System.out.println("Produtos salvos no arquivo: " + arquivoRelatoriosAgendamento.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     
     @Override

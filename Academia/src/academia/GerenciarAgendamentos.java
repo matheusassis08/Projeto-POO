@@ -53,13 +53,24 @@ public class GerenciarAgendamentos {
         int idInstrutorIn = scanner.nextInt();
         
         System.out.println("Qual o valor do agendamento da aula?");
-        int valorAgendamentoIn = scanner.nextInt();
+        double valorAgendamentoIn = scanner.nextInt();
         GerenciarPagamentos gerenciarPagamentos = new GerenciarPagamentos();
         GerenciarAgendamentos gerenciarAgendamentos = new GerenciarAgendamentos();
+        GerenciarRelatorios gerenciarRelatorios = new GerenciarRelatorios();
         
         Agendamento agendamento = new Agendamento(data, horario, cliente.get().getNome(), cliente.get().getEmail(), cliente.get().getIdCliente(), nomeInstrutorIn, idInstrutorIn, tipoDeAulaIn, valorAgendamentoIn, false);
         agendamentos.add(agendamento);
         agendamentos.addAll(gerenciarPagamentos.solicitarPagamentoAgendamento(agendamentos));
+        LocalTime horaAtual = LocalTime.now();
+       //hora formatada para hora:minuto:segundo
+        String horarioDeRealizacao = horaAtual.format(Academia.getTIME_FORMATTER());
+                            
+        LocalDate dataAtual = LocalDate.now();
+        //Formata a data para (dia/mes/ano)
+        String dataDeRealizacao = dataAtual.format(Academia.getDATE_FORMATTER());
+        
+        //Gerando relatorio para receita de pagamento de agendamento
+        gerenciarRelatorios.gerarRelatorioPagamentoAgendamento(cliente.get().getNome(), cliente.get().getIdCliente(), nomeInstrutorIn, idInstrutorIn, tipoDeAulaIn, valorAgendamentoIn, "Relátorio Agendamento de Aula", dataDeRealizacao, horarioDeRealizacao, gerenciarRelatorios.gerarIdRelatorio());
         
         salvarJSONAgendamentos(agendamentos);
         System.out.println("Agendamento salvo com sucesso!");

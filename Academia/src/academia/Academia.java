@@ -174,7 +174,6 @@ public class Academia {
                             GerenciarPagamentos gerenciarPagamento = new GerenciarPagamentos();
                             gerenciarPagamento.solicitarPagamento(carrinho.somarPedido(carrinhos), "");
                             
-                            
                             GerenciarProduto gerenciarProduto = new GerenciarProduto();
                             GerenciarFuncionario gerenciarFuncionario = new GerenciarFuncionario();
                             //padrao de projeto observer
@@ -214,6 +213,7 @@ public class Academia {
                             gerenciarAgendamentos.realizarAgendamentoPrevio();
                         }
                         case 2 -> {
+                            GerenciarAgendamentos gerenciarAgendamentos = new GerenciarAgendamentos();
                             
                         }
                         case 3 -> {
@@ -249,7 +249,7 @@ public class Academia {
                                     LocalDate diaSolicitado = LocalDate.parse(scanner.nextLine(), DATE_FORMATTER);
                                     //formatando de LocalDate para String
                                     String diaSolicitadoFormatado = diaSolicitado.format(DATE_FORMATTER);
-                                    List<RelatorioVenda> relatoriosVendaDiario = gerenciarRelatorios.buscarRelatoriosPorDia(relatoriosVenda, diaSolicitadoFormatado);
+                                    List<RelatorioVenda> relatoriosVendaDiario = gerenciarRelatorios.buscarRelatoriosVendaPorDia(relatoriosVenda, diaSolicitadoFormatado);
                                     System.out.println("o relatorio: " + relatoriosVendaDiario);
                                 }
                                 case 2 -> {

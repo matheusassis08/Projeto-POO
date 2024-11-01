@@ -18,7 +18,6 @@ public class GerenciarCliente implements Cadastro{
     private final File arquivoCliente = new File(FILE_CLIENTES);
     Scanner scanner = new Scanner(System.in);
     ObjectMapper mapper = new ObjectMapper();
-    
         /** 
      Cadastra um novo cliente no sistema
      */
