@@ -214,9 +214,10 @@ public class Academia {
                         }
                         case 2 -> {
                             GerenciarAgendamentos gerenciarAgendamentos = new GerenciarAgendamentos();
-                            
+                            gerenciarAgendamentos.confimarAgendamentoPrevio();
                         }
                         case 3 -> {
+                            GerenciarAgendamentos gerenciarAgendamentos = new GerenciarAgendamentos();
                             
                         }
                         case 4 -> {

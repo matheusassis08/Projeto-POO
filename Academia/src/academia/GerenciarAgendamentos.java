@@ -76,7 +76,7 @@ public class GerenciarAgendamentos {
         System.out.println("Agendamento salvo com sucesso!");
     }
     
-    void confimarAgendamentoPrevio(){
+    public void confimarAgendamentoPrevio(){
         List<Agendamento> agendamentos = carregarJSONAgendamentos();
         
         
@@ -87,8 +87,18 @@ public class GerenciarAgendamentos {
         if(agendamento==null){
             System.out.println("Agendamento não encontrado");
         }
+        agendamento.setConfirmado(true);
     }
     
+    public void cancelarAgendamento(){
+        List<Agendamento> agendamentos = carregarJSONAgendamentos();
+        System.out.println("Qual o email do cliente para cancelar agendamento?");
+        String emailCliente = scanner.nextLine();
+        Agendamento agendamento = buscarAgendamentoPorEmail(agendamentos, emailCliente);
+        agendamentos.remove(agendamento);
+        salvarJSONAgendamentos(agendamentos);
+    }
+            
     /**
      * Solicita as horas no formato (hh:mm:ss) e retorna no formato LocalTime.
      * @return LocalTime

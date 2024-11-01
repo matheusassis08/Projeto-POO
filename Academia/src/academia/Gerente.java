@@ -44,20 +44,19 @@ public class Gerente extends Pessoa {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
+    
     
     
     public double getSalario() {
         return salario;
     }
-
+    
     public void setSalario(double salario) {
         this.salario = salario;
     }
-
+    
     @Override
     public String toString() {
         return "Gerente{" + "senha=" + senha + ", salario=" + salario + '}';
     }
 }
-
