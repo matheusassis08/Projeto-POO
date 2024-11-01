@@ -40,7 +40,8 @@ public class GerenciarDespesas{
                            7. Despesas de Software e Sistemas
                            8. Marketing e Publicidade
                            9. Aluguel ou Financiamento do Espaço
-                           10. Outro""");
+                           10. Cancelamento de Aula
+                           11. Outro""");
         String tipoDeDespesa = "";
         int n = scanner.nextInt();
         switch(n){
@@ -53,7 +54,8 @@ public class GerenciarDespesas{
             case(7)-> tipoDeDespesa = "Despesas de Software e Sistemas";
             case(8)-> tipoDeDespesa = "Marketing e Publicidade";
             case(9)-> tipoDeDespesa = "Aluguel ou Financiamento do Espaço";
-            case(10)-> tipoDeDespesa = "Outro";
+            case(10)-> tipoDeDespesa = "Cancelamento de Aula";
+            case(11)-> tipoDeDespesa = "Outro";
             default -> System.out.println("Opção inválida.");
         }
         
@@ -127,7 +129,7 @@ public class GerenciarDespesas{
         }
     }
     
-    private int gerarIdDespesa(){
+    public int gerarIdDespesa(){
         Random random = new Random();
         List<RegistroDespesas> registroDespesas = new ArrayList<>();
         GerenciarDespesas gerenciarDespesas = new GerenciarDespesas();

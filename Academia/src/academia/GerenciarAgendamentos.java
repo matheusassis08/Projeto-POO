@@ -97,6 +97,25 @@ public class GerenciarAgendamentos {
         Agendamento agendamento = buscarAgendamentoPorEmail(agendamentos, emailCliente);
         agendamentos.remove(agendamento);
         salvarJSONAgendamentos(agendamentos);
+        
+        LocalDate dataAtual = LocalDate.now();
+        //Formata a data para (dia/mes/ano)
+        String dataDeRealizacao = dataAtual.format(Academia.getDATE_FORMATTER());
+        
+        LocalTime horaAtual = LocalTime.now();
+        //hora formatada para hora:minuto:segundo
+        String horarioDeRealizacao = horaAtual.format(Academia.getTIME_FORMATTER());
+        
+        
+        //gerando despesa de gasto com a devolução de metade do valor do agendamento caso seja 3 dias anterior a data marcada
+        GerenciarDespesas gerenciarDespesas = new GerenciarDespesas();
+        List<RegistroDespesas> despesas = new ArrayList<>();
+        RegistroDespesas novaDespesa = new RegistroDespesas("Devolução de metade do valor do agendamento de aula", "Cancelamento de Aula", agendamento.getValorAgendamento()/2, dataDeRealizacao, horarioDeRealizacao, gerenciarDespesas.gerarIdDespesa());
+        
+        //salvando a nova despesa de devolver metade do valor do agendamento.
+        gerenciarDespesas.carregarJSONRegistroDespesas(despesas);
+        despesas.add(novaDespesa);
+        gerenciarDespesas.salvarJSONRegistroDespesas(despesas);
     }
             
     /**
