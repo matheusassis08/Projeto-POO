@@ -9,9 +9,8 @@ package academia;
  * 
  */
 public class RelatorioAgendamento extends Relatorios{
-    
-    String nomeCliente;
-    String idCliente;
+    private String nomeCliente;
+    private String idCliente;
     
     public RelatorioAgendamento(String nome, String dataDeRealizacao, String horarioDeRealizacao, int idRelatorio) {
         super(nome, dataDeRealizacao, horarioDeRealizacao, idRelatorio);

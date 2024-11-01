@@ -172,7 +172,7 @@ public class Academia {
                         }
                         case 6 -> {
                             GerenciarPagamentos gerenciarPagamento = new GerenciarPagamentos();
-                            gerenciarPagamento.solicitarPagamento(carrinho.somarPedido(carrinhos));
+                            gerenciarPagamento.solicitarPagamento(carrinho.somarPedido(carrinhos), "");
                             
                             
                             GerenciarProduto gerenciarProduto = new GerenciarProduto();
@@ -202,15 +202,16 @@ public class Academia {
                 }
                 case 4 -> {
                     System.out.println("""
-                                       1. Agendar Horário
-                                       2. Verificar Horários
+                                       1. Realizar Agendamento Prévio de Aula
+                                       2. Confirmar Agendamento Prévio
                                        3. Cancelar Agendamento
+                                       3. Verificar Horários
                                        4. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
-                            GerenciarAgendamentos agendamentos = new GerenciarAgendamentos();
-                            agendamentos.realizarAgendamento();
+                            GerenciarAgendamentos gerenciarAgendamentos = new GerenciarAgendamentos();
+                            gerenciarAgendamentos.realizarAgendamentoPrevio();
                         }
                         case 2 -> {
                             

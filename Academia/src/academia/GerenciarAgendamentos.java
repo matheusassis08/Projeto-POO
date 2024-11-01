@@ -6,9 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 /**
@@ -16,12 +16,6 @@ import java.util.Scanner;
  */
 public class GerenciarAgendamentos {
     private static final String FILE_AGENDAMENTOS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\agendamentos.json";
-
-    private String data;
-    private String horario;
-    private String nomeCliente;
-    private String emailCliente;
-    private String nomeInstrutor;
     
     private final Scanner scanner = new Scanner(System.in);
     private final ObjectMapper mapper = new ObjectMapper();
@@ -29,44 +23,66 @@ public class GerenciarAgendamentos {
     /** 
      * Para agendar um horário para um aluno ter aula
      */
-    void realizarAgendamento() {
+    void realizarAgendamentoPrevio() {
         System.out.println("Informe o e-mail do cliente para o agendamento: ");
         String email = scanner.nextLine();
-        List<Cliente> clientes = carregarClientes();
-
-        Cliente cliente = buscarClientePorEmail(clientes, email);
+        GerenciarCliente gerenciarCliente = new GerenciarCliente();
+        List<Cliente> clientes = new ArrayList<>();
+        clientes = gerenciarCliente.carregarJSONClientes(clientes);
+        
+        Optional<Cliente> cliente = gerenciarCliente.buscarClientePorEmail(clientes, email);
         if (cliente == null) {
             System.out.println("Cliente com e-mail " + email + " não encontrado.");
             return;
         }
-        
         LocalDate dataIn = solicitarData();
+        String data = dataIn.format(Academia.getDATE_FORMATTER());
         
         LocalTime horarioIn = solicitarHorario();
+        String horario = horarioIn.format(Academia.getTIME_FORMATTER());
         
-        List<GerenciarAgendamentos> agendamentos = carregarAgendamentos();
-
-        GerenciarAgendamentos agendamento = new GerenciarAgendamentos(
-                dataIn.format(Academia.getDATE_FORMATTER()),
-                horarioIn.format(Academia.getTIME_FORMATTER()),
-                cliente.getNome(),
-                cliente.getEmail(),
-                "");
-        // teve que ficar na frente dos outros por problema na leitura das linhas do scanner.
+        List<Agendamento> agendamentos = carregarJSONAgendamentos();
+        
+        System.out.println("Qual o tipo de aula desejada?");
+        String tipoDeAulaIn = scanner.nextLine();
+        
         System.out.println("Qual o nome do instrutor designado para a aula?");
         String nomeInstrutorIn = scanner.nextLine();
-        agendamento.setNomeInstrutor(nomeInstrutorIn);
         
+        System.out.println("Qual o id do instrutor designado para a aula?");
+        int idInstrutorIn = scanner.nextInt();
+        
+        System.out.println("Qual o valor do agendamento da aula?");
+        int valorAgendamentoIn = scanner.nextInt();
+        GerenciarPagamentos gerenciarPagamentos = new GerenciarPagamentos();
+        GerenciarAgendamentos gerenciarAgendamentos = new GerenciarAgendamentos();
+        
+        Agendamento agendamento = new Agendamento(data, horario, cliente.get().getNome(), cliente.get().getEmail(), cliente.get().getIdCliente(), nomeInstrutorIn, idInstrutorIn, tipoDeAulaIn, valorAgendamentoIn, false);
         agendamentos.add(agendamento);
-
-        salvarAgendamentos(agendamentos);
+        agendamentos.addAll(gerenciarPagamentos.solicitarPagamentoAgendamento(agendamentos));
+        
+        salvarJSONAgendamentos(agendamentos);
         System.out.println("Agendamento salvo com sucesso!");
     }
+    
+    void confimarAgendamentoPrevio(){
+        List<Agendamento> agendamentos = carregarJSONAgendamentos();
+        
+        
+        System.out.println("Qual o email do cliente que deseja confirmar seu agendamento?");
+        String emailIn = scanner.nextLine();
+        
+        Agendamento agendamento = buscarAgendamentoPorEmail(agendamentos, emailIn);
+        if(agendamento==null){
+            System.out.println("Agendamento não encontrado");
+        }
+    }
+    
     /**
      * Solicita as horas no formato (hh:mm:ss) e retorna no formato LocalTime.
      * @return LocalTime
      */
-    public LocalTime solicitarHorario() {
+    private LocalTime solicitarHorario() {
         LocalTime horario = null;
         while (horario == null) {
             System.out.println("Digite o horário (HH:mm:ss): ");
@@ -96,46 +112,24 @@ public class GerenciarAgendamentos {
         return data;
     }
     
-    /**
-     * Carrega a lista de clientes a partir de seu arquivo JSON.
-     * @return ArrayList
-     */
-    private List<Cliente> carregarClientes() {
-        File arquivo = new File(GerenciarCliente.getFILE_CLIENTES());
-        try {
-            if (arquivo.exists() && arquivo.length() > 0) {
-                return mapper.readValue(arquivo, new TypeReference<List<Cliente>>() {});
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
-    }
-    
-    /**
-     * Realiza uma busca em uma lista de clientes a partir de seu email.
-     * @param clientes
-     * @param email
-     * @return Cliente
-     */
-    private Cliente buscarClientePorEmail(List<Cliente> clientes, String email) {
-        for (Cliente cliente : clientes) {
-            if (cliente.getEmail().equalsIgnoreCase(email)) {
-                return cliente;
+    public Agendamento buscarAgendamentoPorEmail(List<Agendamento> agendamentos, String emailCliente) {
+       for (Agendamento agendamento : agendamentos) {
+           if (agendamento.getEmailCliente().equalsIgnoreCase(emailCliente)) {
+               return agendamento; // Retorna o agendamento se encontrar o email correspondente
             }
         }
-        return null;
+        return null; // Retorna null se não encontrar o email
     }
     
     /**
      * Carrega o arquivo com todos os agendamentos.
      * @return ArrayList
      */
-    private List<GerenciarAgendamentos> carregarAgendamentos() {
+    public List<Agendamento> carregarJSONAgendamentos() {
         File arquivo = new File(FILE_AGENDAMENTOS);
         try {
             if (arquivo.exists() && arquivo.length() > 0) {
-                return mapper.readValue(arquivo, new TypeReference<List<GerenciarAgendamentos>>() {});
+                return mapper.readValue(arquivo, new TypeReference<List<Agendamento>>() {});
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -147,7 +141,7 @@ public class GerenciarAgendamentos {
      * Salva a lista de agendamentos realizados.
      * @param agendamentos
      */
-    private void salvarAgendamentos(List<GerenciarAgendamentos> agendamentos) {
+    public void salvarJSONAgendamentos(List<Agendamento> agendamentos) {
         File arquivo = new File(FILE_AGENDAMENTOS);
         try {
             mapper.writeValue(arquivo, agendamentos);
@@ -161,67 +155,5 @@ public class GerenciarAgendamentos {
      */
     public GerenciarAgendamentos() {
         
-    }
-    /**
-     * Construtor da classe Agendamentos.
-     * @param data
-     * @param horario
-     * @param nomeCliente
-     * @param emailCliente
-     * @param nomeInstrutor
-     */
-    public GerenciarAgendamentos(String data, String horario, String nomeCliente, String emailCliente, String nomeInstrutor) {
-        this.data = data;
-        this.horario = horario;
-        this.nomeCliente = nomeCliente;
-        this.emailCliente = emailCliente;
-        this.nomeInstrutor = nomeInstrutor;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
-    }
-
-    public String getNomeCliente() {
-        return nomeCliente;
-    }
-
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
-    }
-
-    public String getEmailCliente() {
-        return emailCliente;
-    }
-
-    public void setEmailCliente(String emailCliente) {
-        this.emailCliente = emailCliente;
-    }
-
-    public String getNomeInstrutor() {
-        return nomeInstrutor;
-    }
-
-    public void setNomeInstrutor(String nomeInstrutor) {
-        this.nomeInstrutor = nomeInstrutor;
-    }
-    
-    
-
-    @Override
-    public String toString() {
-        return "Agendamentos{" + "data=" + data + ", horario=" + horario + ", nomeCliente=" + nomeCliente + ", emailCliente=" + emailCliente + ", nomeInstrutor=" + nomeInstrutor + '}';
     }
 }

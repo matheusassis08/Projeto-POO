@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
     //só essa^
     
     
-    private Scanner scanner = new Scanner(System.in);
-    private File arquivoRelatoriosVenda = new File(FILE_RELATORIOSVENDA);
-    private ObjectMapper mapper = new ObjectMapper();
+    private final Scanner scanner = new Scanner(System.in);
+    private final File arquivoRelatoriosVenda = new File(FILE_RELATORIOSVENDA);
+    private final ObjectMapper mapper = new ObjectMapper();
     
     /*
     public void gerarRelatorioPedido(){
@@ -53,6 +53,17 @@ import java.util.stream.Collectors;
         }
         return relatoriosVenda;
     }
+    /*
+    public List<RelatorioVenda> carregarJSONRelatorioVenda(List<RelatorioVenda> relatoriosVenda){
+        if (arquivoRelatoriosVenda.exists()) {
+            try {
+                relatoriosVenda = mapper.readValue(arquivoRelatoriosVenda, new TypeReference<List<RelatorioVenda>>() {});
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return relatoriosVenda;
+    }*/
     
     public void salvarJSONRelatorioVenda(List<RelatorioVenda> relatoriosVenda){
         try {
@@ -117,12 +128,9 @@ import java.util.stream.Collectors;
                 .collect(Collectors.toList());
     }
     
-    public void GerarRelatorioPagamentoAgendamento(){
-        System.out.println("Relatório de venda cancelada gerado.\n");
-    }
-    
-    public void GerarRelatorioCancelamentoVenda(){
-        System.out.println("Relatório de venda cancelada gerado.\n");
+    public void gerarRelatorioPagamentoAgendamento(){
+        List<RelatorioAgendamento> relatoriosAgendamentos = new ArrayList<>();
+        
     }
     
     
@@ -135,7 +143,7 @@ import java.util.stream.Collectors;
             
         }
         if(estado.equals("Cancelada")){
-            this.GerarRelatorioCancelamentoVenda();
+            
         }
      }
 }
