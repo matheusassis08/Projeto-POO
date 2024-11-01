@@ -419,7 +419,7 @@ public class Academia {
                     
                     {                                                 
 
-                        Catraca catraca = new Catraca();
+                        GerenciarCatraca catraca = new GerenciarCatraca();
 
                         System.out.println("=== Sistema de Acesso da Academia ===");
 
@@ -435,6 +435,20 @@ public class Academia {
                          
                             if (catraca.validarAcessoPorId(entrada)) {
                                 catraca.abrirCatraca();
+                                LocalTime horaAtual = LocalTime.now();
+                                //hora formatada para hora:minuto:segundo
+                                String horarioDeRealizacao = horaAtual.format(TIME_FORMATTER);
+                            
+                                LocalDate dataAtual = LocalDate.now();
+                                //Formata a data para (dia/mes/ano)
+                                String dataDeRealizacao = dataAtual.format(DATE_FORMATTER);
+                                
+                                Catraca novaCatraca = new Catraca(dataDeRealizacao, horarioDeRealizacao, entrada);
+                                List<Catraca> catracas = new ArrayList<>();
+                                catracas = catraca.carregarJSONCatraca(catracas);
+                                catracas.add(novaCatraca);
+                                catraca.salvarJSONCatracas(catracas);
+                                        
                                 break;
                             } else {
                                 catraca.negarAcesso();

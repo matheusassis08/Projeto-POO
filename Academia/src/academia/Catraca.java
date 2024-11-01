@@ -1,48 +1,59 @@
 package academia;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Scanner;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
 /**
- *Classe para administrar a catraca da academia
- * 
+ *
+ * Classe catraca
  */
 public class Catraca {
-    
-    private List<Cliente> listaClientes = new ArrayList<>();
-    
+    private String data;
+    private String horario;
+    private int idCliente;
+
+    public String getData() {
+        return data;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public Catraca(String data, String horario, int idCliente) {
+        this.data = data;
+        this.horario = horario;
+        this.idCliente = idCliente;
+    }
+
     public Catraca() {
         
     }
-
-    // Método para validar o acesso usando o ID do cliente
-    public boolean validarAcessoPorId(int id) {
-        GerenciarCliente gerenciarCliente = new GerenciarCliente();
-        listaClientes = gerenciarCliente.carregarJSONClientes(listaClientes);
-        
-        Optional<Cliente> cliente = gerenciarCliente.buscarClientePorId(listaClientes, id);
-        return cliente.isPresent();  // Retorna true se o cliente for encontrado
+    
+    @Override
+    public String toString() {
+        return "Catraca{" + "data=" + data + ", horario=" + horario + ", idCliente=" + idCliente + '}';
     }
-
-    public void abrirCatraca() {
-        System.out.println("Acesso concedido. Catraca liberada.");
-    }
-
-    public void negarAcesso() {
-        System.out.println("Acesso negado. ID inválido.");
-    }
+    
+    
+    
+    
 }
-
-
