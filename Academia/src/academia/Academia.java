@@ -330,7 +330,7 @@ public class Academia {
                                        2. Verificar Despesas Diárias
                                        3. Verificar Despesas Mensais
                                        4. Remover Despesa
-                                       . Voltar ao menu principal""");
+                                       5. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
@@ -370,6 +370,9 @@ public class Academia {
                             int id = scanner.nextInt();
                             gerenciarDespesas.apagarDespesa(id);
                             System.out.println("Despesa removida com sucesso");
+                        }
+                        case 5 -> {
+                            
                         }
                         default -> System.out.println("Opção inválida.");
                     }
