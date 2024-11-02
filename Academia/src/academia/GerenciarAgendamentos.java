@@ -122,7 +122,7 @@ public class GerenciarAgendamentos {
      * Solicita as horas no formato (hh:mm:ss) e retorna no formato LocalTime.
      * @return LocalTime
      */
-    private LocalTime solicitarHorario() {
+    private LocalTime solicitarHorario(){
         LocalTime horario = null;
         while (horario == null) {
             System.out.println("Digite o horário (HH:mm:ss): ");
@@ -139,7 +139,7 @@ public class GerenciarAgendamentos {
      * Solicita a data no formato (dd/mm/yyyy) e retorna no formato LocalDate.
      * @return LocalDate
      */
-    private LocalDate solicitarData() {
+    private LocalDate solicitarData(){
         LocalDate data = null;
         while (data == null) {
             System.out.println("Digite o dia do agendamento (dd/MM/yyyy): ");

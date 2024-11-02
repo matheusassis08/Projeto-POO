@@ -219,7 +219,7 @@ public class Academia {
                         }
                         case 3 -> {
                             GerenciarAgendamentos gerenciarAgendamentos = new GerenciarAgendamentos();
-                            
+                            gerenciarAgendamentos.cancelarAgendamento();
                         }
                         case 4 -> {
                             

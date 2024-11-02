@@ -100,6 +100,4 @@ public class RegistroDespesas {
         sb.append('}');
         return sb.toString();
     }
-    
-    
 }
