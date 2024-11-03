@@ -1,8 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package academia;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -11,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -107,6 +105,13 @@ import java.util.stream.Collectors;
         salvarJSONRelatorioVenda(relatoriosVenda);
     }
     
+    /**
+     * Método para buscar relatorio de Vendas Mensais a partir de determinado mês e ano.
+     * @param relatorios
+     * @param mes
+     * @param ano
+     * @return List RelatorioVenda
+     */
     public List<RelatorioVenda> buscarRelatorioVendaMensal(List<RelatorioVenda> relatorios, int mes, int ano) {
         return relatorios.stream()
                 .filter(relatorio -> {
@@ -167,6 +172,60 @@ import java.util.stream.Collectors;
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public List<RelatorioAgendamento> buscarRelatorioAgendamentoMensal(List<RelatorioAgendamento> relatorios, int mes, int ano) {
+        return relatorios.stream()
+                .filter(relatorio -> {
+                    String[] partesData = relatorio.getDataDeRealizacao().split("/");
+                    int mesRelatorio = Integer.parseInt(partesData[1]);
+                    int anoRelatorio = Integer.parseInt(partesData[2]);
+                    return mesRelatorio == mes && anoRelatorio == ano;
+                })
+                .collect(Collectors.toList());
+    }
+    
+    /**
+     * Calcula e retorna o balanço mensal de determinado mês informado.
+     */
+    public void geraBalançoMensal(){
+        
+        List<RelatorioAgendamento> relatoriosAgendamentos = new ArrayList<>();
+        List<RelatorioVenda> relatoriosVendas = new ArrayList<>();
+        List<RegistroDespesas> registrosDespesas = new ArrayList<>();
+        GerenciarDespesas gerenciarDespesas = new GerenciarDespesas();
+        relatoriosVendas = carregarJSONRelatorioVenda(relatoriosVendas);
+        relatoriosAgendamentos = carregarJSONRelatorioAgendamento(relatoriosAgendamentos);
+        registrosDespesas = gerenciarDespesas.carregarJSONRegistroDespesas(registrosDespesas);
+        
+        System.out.println("Qual o ano do balanço desejado: ");
+        int mes = scanner.nextInt();
+        System.out.println("Qual o mês do balanço desejado: ");
+        int ano = scanner.nextInt();
+        
+        relatoriosVendas = carregarJSONRelatorioVenda(relatoriosVendas);
+        relatoriosVendas = buscarRelatorioVendaMensal(relatoriosVendas, mes, ano);
+        relatoriosAgendamentos = buscarRelatorioAgendamentoMensal(relatoriosAgendamentos, mes, ano);
+        registrosDespesas = gerenciarDespesas.buscarDespesasMensais(registrosDespesas, mes, ano);
+        
+        double valorReceitas = somarValores(relatoriosVendas, RelatorioVenda::getValor) + somarValores(relatoriosAgendamentos, RelatorioAgendamento::getValor);
+        double valorDespesas = somarValores(registrosDespesas, RegistroDespesas::getValor);
+        
+        double valorBalanço = valorReceitas - valorDespesas;
+        System.out.println("O seu balanço mensal de "+ mes + "/" + ano + ". Foi de: " + valorBalanço + "R$.");
+    }
+    
+    /**
+     * Método para somar 
+     * @param <T>
+     * @param lista
+     * @param valorExtractor
+     * @return valor
+     */
+    public <T> double somarValores(List<T> lista, Function<T, Double> valorExtractor) {
+        return lista.stream()
+                    .mapToDouble(valorExtractor::apply) // usa a função para extrair o valor
+                    .sum();
     }
     
     

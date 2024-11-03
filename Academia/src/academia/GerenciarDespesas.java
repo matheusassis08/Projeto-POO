@@ -168,7 +168,7 @@ public class GerenciarDespesas{
     
     public double calcularTotalDespesas(List<RegistroDespesas> despesas) {
         return despesas.stream()
-                       .mapToDouble(RegistroDespesas::getValorDespesa)
+                       .mapToDouble(RegistroDespesas::getValor)
                        .sum();
     }
 }

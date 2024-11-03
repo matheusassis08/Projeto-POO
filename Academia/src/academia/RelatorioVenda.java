@@ -9,7 +9,7 @@ import java.util.List;
 public class RelatorioVenda extends Relatorios{
     
     private int numeroPedido;
-    private double valorTotalPedido;
+    private double valor;
     private String nomeCliente;
     private String emailCliente;
     private List<String> nomeProdutos;
@@ -21,7 +21,7 @@ public class RelatorioVenda extends Relatorios{
     public RelatorioVenda(String nome, String dataDeRealizacao, String horarioDeRealizacao, int idRelatorio,int numeroPedido, double valorTotalPedido, String nomeCliente, String emailCliente, List<String> nomeProdutos, List<Double> valorUnitarioItemsPedido, List<Integer> codigoProdutosPedido) {
         super(nome, dataDeRealizacao, horarioDeRealizacao, idRelatorio);
         this.numeroPedido = numeroPedido;
-        this.valorTotalPedido = valorTotalPedido;
+        this.valor = valorTotalPedido;
         this.nomeCliente = nomeCliente;
         this.emailCliente = emailCliente;
         this.nomeProdutos = new ArrayList<>();
@@ -49,12 +49,12 @@ public class RelatorioVenda extends Relatorios{
         this.numeroPedido = numeroPedido;
     }
 
-    public double getValorTotalPedido() {
-        return valorTotalPedido;
+    public double getValor() {
+        return valor;
     }
 
-    public void setValorTotalPedido(double valorTotalPedido) {
-        this.valorTotalPedido = valorTotalPedido;
+    public void setValor(double valor) {
+        this.valor = valor;
     }
 
     public String getNomeCliente() {
@@ -100,7 +100,7 @@ public class RelatorioVenda extends Relatorios{
     
     @Override
     public String toString() {
-        return "RelatorioVenda{" + "numeroPedido=" + numeroPedido + ", valorTotalPedido=" + valorTotalPedido + ", nomeCliente=" + nomeCliente + ", emailCliente=" + emailCliente + ", nomeProdutos=" + nomeProdutos + ", valorUnitarioItemsPedido=" + valorUnitarioItemsPedido + ", codigoProdutosPedido=" + codigoProdutosPedido + ", FILE_RELATORIOVENDA=" + FILE_RELATORIOVENDA + super.toString() + '}';
+        return "RelatorioVenda{" + "numeroPedido=" + numeroPedido + ", valorTotalPedido=" + valor + ", nomeCliente=" + nomeCliente + ", emailCliente=" + emailCliente + ", nomeProdutos=" + nomeProdutos + ", valorUnitarioItemsPedido=" + valorUnitarioItemsPedido + ", codigoProdutosPedido=" + codigoProdutosPedido + ", FILE_RELATORIOVENDA=" + FILE_RELATORIOVENDA + super.toString() + '}';
     }
     
     

@@ -230,7 +230,7 @@ public class Academia {
                 case 5 -> {
                     System.out.println("""
                                        1. Verificar Relatórios de Vendas
-                                       2. Balanços
+                                       2. Verficar Relatórios de Agendamentos
                                        3. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
@@ -271,7 +271,8 @@ public class Academia {
                             }
                         }
                         case 2 -> {
-                            
+                            GerenciarRelatorios gerenciarRelatorio = new GerenciarRelatorios();
+                            gerenciarRelatorio.geraBalançoMensal();
                         }
                         case 3 -> {
                             
@@ -390,17 +391,8 @@ public class Academia {
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
-                            double receitasTotal;
-                            double despesasTotal;
-                            
-                            System.out.println("Qual o ano desejado para o balanço?");
-                            int ano = scanner.nextInt();
-                            System.out.println("Qual o mês desejado para o balanço?");
-                            int mes = scanner.nextInt();
-                            
-                            GerenciarRelatorios gerenciarRelatorios = new GerenciarRelatorios();
-                            GerenciarDespesas gerenciarDespesas = new GerenciarDespesas();
-                            
+                            GerenciarRelatorios gerenciarRelatorio = new GerenciarRelatorios();
+                            gerenciarRelatorio.geraBalançoMensal();
                         }
                         case 2 -> {
                             

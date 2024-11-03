@@ -10,7 +10,7 @@ package academia;
 public class RegistroDespesas {
     private String descricaoDaDespesa;
     private String tipoDeDespesa;
-    private double valorDespesa;
+    private double valor;
     private String dataDespesa;
     private String horaDespesa;
     private int idDespesa;
@@ -31,12 +31,12 @@ public class RegistroDespesas {
         this.tipoDeDespesa = tipoDeDespesa;
     }
 
-    public double getValorDespesa() {
-        return valorDespesa;
+    public double getValor() {
+        return valor;
     }
 
-    public void setValorDespesa(double valorDespesa) {
-        this.valorDespesa = valorDespesa;
+    public void setValor(double valorDespesa) {
+        this.valor = valorDespesa;
     }
 
     public int getIdDespesa() {
@@ -77,7 +77,7 @@ public class RegistroDespesas {
     public RegistroDespesas(String descricaoDaDespesa, String tipoDeDespesa, double valorDespesa, String dataDespesa, String horaDespesa, int idDespesa) {
         this.descricaoDaDespesa = descricaoDaDespesa;
         this.tipoDeDespesa = tipoDeDespesa;
-        this.valorDespesa = valorDespesa;
+        this.valor = valorDespesa;
         this.dataDespesa = dataDespesa;
         this.horaDespesa = horaDespesa;
         this.idDespesa = idDespesa;
@@ -93,7 +93,7 @@ public class RegistroDespesas {
         sb.append("RegistroDespesas{");
         sb.append("descricaoDaDespesa=").append(descricaoDaDespesa);
         sb.append(", tipoDeDespesa=").append(tipoDeDespesa);
-        sb.append(", valorDespesa=").append(valorDespesa);
+        sb.append(", valorDespesa=").append(valor);
         sb.append(", dataDespesa=").append(dataDespesa);
         sb.append(", horaDespesa=").append(horaDespesa);
         sb.append(", idDespesa=").append(idDespesa);
