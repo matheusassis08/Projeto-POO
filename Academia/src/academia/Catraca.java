@@ -1,58 +1,66 @@
 package academia;
 
-/**
- *
- * Classe catraca
- */
+import java.time.Duration;
+import java.time.LocalTime;
+
 public class Catraca {
     private String data;
-    private String horario;
+    private String horarioEntrada;
+    private String horarioSaida;
     private int idCliente;
-    private String tipoEvento; // "entrada" ou "saída"
+    private String tempoPermanencia;
+
+    public Catraca(String data, String horarioEntrada, int idCliente) {
+        this.data = data;
+        this.horarioEntrada = horarioEntrada;
+        this.idCliente = idCliente;
+    }
+    
+    public Catraca(){
+    
+    }
 
     public String getData() {
         return data;
     }
 
-    public String getHorario() {
-        return horario;
+    public String getHorarioEntrada() {
+        return horarioEntrada;
+    }
+
+    public String getHorarioSaida() {
+        return horarioSaida;
     }
 
     public int getIdCliente() {
         return idCliente;
     }
 
-    public String getTipoEvento() {
-        return tipoEvento;
+    public String getTempoPermanencia() {
+        return tempoPermanencia;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setHorarioSaida(String horarioSaida) {
+        this.horarioSaida = horarioSaida;
     }
 
-    public void setHorario(String horario) {
-        this.horario = horario;
+    public void calcularTempoPermanencia() {
+        try {
+            Duration duracao = Duration.between(LocalTime.parse(horarioEntrada), LocalTime.parse(horarioSaida));
+            this.tempoPermanencia = String.format("%02d:%02d:%02d", duracao.toHoursPart(), duracao.toMinutesPart(), duracao.toSecondsPart());
+        } catch (Exception e) {
+            System.out.println("Erro ao calcular tempo de permanência.");
+        }
     }
-
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public void setTipoEvento(String tipoEvento) {
-        this.tipoEvento = tipoEvento;
-    }
-
-    public Catraca(String data, String horario, int idCliente, String tipoEvento) {
-        this.data = data;
-        this.horario = horario;
-        this.idCliente = idCliente;
-        this.tipoEvento = tipoEvento;
-    }
-
-    public Catraca() {}
 
     @Override
     public String toString() {
-        return "Catraca{" + "data=" + data + ", horario=" + horario + ", idCliente=" + idCliente + ", tipoEvento=" + tipoEvento + '}';
+        return "Catraca{" +
+                "data='" + data + '\'' +
+                ", horarioEntrada='" + horarioEntrada + '\'' +
+                ", horarioSaida='" + horarioSaida + '\'' +
+                ", idCliente=" + idCliente +
+                ", tempoPermanencia='" + tempoPermanencia + '\'' +
+                '}';
     }
 }

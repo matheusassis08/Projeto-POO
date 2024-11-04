@@ -417,34 +417,33 @@ public class Academia {
                     }
                 }
                 case 10 -> {
+                            
                             GerenciarCatraca gerenciarCatraca = new GerenciarCatraca();
+
                             System.out.println("=== Sistema de Acesso da Academia ===");
 
                             while (true) {
-                                System.out.print("Digite o ID do cliente para acesso (ou 0 para encerrar): ");
-                                int entrada = scanner.nextInt();
+                                System.out.print("Digite o ID do cliente para entrada (positivo), saída (negativo) ou 0 para encerrar: ");
+                                int idCliente = scanner.nextInt();
 
-                                if (entrada == 0) {
+                                if (idCliente == 0) {
                                     System.out.println("Encerrando sistema...");
                                     break;
                                 }
 
-                                if (gerenciarCatraca.validarAcessoPorId(entrada)) {
-                                    System.out.print("Digite '1' para entrada ou '2' para saída: ");
-                                    int tipo = scanner.nextInt();
-                                    String tipoEvento = (tipo == 1) ? "entrada" : "saída";
-
-                                    gerenciarCatraca.registrarEvento(entrada, tipoEvento);
-                                    gerenciarCatraca.abrirCatraca();
-
-                                    if (tipo == 2) {
-                                        gerenciarCatraca.calcularTempoPermanencia(entrada);
+                                if (idCliente > 0) {
+                                    if (gerenciarCatraca.validarAcessoPorId(idCliente)) {
+                                        gerenciarCatraca.registrarEntrada(idCliente);
+                                    } else {
+                                        System.out.println("Acesso negado. ID inválido.");
                                     }
                                 } else {
-                                    gerenciarCatraca.negarAcesso();
+                                    gerenciarCatraca.registrarSaida(-idCliente);
                                 }
                             }
                         }
+                    
+
                     
                 case 11 -> {
                 System.out.println(GerenciarSala.getSalas());
