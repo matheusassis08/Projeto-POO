@@ -228,35 +228,45 @@ import java.util.stream.Collectors;
                 .collect(Collectors.toList());
     }
     
+    public List<RelatorioMensalidades> buscarRelatorioMensalidades(List<RelatorioMensalidades> relatorios, int mes, int ano) {
+        return relatorios.stream()
+                .filter(relatorio -> {
+                    String[] partesData = relatorio.getDataDeRealizacao().split("/");
+                    int mesRelatorio = Integer.parseInt(partesData[1]);
+                    int anoRelatorio = Integer.parseInt(partesData[2]);
+                    return mesRelatorio == mes && anoRelatorio == ano;
+                })
+                .collect(Collectors.toList());
+    }
+    
     /**
      * Calcula e retorna o balanço mensal de determinado mês informado.
      */
-    public void gerarBalançoMensal(){
-        
-        List<RelatorioAgendamento> relatoriosAgendamentos = new ArrayList<>();
-        List<RelatorioVenda> relatoriosVendas = new ArrayList<>();
-        List<RegistroDespesas> registrosDespesas = new ArrayList<>();
-        GerenciarDespesas gerenciarDespesas = new GerenciarDespesas();
-        relatoriosVendas = carregarJSONRelatorioVenda(relatoriosVendas);
-        relatoriosAgendamentos = carregarJSONRelatorioAgendamento(relatoriosAgendamentos);
-        registrosDespesas = gerenciarDespesas.carregarJSONRegistroDespesas(registrosDespesas);
-        
+    public void gerarBalançoMensal() {
+        List<RelatorioAgendamento> relatoriosAgendamentos = carregarJSONRelatorioAgendamento(new ArrayList<>());
+        List<RelatorioVenda> relatoriosVendas = carregarJSONRelatorioVenda(new ArrayList<>());
+        List<RegistroDespesas> registrosDespesas = new GerenciarDespesas().carregarJSONRegistroDespesas(new ArrayList<>());
+        List<RelatorioMensalidades> relatoriosMensalidades = new GerenciarRelatorios().carregarJSONRelatorioMensalidades();
+
         System.out.println("Qual o mes do balanço desejado: ");
         int mes = scanner.nextInt();
         System.out.println("Qual o ano do balanço desejado: ");
         int ano = scanner.nextInt();
-        
+
         relatoriosVendas = buscarRelatorioVendaMensal(relatoriosVendas, mes, ano);
         relatoriosAgendamentos = buscarRelatorioAgendamentoMensal(relatoriosAgendamentos, mes, ano);
-        registrosDespesas = gerenciarDespesas.buscarDespesasMensais(registrosDespesas, mes, ano);
-        
-        double valorReceitas = somarValores(relatoriosVendas, RelatorioVenda::getValor) + somarValores(relatoriosAgendamentos, RelatorioAgendamento::getValor);
+        registrosDespesas = new GerenciarDespesas().buscarDespesasMensais(registrosDespesas, mes, ano);
+        relatoriosMensalidades = buscarRelatorioMensalidades(relatoriosMensalidades, mes, ano);
+
+        double valorReceitas = somarValores(relatoriosVendas, RelatorioVenda::getValor) +
+                               somarValores(relatoriosAgendamentos, RelatorioAgendamento::getValor) +
+                               somarValores(relatoriosMensalidades, RelatorioMensalidades::getValor);
+
         double valorDespesas = somarValores(registrosDespesas, RegistroDespesas::getValor);
-        
+
         double valorBalanço = valorReceitas - valorDespesas;
-        System.out.println("O seu balanço mensal de "+ mes + "/" + ano + ". Foi de: " + valorBalanço + "R$.");
+        System.out.println("O seu balanço mensal de " + mes + "/" + ano + " foi de: " + valorBalanço + " R$.");
     }
-    
     /**
      * Método para somar 
      * @param <T>
@@ -283,6 +293,65 @@ import java.util.stream.Collectors;
         return data;
     }
     
+    public void gerarBalançoMensalEstatisticas() {
+        List<RelatorioAgendamento> relatoriosAgendamentos = carregarJSONRelatorioAgendamento(new ArrayList<>());
+        List<RelatorioVenda> relatoriosVendas = carregarJSONRelatorioVenda(new ArrayList<>());
+        List<RegistroDespesas> registrosDespesas = new GerenciarDespesas().carregarJSONRegistroDespesas(new ArrayList<>());
+        List<RelatorioMensalidades> relatoriosMensalidades = new GerenciarRelatorios().carregarJSONRelatorioMensalidades();
+
+        System.out.println("Qual o ano do balanço desejado: ");
+        int ano = scanner.nextInt();
+        System.out.println("Qual o mês do balanço desejado: ");
+        int mes = scanner.nextInt();
+
+        relatoriosVendas = buscarRelatorioVendaMensal(relatoriosVendas, mes, ano);
+        relatoriosAgendamentos = buscarRelatorioAgendamentoMensal(relatoriosAgendamentos, mes, ano);
+        registrosDespesas = new GerenciarDespesas().buscarDespesasMensais(registrosDespesas, mes, ano);
+        relatoriosMensalidades = buscarRelatorioMensalidades(relatoriosMensalidades, mes, ano);
+
+        double valorReceitas = somarValores(relatoriosVendas, RelatorioVenda::getValor)
+                             + somarValores(relatoriosAgendamentos, RelatorioAgendamento::getValor)
+                             + somarValores(relatoriosMensalidades, RelatorioMensalidades::getValor);
+
+        double valorDespesas = somarValores(registrosDespesas, RegistroDespesas::getValor);
+        double valorBalanço = valorReceitas - valorDespesas;
+
+        int totalVendas = relatoriosVendas.size();
+        int totalAgendamentos = relatoriosAgendamentos.size();
+        int totalMensalidades = relatoriosMensalidades.size();
+        int totalDespesas = registrosDespesas.size();
+
+        // Exibe o balanço mensal com estatísticas
+        System.out.println("\n========== Balanço Mensal - " + mes + "/" + ano + " ==============");
+        System.out.println("Receitas totais: R$" + String.format("%.2f", valorReceitas));
+        System.out.println("Despesas totais: R$" + String.format("%.2f", valorDespesas));
+        System.out.println("Balanço final: R$" + String.format("%.2f", valorBalanço));
+        System.out.println("------------------------------------------------------");
+        System.out.println("Número de vendas: " + totalVendas);
+        System.out.println("Número de agendamentos: " + totalAgendamentos);
+        System.out.println("Número de mensalidades: " + totalMensalidades);
+        System.out.println("Número de despesas: " + totalDespesas);
+
+        System.out.println("\nDetalhes de Despesas:");
+        registrosDespesas.forEach(despesa -> {
+            System.out.println("Descrição: " + despesa.getDescricaoDaDespesa() + " | Tipo: " + despesa.getTipoDeDespesa() + " | Valor: R$" + String.format("%.2f", despesa.getValor()));
+        });
+
+        System.out.println("\nDetalhes de Vendas:");
+        relatoriosVendas.forEach(venda -> {
+            System.out.println("Cliente: " + venda.getNomeCliente() + " | Valor: R$" + String.format("%.2f", venda.getValor()) + " | Número do Pedido: " + venda.getNumeroPedido());
+        });
+
+        System.out.println("\nDetalhes de Mensalidades:");
+        relatoriosMensalidades.forEach(mensalidade -> {
+            System.out.println("Cliente: " + mensalidade.getNomeCliente() + " | Valor: R$" + String.format("%.2f", mensalidade.getValor()));
+        });
+
+        System.out.println("==========================================================");
+    }
+
+    
+    /*
     public void gerarBalançoMensalEstatisticas() {
         List<RelatorioAgendamento> relatoriosAgendamentos = new ArrayList<>();
         List<RelatorioVenda> relatoriosVendas = new ArrayList<>();
@@ -336,7 +405,7 @@ import java.util.stream.Collectors;
         });
         
         System.out.println("====================================================");
-    }
+    }*/
     
     @Override
     public void update(PadraoObservable o, Object arg){
