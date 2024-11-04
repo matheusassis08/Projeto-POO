@@ -1,5 +1,5 @@
 package academia;
-
+import java.util.Comparator;
 /**
  * A classe Cliente representa um cliente da academia.
  * Ela herda os atributos e comportamentos da classe abstrata Pessoa.

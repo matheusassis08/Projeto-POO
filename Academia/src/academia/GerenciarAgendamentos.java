@@ -14,7 +14,7 @@ import java.util.Scanner;
 /**
  * Classe para administrar os agendamentos das aulas
  */
-public class GerenciarAgendamentos {
+public class GerenciarAgendamentos{
     private static final String FILE_AGENDAMENTOS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\agendamentos.json";
     
     private final Scanner scanner = new Scanner(System.in);
@@ -207,6 +207,26 @@ public class GerenciarAgendamentos {
                 System.out.println("Horário agendado: " + agendamento.getHorario());
             });
     }
+    
+    public Comparator<Agendamento> compararPorValor() {
+        return new Comparator<Agendamento>() {
+            @Override
+            public int comparar(Agendamento a1, Agendamento a2) {
+                int t = 0;
+                if(a1.getValorAgendamento()>a2.getValorAgendamento()){
+                    t = 1;
+                }
+                if(a1.getValorAgendamento()<a2.getValorAgendamento()){
+                    t = -1;
+                }
+                if(a1.getValorAgendamento()==a2.getValorAgendamento()){
+                    t = 0;
+                }
+                return t;
+            }
+        };
+    }
+    
     /**
      * Construtor padrão da classe Agendamentos.
      */

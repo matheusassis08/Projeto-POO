@@ -250,6 +250,25 @@ public class GerenciarCliente implements Cadastro{
         }
     }
     
+    public Comparator<Cliente> compararPorValor() {
+        return new Comparator<Cliente>() {
+            @Override
+            public int comparar(Cliente a1, Cliente a2) {
+                int t = 0;
+                if(a1.getIdCliente()>a2.getIdCliente()){
+                    t = 1;
+                }
+                if(a1.getIdCliente()<a2.getIdCliente()){
+                    t = -1;
+                }
+                if(a1.getIdCliente()==a2.getIdCliente()){
+                    t = 0;
+                }
+                return t;
+            }
+        };
+    }
+    
     public GerenciarCliente() {
     }
     

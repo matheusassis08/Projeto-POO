@@ -449,6 +449,19 @@ public class Academia {
                 System.out.println(GerenciarSala.getSalas());
                 }
                 case 12 -> {
+                    System.out.println("Questão 13: ");
+                    GerenciarAgendamentos gerenciarAgendamentos = new GerenciarAgendamentos();
+                    List<Agendamento> agendamentos = new ArrayList<>();
+                    agendamentos = gerenciarAgendamentos.carregarJSONAgendamentos();
+                    
+                    GerenciarCliente gerenciarClientes = new GerenciarCliente();
+                    List<Cliente> clientes = new ArrayList<>();
+                    clientes = gerenciarClientes.carregarJSONClientes(clientes);
+                    
+                    System.out.println("Comparando valores de agendamento(1 maior, 2 menor, 0 igual):  " + gerenciarAgendamentos.compararPorValor().comparar(agendamentos.getLast(), agendamentos.getFirst()));
+                    System.out.println("Comparando id de clientes(1 maior, 2 menor, 0 igual): " + gerenciarClientes.compararPorValor().comparar(clientes.getFirst(), clientes.getLast()));
+                }
+                case 13 -> {
                     System.out.println("Encerrando o sistema...");
                     continuar = false;
                 }
