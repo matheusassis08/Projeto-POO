@@ -12,10 +12,11 @@ import java.time.LocalDate;
  */
 public class Mensalidade {
     private double valor;
-    private LocalDate mes;
+    private int mesInicio;
     private String nomeCliente;
     private int idCliente;
-    private boolean pagamento;
+    private String plano;
+    private int mesesEmAberto;
 
     public double getValor() {
         return valor;
@@ -25,14 +26,14 @@ public class Mensalidade {
         this.valor = valor;
     }
 
-    public LocalDate getMes() {
-        return mes;
+    public int getMesInicio() {
+        return mesInicio;
     }
 
-    public void setMes(LocalDate mes) {
-        this.mes = mes;
+    public void setMesInicio(int mesInicio) {
+        this.mesInicio = mesInicio;
     }
-
+    
     public String getNomeCliente() {
         return nomeCliente;
     }
@@ -49,26 +50,41 @@ public class Mensalidade {
         this.idCliente = idCliente;
     }
 
-    public boolean isPagamento() {
-        return pagamento;
+    public String getPlano() {
+        return plano;
     }
 
-    public void setPagamento(boolean pagamento) {
-        this.pagamento = pagamento;
+    public void setPlano(String plano) {
+        this.plano = plano;
     }
 
-    public Mensalidade(double valor, LocalDate mes, String nomeCliente, int idCliente, boolean pagamento) {
+    public int getMesesEmAberto() {
+        return mesesEmAberto;
+    }
+
+    public void setMesesEmAberto(int mesesEmAberto) {
+        this.mesesEmAberto = mesesEmAberto;
+    }
+
+    
+
+    public Mensalidade(double valor, int mes, String nomeCliente, int idCliente, String plano, int mesesEmAberto) {
         this.valor = valor;
-        this.mes = mes;
+        this.mesInicio = mes;
         this.nomeCliente = nomeCliente;
         this.idCliente = idCliente;
-        this.pagamento = pagamento;
+        this.plano = plano;
+        this.mesesEmAberto = mesesEmAberto;
     }
     
-    
+    public Mensalidade() {
+        
+    }
 
     @Override
     public String toString() {
-        return "Mensalidade{" + "valor=" + valor + ", mes=" + mes + ", nomeCliente=" + nomeCliente + ", idCliente=" + idCliente + ", pagamento=" + pagamento + '}';
+        return "Mensalidade{" + "valor=" + valor + ", mes=" + mesInicio + ", nomeCliente=" + nomeCliente + ", idCliente=" + idCliente + ", plano=" + plano + ", mesesEmAberto=" + mesesEmAberto + '}';
     }
+
+    
 }

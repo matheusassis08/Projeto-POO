@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
         
     private final String FILE_RELATORIOSVENDA = "C:\\POO\\Projeto-POO\\Academia\\src\\relatorios\\relatoriosVenda.json";
     private final String FILE_RELATORIOSAGENDAMENTO = "C:\\POO\\Projeto-POO\\Academia\\src\\relatorios\\relatoriosAgendamento.json";
+    private static final String FILE_RELATORIOSMENSALIDADES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\relatoriosMensalidades.json";
     String estado;
     //só essa^
     
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
     private final Scanner scanner = new Scanner(System.in);
     private final File arquivoRelatoriosVenda = new File(FILE_RELATORIOSVENDA);
     private final File arquivoRelatoriosAgendamento = new File(FILE_RELATORIOSAGENDAMENTO);
+    private final File arquivoRelatoriosMensalidades = new File(FILE_RELATORIOSMENSALIDADES);
     private final ObjectMapper mapper = new ObjectMapper();
     
 
@@ -57,11 +59,31 @@ import java.util.stream.Collectors;
     public void salvarJSONRelatorioVenda(List<RelatorioVenda> relatoriosVenda){
         try {
             mapper.writeValue(arquivoRelatoriosVenda, relatoriosVenda);
-            System.out.println("Produtos salvos no arquivo: " + arquivoRelatoriosVenda.getAbsolutePath());
+            System.out.println("Relatorios salvos no arquivo: " + arquivoRelatoriosVenda.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
+    public List<RelatorioMensalidades> carregarJSONRelatorioMensalidades(){
+        List<RelatorioMensalidades> relatoriosMensalidades = new ArrayList<>();
+        if (arquivoRelatoriosMensalidades.exists()) {
+            try {
+                relatoriosMensalidades = mapper.readValue(arquivoRelatoriosMensalidades, new TypeReference<List<RelatorioMensalidades>>() {});
+            } catch (IOException e) {
+            }
+        }
+        return relatoriosMensalidades;
+    }
+    
+    public void salvarJSONRelatorioMensalidades(List<RelatorioMensalidades> relatoriosMensalidades){
+        try {
+            mapper.writeValue(arquivoRelatoriosMensalidades, relatoriosMensalidades);
+            System.out.println("Relátorios salvos no arquivo: " + arquivoRelatoriosMensalidades.getAbsolutePath());
+        } catch (IOException e) {
+        }
+    }
+    
     /**
      * Método para gerar um id de relatorio unico para cada relatorio novo.
      * @return int idRelatorio
@@ -148,6 +170,25 @@ import java.util.stream.Collectors;
         
         return relatoriosAgendamentos;
     }
+    /**
+     * Gera o relatorio de pagamento de mensalidade, para ser salvo.
+     * 
+     * @param nomeCliente O nome do cliente
+     * @param idCliente O nome do cliente
+     * @param valor O nome do cliente
+     * @param nome  O nome do cliente
+     * @param dataDeRealizacao  O nome do cliente
+     * @param horarioDeRealizacao   O nome do cliente
+     * @param idRelatorio   O nome do cliente
+     */
+    public void gerarRelatorioPagamentoMensalidades(String nomeCliente, int idCliente, double valor, String nome, String dataDeRealizacao, String horarioDeRealizacao, int idRelatorio){
+        List<RelatorioMensalidades> relatoriosMensalidades = carregarJSONRelatorioMensalidades();
+        
+        RelatorioMensalidades relatorioMensalidades = new RelatorioMensalidades(nomeCliente, idCliente, valor, nome, dataDeRealizacao, horarioDeRealizacao, idRelatorio);
+        relatoriosMensalidades.add(relatorioMensalidades);
+        salvarJSONRelatorioMensalidades(relatoriosMensalidades);
+    }
+    
     /**
      * Método para carregar todos os JSONs de Relatorios de Agendamento
      * @param relatoriosAgendamentos

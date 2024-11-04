@@ -16,6 +16,7 @@ import java.util.Scanner;
  */
 public class GerenciarAgendamentos{
     private static final String FILE_AGENDAMENTOS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\agendamentos.json";
+    private static final String FILE_MENSALIDADES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\mensalidades.json";
     
     private final Scanner scanner = new Scanner(System.in);
     private final ObjectMapper mapper = new ObjectMapper();
@@ -145,7 +146,7 @@ public class GerenciarAgendamentos{
     public LocalDate solicitarData(){
         LocalDate data = null;
         while (data == null) {
-            System.out.println("Digite o dia do agendamento (dd/MM/yyyy): ");
+            System.out.println("Digite o dia (dd/MM/yyyy): ");
             try {
                 data = LocalDate.parse(scanner.nextLine(), Academia.getDATE_FORMATTER());
             } catch (Exception e) {
@@ -180,6 +181,18 @@ public class GerenciarAgendamentos{
         return new ArrayList<>();
     }
     
+    public List<Mensalidade> carregarJSONMensalidades() {
+        File arquivo = new File(FILE_MENSALIDADES);
+        try {
+            if (arquivo.exists() && arquivo.length() > 0) {
+                return mapper.readValue(arquivo, new TypeReference<List<Mensalidade>>() {});
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+    
     /**
      * Salva a lista de agendamentos realizados.
      * @param agendamentos
@@ -189,6 +202,16 @@ public class GerenciarAgendamentos{
         try {
             mapper.writeValue(arquivo, agendamentos);
             System.out.println("Agendamentos salvos com sucesso em: " + arquivo.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void salvarJSONMensalidades(List<Mensalidade> mensalidades) {
+        File arquivo = new File(FILE_MENSALIDADES);
+        try {
+            mapper.writeValue(arquivo, mensalidades);
+            System.out.println("Mensalidades salvas com sucesso em: " + arquivo.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -226,6 +249,45 @@ public class GerenciarAgendamentos{
                 return t;
             }
         };
+    }
+    
+    void cadastarMensalista() {
+        System.out.println("Informe o e-mail do cliente para cadastra sua mensalidade: ");
+        String email = scanner.nextLine();
+        GerenciarCliente gerenciarCliente = new GerenciarCliente();
+        List<Cliente> clientes = new ArrayList<>();
+        clientes = gerenciarCliente.carregarJSONClientes(clientes);
+        
+        Optional<Cliente> cliente = gerenciarCliente.buscarClientePorEmail(clientes, email);
+        if (cliente == null) {
+            System.out.println("Cliente com e-mail " + email + " não encontrado.");
+            return;
+        }
+        
+        System.out.println("Qual o tipo de plano de mensalidade:\n1. Mensal(1 mes) \n2.Semestral(6 Meses) \n3. Anual(12 Meses)");
+        int escolha = scanner.nextInt();
+        scanner.nextLine();
+        String plano = "";
+        int mesesEmAberto = 1;
+        switch(escolha){
+            case(1) -> {plano = "Mensal" ;mesesEmAberto = 1;}
+            case(2) -> {plano = "Semestral" ;mesesEmAberto = 6;}
+            case(3) -> {plano = "Anual" ;mesesEmAberto = 12;}
+            default -> System.out.println("Opção Inválida!");
+        }
+        
+        System.out.println("A partir de que mes a mensalidade será cobrada?");
+        int mes = scanner.nextInt();
+        scanner.nextLine();
+        
+        System.out.println("Qual o valor de cada mensalidade?");
+        double valor = scanner.nextDouble();
+        scanner.nextLine();
+        
+        List<Mensalidade> mensalidades = carregarJSONMensalidades();
+        Mensalidade mensalistaNovo = new Mensalidade(valor, mes, cliente.get().getNome(), cliente.get().getIdCliente(), plano, mesesEmAberto);
+        mensalidades.add(mensalistaNovo);
+        salvarJSONMensalidades(mensalidades);
     }
     
     /**

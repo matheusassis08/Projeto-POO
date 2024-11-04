@@ -27,7 +27,7 @@ public class Academia {
                                1. Clientes
                                2. Produtos
                                3. Realizar Venda
-                               4. Agendamentos
+                               4. Agendamentos e Mensalidades
                                5. Relatórios
                                6. Instrutor
                                7. Funcionários
@@ -39,7 +39,7 @@ public class Academia {
                                13. Questão 12, Método de classe para ver instâncias de clientes/produtos
                                14. Questão 11, Dois tipos Variaveis private e protected.
                                15. Sair""");
-                               
+            
             int n = scanner.nextInt();
             
             switch (n) {
@@ -222,7 +222,9 @@ public class Academia {
                                        2. Confirmar Agendamento Prévio
                                        3. Cancelar Agendamento
                                        4. Verificar Horários
-                                       5. Voltar ao menu principal""");
+                                       5. Cadastrar novo Mensalista
+                                       6. Pagar mensalidade
+                                       7. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
@@ -242,6 +244,17 @@ public class Academia {
                             System.out.println("Qual a data que deseja verificar os horários?");
                             LocalDate data = gerenciarAgendamentos.solicitarData();
                             gerenciarAgendamentos.verificarVagasAgenda(data);
+                        }
+                        case 5 -> {
+                            GerenciarAgendamentos gerenciarAgendamentos = new GerenciarAgendamentos();
+                            gerenciarAgendamentos.cadastarMensalista();
+                        }
+                        case 6 -> {
+                            GerenciarPagamentos gerenciarPagamentos = new GerenciarPagamentos();
+                            gerenciarPagamentos.confirmarPagamentoMensalidade();
+                        }
+                        case 7 -> {
+                            
                         }
                         default -> System.out.println("Opção inválida.");
                     }

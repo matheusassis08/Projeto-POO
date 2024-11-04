@@ -1,13 +1,19 @@
 package academia;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  *
  * Classe para realizar ou gerenciar pagamentos.
  */
 public class GerenciarPagamentos{
+    
     private final Scanner scanner = new Scanner(System.in);
     
     
@@ -69,7 +75,54 @@ public class GerenciarPagamentos{
                                 }
                             }                
     }
+    
+    public void confirmarPagamentoMensalidade() {
+        System.out.println("Informe o e-mail do cliente para cadastrar sua mensalidade: ");
+        String email = scanner.nextLine();
+        GerenciarCliente gerenciarCliente = new GerenciarCliente();
+        GerenciarAgendamentos gerenciarAgendamentos = new GerenciarAgendamentos();
+        GerenciarRelatorios gerenciarRelatorios = new GerenciarRelatorios();
+        List<Cliente> clientes = gerenciarCliente.carregarJSONClientes(new ArrayList<>());
+        Optional<Cliente> cliente = gerenciarCliente.buscarClientePorEmail(clientes, email);
+        if (cliente.isEmpty()) {
+            System.out.println("Cliente com e-mail " + email + " não encontrado.");
+            return;
+        }
+        int idCliente = cliente.get().getIdCliente();
 
+        
+        List<Mensalidade> mensalidades = gerenciarAgendamentos.carregarJSONMensalidades();
+        List<Mensalidade> mensalidadesCliente = mensalidades.stream()
+            .filter(mensalidade -> mensalidade.getIdCliente() == idCliente)
+            .collect(Collectors.toList());
+
+        if (mensalidadesCliente.isEmpty()) {
+            System.out.println("Nenhuma mensalidade encontrada para o cliente com ID: " + idCliente);
+        } else {
+            System.out.println("Mensalidades do cliente " + cliente.get().getNome() + ":");
+            mensalidadesCliente.forEach(mensalidade -> {
+                if (mensalidade.getMesesEmAberto() > 0) {
+                    mensalidade.setMesesEmAberto(mensalidade.getMesesEmAberto() - 1);
+                    gerenciarAgendamentos.salvarJSONMensalidades(mensalidades);
+                }
+                System.out.println("Mensalidade atualizada: " + mensalidade);
+            });
+        }
+        
+        LocalTime horaAtual = LocalTime.now();
+       //hora formatada para hora:minuto:segundo
+        String horarioRealizacao = horaAtual.format(Academia.getTIME_FORMATTER());
+                            
+        LocalDate dataAtual = LocalDate.now();
+        //Formata a data para (dia/mes/ano)
+        String dataRealizacao = dataAtual.format(Academia.getDATE_FORMATTER());
+        
+        
+        // gerando relatorio do pagamento de mensalidade
+        GerenciarRelatorios gerenciarRelatorio = new GerenciarRelatorios();
+        gerenciarRelatorio.gerarRelatorioPagamentoMensalidades(cliente.get().getNome(), idCliente, mensalidadesCliente.getFirst().getValor(), "Relátorio de Pagamento De Agendamento", dataRealizacao, horarioRealizacao, gerenciarRelatorio.gerarIdRelatorio());
+    }
+    
     public GerenciarPagamentos() {
     }
     
