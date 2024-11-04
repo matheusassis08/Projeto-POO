@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class Academia {
-    
     /**
      Atributo para definir a formatação das datas(dd/MM/yyyy).
      */
@@ -35,10 +34,12 @@ public class Academia {
                                10. Catraca
                                11. Exibir Salas
                                12. Questão 13, Comparator Agendamento/Cliente
-                               13. Sair""");
-            
+                               13. Questão 12, Método de classe para ver instâncias de clientes/produtos
+                               14. Questão 11, Dois tipos Variaveis private e protected.
+                               14. Sair""");
+                               
             int n = scanner.nextInt();
-
+            
             switch (n) {
                 case 1 -> {
                     System.out.println("""
@@ -46,7 +47,7 @@ public class Academia {
                                        2. Alterar Cliente
                                        3. Apagar Cliente
                                        4. Ver Despesa Diária de Cliente
-                                       4. Voltar ao menu principal""");
+                                       5. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
@@ -460,13 +461,22 @@ public class Academia {
                     System.out.println("Comparando id de clientes(1 maior, 2 menor, 0 igual): " + gerenciarClientes.compararPorValor().comparar(clientes.getFirst(), clientes.getLast()));
                 }
                 case 13 -> {
+                    System.out.println("Questão 12: ");
+                    System.out.println(instanciasDeClientesEProdutos());
+                }
+                case 14 -> {
+                    System.out.println("Questão 11: ");
+                    System.out.println("Numero de Instancias(Private): " + Cliente.getInstanciasClientes());
+                    System.out.println("Numero de Instancias(Protected): " + Cliente.getInstanciasClientesProtected());
+                    //O private tem acesso em outras classe apenas com o get, o protected em suas subclasses não é necessario uso de get.
+                }
+                case 15 -> {
                     System.out.println("Encerrando o sistema...");
                     continuar = false;
                 }
                 default -> System.out.println("Opção inválida.");
             }
         }
-
         scanner.close();
     }
 
@@ -476,5 +486,12 @@ public class Academia {
 
     public static DateTimeFormatter getTIME_FORMATTER() {
         return TIME_FORMATTER;
+    }
+    
+    public static String instanciasDeClientesEProdutos(){
+        int instanciasClientes = Cliente.getInstanciasClientes();
+        int instanciasProdutos = Produto.getInstanciasProdutos();
+        String resultado = "A quantidade de instancias de Clientes e de : " + instanciasClientes + "\nA quantidade de instancias de Produtos e de: " + instanciasProdutos;
+        return resultado;
     }
 }

@@ -18,7 +18,7 @@ public class Produto {
     private String prazoValidade;
     private String tipo;
     private int filaEspera;
-    
+    private static int instanciasProdutos = 0;
     
      public Produto() {
          
@@ -43,6 +43,7 @@ public class Produto {
         this.prazoValidade = prazoValidade;
         this.tipo = tipo;
         this.filaEspera = filaEspera;
+        instanciasProdutos++;
     }
     
     
@@ -61,8 +62,6 @@ public class Produto {
     public void setQuantidadeEstoque(int quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
     }
-    
-    
 
     public int getCodigo() {
         return codigo;
@@ -103,6 +102,10 @@ public class Produto {
 
     public void setFilaEspera(int filaEspera) {
         this.filaEspera = filaEspera;
+    }
+    
+    public static int getInstanciasProdutos() {
+        return instanciasProdutos;
     }
 
     @Override

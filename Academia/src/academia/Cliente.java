@@ -6,6 +6,8 @@ import java.util.Comparator;
  */
 
 public class Cliente extends Pessoa {
+    private static int instanciasClientes = 0;
+    protected static int instanciasClientesProtected = 0;
     private int idCliente;
 
     public int getIdCliente() {
@@ -33,8 +35,21 @@ public class Cliente extends Pessoa {
     public Cliente(String nome, String cpf, String endereco, String telefone, String email, int idCliente) {
         super(nome, cpf, endereco, telefone, email);
         this.idCliente = idCliente;
+        instanciasClientes++;
+        instanciasClientesProtected++;
+    }
+    
+    public static int getInstanciasClientes() {
+        return instanciasClientes;
     }
 
+    public static int getInstanciasClientesProtected() {
+        return instanciasClientesProtected;
+    }
+
+    public static void setInstanciasClientesProtected(int instanciasClientesProtected) {
+        Cliente.instanciasClientesProtected = instanciasClientesProtected;
+    }
     
     
     
