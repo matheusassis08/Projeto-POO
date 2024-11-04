@@ -34,7 +34,8 @@ public class Academia {
                                9. Balanços
                                10. Catraca
                                11. Exibir Salas
-                               12. Sair""");
+                               12. Questão 13, Comparator Agendamento/Cliente
+                               13. Sair""");
             
             int n = scanner.nextInt();
 
@@ -442,9 +443,6 @@ public class Academia {
                                 }
                             }
                         }
-                    
-
-                    
                 case 11 -> {
                 System.out.println(GerenciarSala.getSalas());
                 }
