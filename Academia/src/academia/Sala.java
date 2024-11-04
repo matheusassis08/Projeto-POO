@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package academia;
 
 import java.util.List;
@@ -12,14 +8,67 @@ import java.util.List;
  */
 public class Sala {
     private int capacidadeMaxima;
-    private List<String> equipamentos;
-    private String horarioFuncionamento;
-    private String tipoAtividade;
-    private String disponibilidade;
-    private String responsavel;
+    private String tipoAula;
+    private String funcionarioChefe;
     private double tamanho;
     private String localizacao;
-    private List<String> recursosEspeciais;
+
+    public int getCapacidadeMaxima() {
+        return capacidadeMaxima;
+    }
+
+    public void setCapacidadeMaxima(int capacidadeMaxima) {
+        this.capacidadeMaxima = capacidadeMaxima;
+    }
+
+    public String getTipoAula() {
+        return tipoAula;
+    }
+
+    public void setTipoAula(String tipoAula) {
+        this.tipoAula = tipoAula;
+    }
+
+    public String getFuncionarioChefe() {
+        return funcionarioChefe;
+    }
+
+    public void setFuncionarioChefe(String funcionarioChefe) {
+        this.funcionarioChefe = funcionarioChefe;
+    }
+
+    public double getTamanho() {
+        return tamanho;
+    }
+
+    public void setTamanho(double tamanho) {
+        this.tamanho = tamanho;
+    }
+
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
+    }
+
+    public Sala(int capacidadeMaxima, String tipoAula, String funcionarioChefe, double tamanho, String localizacao) {
+        this.capacidadeMaxima = capacidadeMaxima;
+        this.tipoAula = tipoAula;
+        this.funcionarioChefe = funcionarioChefe;
+        this.tamanho = tamanho;
+        this.localizacao = localizacao;
+    }
+    
+    public Sala() {
+        
+    }
+
+    @Override
+    public String toString() {
+        return "Sala{" + "capacidadeMaxima=" + capacidadeMaxima + ", tipoAula=" + tipoAula + ", funcionarioChefe=" + funcionarioChefe + ", tamanho=" + tamanho + ", localizacao=" + localizacao + '}';
+    }
     
     
 }

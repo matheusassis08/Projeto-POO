@@ -4,7 +4,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +33,8 @@ public class Academia {
                                8. Despesas
                                9. Balanços
                                10. Catraca
-                               11. Sair""");
+                               11. Exibir Salas
+                               12. Sair""");
             
             int n = scanner.nextInt();
 
@@ -446,8 +446,10 @@ public class Academia {
                             }
                         }
                     
-                
                 case 11 -> {
+                System.out.println(GerenciarSala.getSalas());
+                }
+                case 12 -> {
                     System.out.println("Encerrando o sistema...");
                     continuar = false;
                 }

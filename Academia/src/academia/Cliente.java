@@ -28,12 +28,15 @@ public class Cliente extends Pessoa {
      * @param endereco O endereço de um cliente.
      * @param telefone O telefone do cliente.
      * @param email    O email do cliente.
+     * @param idCliente O id do cliente.
      */
     public Cliente(String nome, String cpf, String endereco, String telefone, String email, int idCliente) {
         super(nome, cpf, endereco, telefone, email);
         this.idCliente = idCliente;
     }
 
+    
+    
     
     @Override
     public String toString() {
