@@ -16,6 +16,8 @@ public class Academia {
     
     
     public static void main(String[] args) {
+        //Para gerenciar entrada e saida da catraca
+        GerenciarCatraca gerenciarCatraca = new GerenciarCatraca();
         Scanner scanner = new Scanner(System.in);
         boolean continuar = true;
 
@@ -36,7 +38,7 @@ public class Academia {
                                12. Questão 13, Comparator Agendamento/Cliente
                                13. Questão 12, Método de classe para ver instâncias de clientes/produtos
                                14. Questão 11, Dois tipos Variaveis private e protected.
-                               14. Sair""");
+                               15. Sair""");
                                
             int n = scanner.nextInt();
             
@@ -419,8 +421,6 @@ public class Academia {
                     }
                 }
                 case 10 -> {
-                            
-                            GerenciarCatraca gerenciarCatraca = new GerenciarCatraca();
 
                             System.out.println("=== Sistema de Acesso da Academia ===");
 

@@ -19,7 +19,7 @@ public class GerenciarAgendamentos{
     
     private final Scanner scanner = new Scanner(System.in);
     private final ObjectMapper mapper = new ObjectMapper();
-
+    
     /** 
      * Para agendar um horário para um aluno ter aula
      */
@@ -85,6 +85,7 @@ public class GerenciarAgendamentos{
             System.out.println("Agendamento não encontrado");
         }
         agendamento.setConfirmado(true);
+        salvarJSONAgendamentos(agendamentos);
     }
     
     public void cancelarAgendamento(){

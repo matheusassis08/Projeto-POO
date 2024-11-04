@@ -99,7 +99,7 @@ import java.util.stream.Collectors;
     
     public void gerarRelotorioVenda(String nome, String dataDeRealizacao, String horarioDeRealizacao, int idRelatorio,int numeroPedido, double valorTotalPedido, String nomeCliente, String emailCliente, List<String> nomeProdutos, List<Double> valorUnitarioItemsPedido, List<Integer> codigoProdutosPedido){
         List<RelatorioVenda> relatoriosVenda = new ArrayList<>();
-        carregarJSONRelatorioVenda(relatoriosVenda);
+        relatoriosVenda = carregarJSONRelatorioVenda(relatoriosVenda);
         
         RelatorioVenda relatorioVenda = new RelatorioVenda(nome, dataDeRealizacao, horarioDeRealizacao, idRelatorio, numeroPedido, valorTotalPedido, nomeCliente, emailCliente, nomeProdutos, valorUnitarioItemsPedido, codigoProdutosPedido);
         relatoriosVenda.add(relatorioVenda);
@@ -200,12 +200,11 @@ import java.util.stream.Collectors;
         relatoriosAgendamentos = carregarJSONRelatorioAgendamento(relatoriosAgendamentos);
         registrosDespesas = gerenciarDespesas.carregarJSONRegistroDespesas(registrosDespesas);
         
-        System.out.println("Qual o ano do balanço desejado: ");
+        System.out.println("Qual o mes do balanço desejado: ");
         int mes = scanner.nextInt();
-        System.out.println("Qual o mês do balanço desejado: ");
+        System.out.println("Qual o ano do balanço desejado: ");
         int ano = scanner.nextInt();
         
-        relatoriosVendas = carregarJSONRelatorioVenda(relatoriosVendas);
         relatoriosVendas = buscarRelatorioVendaMensal(relatoriosVendas, mes, ano);
         relatoriosAgendamentos = buscarRelatorioAgendamentoMensal(relatoriosAgendamentos, mes, ano);
         registrosDespesas = gerenciarDespesas.buscarDespesasMensais(registrosDespesas, mes, ano);
