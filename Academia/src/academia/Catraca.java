@@ -8,6 +8,7 @@ public class Catraca {
     private String data;
     private String horario;
     private int idCliente;
+    private String tipoEvento; // "entrada" ou "saída"
 
     public String getData() {
         return data;
@@ -19,6 +20,10 @@ public class Catraca {
 
     public int getIdCliente() {
         return idCliente;
+    }
+
+    public String getTipoEvento() {
+        return tipoEvento;
     }
 
     public void setData(String data) {
@@ -33,22 +38,21 @@ public class Catraca {
         this.idCliente = idCliente;
     }
 
-    public Catraca(String data, String horario, int idCliente) {
+    public void setTipoEvento(String tipoEvento) {
+        this.tipoEvento = tipoEvento;
+    }
+
+    public Catraca(String data, String horario, int idCliente, String tipoEvento) {
         this.data = data;
         this.horario = horario;
         this.idCliente = idCliente;
+        this.tipoEvento = tipoEvento;
     }
 
-    public Catraca() {
-        
-    }
-    
+    public Catraca() {}
+
     @Override
     public String toString() {
-        return "Catraca{" + "data=" + data + ", horario=" + horario + ", idCliente=" + idCliente + '}';
+        return "Catraca{" + "data=" + data + ", horario=" + horario + ", idCliente=" + idCliente + ", tipoEvento=" + tipoEvento + '}';
     }
-    
-    
-    
-    
 }
