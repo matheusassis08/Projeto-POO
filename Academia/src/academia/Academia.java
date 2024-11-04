@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ public class Academia {
      */
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+    
     
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -42,6 +44,7 @@ public class Academia {
                                        1. Adicionar Cliente
                                        2. Alterar Cliente
                                        3. Apagar Cliente
+                                       4. Ver Despesa Diária de Cliente
                                        4. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
@@ -58,6 +61,15 @@ public class Academia {
                             cadastroCliente.apagarCadastro();
                         }
                         case 4 -> {
+                            GerenciarCliente gerenciarCliente = new GerenciarCliente();
+                            List<Cliente> clientes = new ArrayList<>();
+                            clientes = gerenciarCliente.carregarJSONClientes(clientes);
+                            System.out.println("Qual o email do cliente para ser verificado suas despesas diárias?");
+                            scanner.nextLine();
+                            String email = scanner.nextLine();
+                            gerenciarCliente.gerarDespesasDiariasCliente(email);
+                        }
+                        case 5 -> {
                             //Volta ao menu principal
                         }
                         default -> System.out.println("Opção inválida.");
@@ -205,8 +217,8 @@ public class Academia {
                                        1. Realizar Agendamento Prévio de Aula
                                        2. Confirmar Agendamento Prévio
                                        3. Cancelar Agendamento
-                                       3. Verificar Horários
-                                       4. Voltar ao menu principal""");
+                                       4. Verificar Horários
+                                       5. Voltar ao menu principal""");
                     n = scanner.nextInt();
                     switch (n) {
                         case 1 -> {
@@ -222,7 +234,10 @@ public class Academia {
                             gerenciarAgendamentos.cancelarAgendamento();
                         }
                         case 4 -> {
-                            
+                            GerenciarAgendamentos gerenciarAgendamentos = new GerenciarAgendamentos();
+                            System.out.println("Qual a data que deseja verificar os horários?");
+                            LocalDate data = gerenciarAgendamentos.solicitarData();
+                            gerenciarAgendamentos.verificarVagasAgenda(data);
                         }
                         default -> System.out.println("Opção inválida.");
                     }
@@ -271,8 +286,7 @@ public class Academia {
                             }
                         }
                         case 2 -> {
-                            GerenciarRelatorios gerenciarRelatorio = new GerenciarRelatorios();
-                            gerenciarRelatorio.geraBalançoMensal();
+                            
                         }
                         case 3 -> {
                             
@@ -392,21 +406,16 @@ public class Academia {
                     switch (n) {
                         case 1 -> {
                             GerenciarRelatorios gerenciarRelatorio = new GerenciarRelatorios();
-                            gerenciarRelatorio.geraBalançoMensal();
+                            gerenciarRelatorio.gerarBalançoMensal();
                         }
                         case 2 -> {
-                            
-                        }
-                        case 3 -> {
-                            
-                        }
-                        case 4 -> {
+                            GerenciarRelatorios gerenciarRelatorio = new GerenciarRelatorios();
+                            gerenciarRelatorio.gerarBalançoMensalEstatisticas();
                             
                         }
                         default -> System.out.println("Opção inválida.");
                     }
                 }
-                
                 case 10 -> {
                     
                     {                                                 
@@ -452,7 +461,6 @@ public class Academia {
                 }
                     
                 }
-                
                 case 11 -> {
                     System.out.println("Encerrando o sistema...");
                     continuar = false;

@@ -3,6 +3,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -225,6 +226,28 @@ public class GerenciarCliente implements Cadastro{
         } while (numerosPedidos.contains(idCliente));
 
         return idCliente;
+    }
+    
+    public void gerarDespesasDiariasCliente(String emailCliente) {
+        GerenciarRelatorios gerenciarRelatorio = new GerenciarRelatorios();
+        List<RelatorioVenda> relatoriosVendas = gerenciarRelatorio.carregarJSONRelatorioVenda(new ArrayList<>());
+
+        // Solicitar data de busca no formato LocalDate
+        LocalDate data = gerenciarRelatorio.solicitarData();
+        
+        System.out.println("Relatórios de despesas diárias para a data: " + data.format(Academia.getDATE_FORMATTER()) + " e cliente: " + emailCliente);
+        
+        // Buscar e exibir relatórios com data e email correspondentes
+        for (RelatorioVenda relatorio : relatoriosVendas) {
+            LocalDate dataRelatorio = LocalDate.parse(relatorio.getDataDeRealizacao(), Academia.getDATE_FORMATTER());
+
+            if (dataRelatorio.equals(data) && relatorio.getEmailCliente().equalsIgnoreCase(emailCliente)) {
+                System.out.println("Cliente: " + relatorio.getNomeCliente());
+                System.out.println("Número do Pedido: " + relatorio.getNumeroPedido());
+                System.out.println("Valor do Pedido: R$" + relatorio.getValor());
+                System.out.println("-----------------------------------");
+            }
+        }
     }
     
     public GerenciarCliente() {

@@ -27,9 +27,8 @@ public class GerenciarPagamentos{
         confirmarPagamento();
     }
     
-    public List<Agendamento> solicitarPagamentoAgendamento(List<Agendamento> agendamentos){
+    public Agendamento solicitarPagamentoAgendamento(Agendamento agendamento){
         GerenciarPagamentos gerenciarPagamentos = new GerenciarPagamentos();
-        GerenciarAgendamentos gerenciarAgendamentos = new GerenciarAgendamentos();
         
         System.out.println("""
                                                Qual forma de Pagamento?
@@ -44,33 +43,29 @@ public class GerenciarPagamentos{
                                     scanner.nextLine();
                                     System.out.println("Qual o numero do cartão? ");
                                     int numCartaoIn = scanner.nextInt();
-                                    gerenciarPagamentos.autenticarPagamentoCartao(numCartaoIn,agendamentos.getLast().getValorAgendamento());
-                                    gerenciarAgendamentos.salvarJSONAgendamentos(agendamentos);
-                                    return agendamentos;
+                                    gerenciarPagamentos.autenticarPagamentoCartao(numCartaoIn,agendamento.getValorAgendamento());
+                                    return agendamento;
                                 }
                                 case 2 -> {
                                     scanner.nextLine();
                                     System.out.println("Qual o numero do cartão? ");
                                     int numCartaoIn = scanner.nextInt();
-                                    gerenciarPagamentos.autenticarPagamentoCartao(numCartaoIn,agendamentos.getLast().getValorAgendamento());
-                                    gerenciarAgendamentos.salvarJSONAgendamentos(agendamentos);
-                                    return agendamentos;
+                                    gerenciarPagamentos.autenticarPagamentoCartao(numCartaoIn,agendamento.getValorAgendamento());
+                                    return agendamento;
                                 }
                                 case 3 -> {
                                     String tipo = "Pix";
-                                    gerenciarPagamentos.solicitarPagamento(agendamentos.getLast().getValorAgendamento(), tipo);
-                                    gerenciarAgendamentos.salvarJSONAgendamentos(agendamentos);
-                                    return agendamentos;
+                                    gerenciarPagamentos.solicitarPagamento(agendamento.getValorAgendamento(), tipo);
+                                    return agendamento;
                                 }
                                 case 4 -> {
                                     String tipo = "Dinheiro";
-                                    gerenciarPagamentos.solicitarPagamento(agendamentos.getLast().getValorAgendamento(), tipo);
-                                    gerenciarAgendamentos.salvarJSONAgendamentos(agendamentos);
-                                    return agendamentos;
+                                    gerenciarPagamentos.solicitarPagamento(agendamento.getValorAgendamento(), tipo);
+                                    return agendamento;
                                 }
                                 default -> {
                                     System.out.println("Opção inválida.");
-                                    return agendamentos;
+                                    return agendamento;
                                 }
                             }                
     }

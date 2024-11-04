@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,14 +53,12 @@ public class GerenciarAgendamentos {
         int idInstrutorIn = scanner.nextInt();
         
         System.out.println("Qual o valor do agendamento da aula?");
-        double valorAgendamentoIn = scanner.nextInt();
+        double valorAgendamentoIn = scanner.nextDouble();
         GerenciarPagamentos gerenciarPagamentos = new GerenciarPagamentos();
-        GerenciarAgendamentos gerenciarAgendamentos = new GerenciarAgendamentos();
         GerenciarRelatorios gerenciarRelatorios = new GerenciarRelatorios();
         
         Agendamento agendamento = new Agendamento(data, horario, cliente.get().getNome(), cliente.get().getEmail(), cliente.get().getIdCliente(), nomeInstrutorIn, idInstrutorIn, tipoDeAulaIn, valorAgendamentoIn, false);
-        agendamentos.add(agendamento);
-        agendamentos.addAll(gerenciarPagamentos.solicitarPagamentoAgendamento(agendamentos));
+        agendamentos.add(gerenciarPagamentos.solicitarPagamentoAgendamento(agendamento));
         LocalTime horaAtual = LocalTime.now();
        //hora formatada para hora:minuto:segundo
         String horarioDeRealizacao = horaAtual.format(Academia.getTIME_FORMATTER());
@@ -74,7 +71,6 @@ public class GerenciarAgendamentos {
         gerenciarRelatorios.gerarRelatorioPagamentoAgendamento(cliente.get().getNome(), cliente.get().getIdCliente(), nomeInstrutorIn, idInstrutorIn, tipoDeAulaIn, valorAgendamentoIn, "Relátorio Agendamento de Aula", dataDeRealizacao, horarioDeRealizacao, gerenciarRelatorios.gerarIdRelatorio());
         
         salvarJSONAgendamentos(agendamentos);
-        System.out.println("Agendamento salvo com sucesso!");
     }
     
     public void confimarAgendamentoPrevio(){
@@ -145,7 +141,7 @@ public class GerenciarAgendamentos {
      * Solicita a data no formato (dd/mm/yyyy) e retorna no formato LocalDate.
      * @return LocalDate
      */
-    private LocalDate solicitarData(){
+    public LocalDate solicitarData(){
         LocalDate data = null;
         while (data == null) {
             System.out.println("Digite o dia do agendamento (dd/MM/yyyy): ");
@@ -195,6 +191,21 @@ public class GerenciarAgendamentos {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void verificarVagasAgenda(LocalDate dataSolicitada) {
+    List<Agendamento> agendamentos = carregarJSONAgendamentos();
+
+    // Filtra e imprime os agendamentos do dia solicitado
+    agendamentos.stream()
+            .filter(agendamento -> {
+                LocalDate dataAgendamento = LocalDate.parse(agendamento.getData(), Academia.getDATE_FORMATTER());
+                return dataAgendamento.equals(dataSolicitada);
+            })
+            .forEach(agendamento -> {
+                System.out.println("Cliente: " + agendamento.getNomeCliente());
+                System.out.println("Horário agendado: " + agendamento.getHorario());
+            });
     }
     /**
      * Construtor padrão da classe Agendamentos.

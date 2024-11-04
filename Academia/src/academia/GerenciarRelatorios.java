@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -168,7 +170,7 @@ import java.util.stream.Collectors;
     public void salvarJSONRelatorioAgendamento(List<RelatorioAgendamento> relatoriosAgendamentos){
         try {
             mapper.writeValue(arquivoRelatoriosAgendamento, relatoriosAgendamentos);
-            System.out.println("Produtos salvos no arquivo: " + arquivoRelatoriosAgendamento.getAbsolutePath());
+            System.out.println("Relatório de Agendamento salvo no arquivo: " + arquivoRelatoriosAgendamento.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -188,7 +190,7 @@ import java.util.stream.Collectors;
     /**
      * Calcula e retorna o balanço mensal de determinado mês informado.
      */
-    public void geraBalançoMensal(){
+    public void gerarBalançoMensal(){
         
         List<RelatorioAgendamento> relatoriosAgendamentos = new ArrayList<>();
         List<RelatorioVenda> relatoriosVendas = new ArrayList<>();
@@ -228,6 +230,73 @@ import java.util.stream.Collectors;
                     .sum();
     }
     
+    public LocalDate solicitarData(){
+        LocalDate data = null;
+        while (data == null) {
+            System.out.println("Digite o dia do agendamento (dd/MM/yyyy): ");
+            try {
+                data = LocalDate.parse(scanner.nextLine(), Academia.getDATE_FORMATTER());
+            } catch (Exception e) {
+                System.out.println("Data inválida. Tente novamente no formato dd/MM/yyyy.");
+            }
+        }
+        return data;
+    }
+    
+    public void gerarBalançoMensalEstatisticas() {
+        List<RelatorioAgendamento> relatoriosAgendamentos = new ArrayList<>();
+        List<RelatorioVenda> relatoriosVendas = new ArrayList<>();
+        List<RegistroDespesas> registrosDespesas = new ArrayList<>();
+        GerenciarDespesas gerenciarDespesas = new GerenciarDespesas();
+        
+        relatoriosVendas = carregarJSONRelatorioVenda(relatoriosVendas);
+        relatoriosAgendamentos = carregarJSONRelatorioAgendamento(relatoriosAgendamentos);
+        registrosDespesas = gerenciarDespesas.carregarJSONRegistroDespesas(registrosDespesas);
+        
+        // Solicita o ano e o mês desejados
+        System.out.println("Qual o ano do balanço desejado: ");
+        int ano = scanner.nextInt();
+        System.out.println("Qual o mês do balanço desejado: ");
+        int mes = scanner.nextInt();
+        
+        // Filtra relatórios e despesas para o mês/ano informados
+        relatoriosVendas = buscarRelatorioVendaMensal(relatoriosVendas, mes, ano);
+        relatoriosAgendamentos = buscarRelatorioAgendamentoMensal(relatoriosAgendamentos, mes, ano);
+        registrosDespesas = gerenciarDespesas.buscarDespesasMensais(registrosDespesas, mes, ano);
+        
+        // Soma os valores
+        double valorReceitas = somarValores(relatoriosVendas, RelatorioVenda::getValor) 
+                             + somarValores(relatoriosAgendamentos, RelatorioAgendamento::getValor);
+        double valorDespesas = somarValores(registrosDespesas, RegistroDespesas::getValor);
+        double valorBalanço = valorReceitas - valorDespesas;
+        
+        // Estatísticas adicionais
+        int totalVendas = relatoriosVendas.size();
+        int totalAgendamentos = relatoriosAgendamentos.size();
+        int totalDespesas = registrosDespesas.size();
+
+        // Exibe o balanço mensal com estatísticas
+        System.out.println("\n========== Balanço Mensal - " + mes + "/" + ano + " ==========");
+        System.out.println("Receitas totais: R$" + String.format("%.2f", valorReceitas));
+        System.out.println("Despesas totais: R$" + String.format("%.2f", valorDespesas));
+        System.out.println("Balanço final: R$" + String.format("%.2f", valorBalanço));
+        System.out.println("------------------------------------------------------");
+        System.out.println("Número de vendas: " + totalVendas);
+        System.out.println("Número de agendamentos: " + totalAgendamentos);
+        System.out.println("Número de despesas: " + totalDespesas);
+
+        System.out.println("\nDetalhes de Despesas:");
+        registrosDespesas.forEach(despesa -> {
+            System.out.println("Descrição: " + despesa.getDescricaoDaDespesa() + " | Tipo: " + despesa.getTipoDeDespesa() + " | Valor: R$" + String.format("%.2f", despesa.getValor()));
+        });
+
+        System.out.println("\nDetalhes de Vendas:");
+        relatoriosVendas.forEach(venda -> {
+            System.out.println("Cliente: " + venda.getNomeCliente() + " | Valor: R$" + String.format("%.2f", venda.getValor()) + " | Número do Pedido: " + venda.getNumeroPedido());
+        });
+        
+        System.out.println("====================================================");
+    }
     
     @Override
     public void update(PadraoObservable o, Object arg){
