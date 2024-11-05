@@ -1,5 +1,7 @@
 package academia;
 
+import academia.Control.PadraoObserver;
+import academia.Control.PadraoObservable;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;

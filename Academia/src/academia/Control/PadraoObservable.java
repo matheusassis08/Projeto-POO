@@ -1,4 +1,4 @@
-package academia;
+package academia.Control;
 import java.util.Vector;
 
 /**
