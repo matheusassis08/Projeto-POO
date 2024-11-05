@@ -73,7 +73,9 @@ public class GerenciarAgendamentos{
         
         salvarJSONAgendamentos(agendamentos);
     }
-    
+    /**
+     * Para confirmar um agendamento prévio mundando o confirmado para True.
+     */
     public void confimarAgendamentoPrevio(){
         List<Agendamento> agendamentos = carregarJSONAgendamentos();
         
@@ -89,6 +91,9 @@ public class GerenciarAgendamentos{
         salvarJSONAgendamentos(agendamentos);
     }
     
+    /**
+     * Para cancelar o agendamento de um aula, devolvendo o valor pago caso seja antecipado a 3 dias.
+     */
     public void cancelarAgendamento(){
         List<Agendamento> agendamentos = new ArrayList<>();
         agendamentos = carregarJSONAgendamentos();
@@ -101,7 +106,7 @@ public class GerenciarAgendamentos{
         //Formata a data para (dia/mes/ano)
         String dataDeRealizacao = dataAtual.format(Academia.getDATE_FORMATTER());
         //Para caso ser cancelado 5 dias anterior 
-        if (dataAtual.isBefore(dataAgendamento.minusDays(5)) || dataAtual.equals(dataAgendamento.minusDays(5))) {
+        if (dataAtual.isBefore(dataAgendamento.minusDays(5)) || dataAtual.equals(dataAgendamento.minusDays(3))) {
             System.out.println("Como o cancelamento de agendamento está sendo feito 5 dias anteriormente a data agendada a devolução de 50% do valor será feita.");
             LocalTime horaAtual = LocalTime.now();
             //hora formatada para hora:minuto:segundo
@@ -156,6 +161,12 @@ public class GerenciarAgendamentos{
         return data;
     }
     
+    /**
+     * Busca um agendamento feito a partir do email informando, e a lista de clientes já carregada.
+     * @param agendamentos
+     * @param emailCliente
+     * @return Agendamento
+     */
     public Agendamento buscarAgendamentoPorEmail(List<Agendamento> agendamentos, String emailCliente) {
        for (Agendamento agendamento : agendamentos) {
            if (agendamento.getEmailCliente().equalsIgnoreCase(emailCliente)) {
@@ -181,6 +192,10 @@ public class GerenciarAgendamentos{
         return new ArrayList<>();
     }
     
+    /**
+     * Carrega toda a lista de Mensalidades salvar em JSON.
+     * @return List Mensalidade
+     */
     public List<Mensalidade> carregarJSONMensalidades() {
         File arquivo = new File(FILE_MENSALIDADES);
         try {
@@ -207,6 +222,10 @@ public class GerenciarAgendamentos{
         }
     }
     
+    /**
+     * Salva o JSON de mensalidades em um arquivo.
+     * @param mensalidades
+     */
     public void salvarJSONMensalidades(List<Mensalidade> mensalidades) {
         File arquivo = new File(FILE_MENSALIDADES);
         try {
@@ -217,6 +236,10 @@ public class GerenciarAgendamentos{
         }
     }
     
+    /**
+     * Verifica e imprime no terminal todas as datas que já estão marcadas;
+     * @param dataSolicitada
+     */
     public void verificarVagasAgenda(LocalDate dataSolicitada) {
     List<Agendamento> agendamentos = carregarJSONAgendamentos();
 
@@ -232,6 +255,10 @@ public class GerenciarAgendamentos{
             });
     }
     
+    /**
+     * Comparator para comparar os agendamentos por valor
+     * @return Comparator Agendamento
+     */
     public Comparator<Agendamento> compararPorValor() {
         return new Comparator<Agendamento>() {
             @Override
@@ -251,6 +278,9 @@ public class GerenciarAgendamentos{
         };
     }
     
+    /**
+     * Cadastra um novo mensalista no sistema salvando em JSON o registro da mensalidade
+     */
     void cadastarMensalista() {
         System.out.println("Informe o e-mail do cliente para cadastra sua mensalidade: ");
         String email = scanner.nextLine();

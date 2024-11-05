@@ -118,7 +118,7 @@ public class GerenciarDespesas{
     
     /**
      *  Método para salvar o JSON de RegistroDespesas.
-     * @param registroDespesas
+     *  @param registroDespesas
      */
     public void salvarJSONRegistroDespesas(List<RegistroDespesas> registroDespesas){
         try {
@@ -129,6 +129,10 @@ public class GerenciarDespesas{
         }
     }
     
+    /**
+     * Gera um id de despesa sem repetição, para salvar no registro
+     * @return int
+     */
     public int gerarIdDespesa(){
         Random random = new Random();
         List<RegistroDespesas> registroDespesas = new ArrayList<>();
@@ -149,6 +153,12 @@ public class GerenciarDespesas{
         return idRelatorio;
     }
     
+    /**
+     * Busca todas as despesa feitas em um dia informando a partir do parametro.
+     * @param despesas
+     * @param data
+     * @return List RegistroDespesas
+     */
     public List<RegistroDespesas> buscarDespesasDiarias(List<RegistroDespesas> despesas, String data) {
         return despesas.stream()
                 .filter(despesa -> despesa.getDataDespesa().equals(data))
@@ -166,6 +176,11 @@ public class GerenciarDespesas{
                 .collect(Collectors.toList());
     }
     
+    /**
+     * Calcula o valor total de uma lista de despesas inserida, retornando o valor total.
+     * @param despesas
+     * @return double
+     */
     public double calcularTotalDespesas(List<RegistroDespesas> despesas) {
         return despesas.stream()
                        .mapToDouble(RegistroDespesas::getValor)

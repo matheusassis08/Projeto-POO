@@ -485,7 +485,7 @@ public class Academia {
                     clientes = gerenciarClientes.carregarJSONClientes(clientes);
                     
                     System.out.println("Comparando valores de agendamento(1 maior, 2 menor, 0 igual):  " + gerenciarAgendamentos.compararPorValor().comparar(agendamentos.getLast(), agendamentos.getFirst()));
-                    System.out.println("Comparando id de clientes(1 maior, 2 menor, 0 igual): " + gerenciarClientes.compararPorValor().comparar(clientes.getFirst(), clientes.getLast()));
+                    System.out.println("Comparando id de clientes(1 maior, 2 menor, 0 igual): " + gerenciarClientes.compararPorId().comparar(clientes.getFirst(), clientes.getLast()));
                 }
                 case 13 -> {
                     System.out.println("Questão 12: ");

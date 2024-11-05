@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -178,9 +177,9 @@ public class GerenciarCliente implements Cadastro{
      * Método para buscar cliente pelo ID
      * 
      * @param clientes
+     * @param id
      * @return clientes;
      */
-      // Método para buscar cliente pelo ID
     public Optional<Cliente> buscarClientePorId(List<Cliente> clientes, int id) {
         
         return clientes.stream()
@@ -203,12 +202,21 @@ public class GerenciarCliente implements Cadastro{
         }
     }
     
+    /**
+     * Para buscar um cliente a partir do seu email inserido como parametro
+     * @param clientes
+     * @param email
+     * @return Optional Cliente
+     */
     public Optional<Cliente> buscarClientePorEmail(List<Cliente> clientes, String email) {
         return clientes.stream()
                 .filter(cliente -> cliente.getEmail().equalsIgnoreCase(email))
                 .findFirst();
     }
     
+    /**
+     * Gera um novo IdCliente para que não ocorra repetições de id, lendo todos os já salvos e gerando um diferente
+     */
     public int gerarIdCliente(){
         Random random = new Random();
         List<Cliente> clientes = new ArrayList<>();
@@ -229,6 +237,9 @@ public class GerenciarCliente implements Cadastro{
         return idCliente;
     }
     
+    /**
+     * A partir do email inserido como parâmetro ele solicita a data e informa quais foram as despesas do cliente naquela data informada
+     */
     public void gerarDespesasDiariasCliente(String emailCliente) {
         GerenciarRelatorios gerenciarRelatorio = new GerenciarRelatorios();
         List<RelatorioVenda> relatoriosVendas = gerenciarRelatorio.carregarJSONRelatorioVenda(new ArrayList<>());
@@ -251,7 +262,11 @@ public class GerenciarCliente implements Cadastro{
         }
     }
     
-    public Comparator<Cliente> compararPorValor() {
+    /**
+     * Comparator para comparar o id de clientes.
+     * @return Comparator Cliente
+     */
+    public Comparator<Cliente> compararPorId() {
         return new Comparator<Cliente>() {
             @Override
             public int comparar(Cliente a1, Cliente a2) {
@@ -270,6 +285,13 @@ public class GerenciarCliente implements Cadastro{
         };
     }
     
+    /**
+     * Método find implementando a partir do iterator e comparator para a questão 17, buscando um cliente a partir de seu id como parametro.
+     * @param idCliente
+     * @param clientes
+     * @param comparator
+     * @return Cliente
+     */
     public Cliente findPorId(int idCliente, List<Cliente> clientes, Comparator<Cliente> comparator) {
         for (Cliente cliente : clientes) {
             if (comparator.comparar(cliente, new Cliente("", "", "", "", "", idCliente)) == 0) {
@@ -279,6 +301,9 @@ public class GerenciarCliente implements Cadastro{
         return null;
     }
     
+    /**
+     * Comparator para o find
+     */
     Comparator<Cliente> comparatorPorId = new Comparator<Cliente>() {
     @Override
     public int comparar(Cliente c1, Cliente c2) {

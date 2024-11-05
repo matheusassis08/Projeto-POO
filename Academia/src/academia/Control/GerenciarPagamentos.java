@@ -9,30 +9,52 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 /**
- *
  * Classe para realizar ou gerenciar pagamentos.
  */
 public class GerenciarPagamentos{
     
     private final Scanner scanner = new Scanner(System.in);
     
-    
+    /**
+     * Autentica o pagamento
+     * @param valor
+     * @param tipo
+     */
     public void autenticarPagamento(Double valor, String tipo){
         System.out.println("Pagamento em "+ tipo +" no valor de " + valor + " confirmado.");
     }
     
+    /**
+     * Para autenticar o pagamento de cartão
+     * @param numeroCartao
+     * @param valor
+     */
     public void autenticarPagamentoCartao(int numeroCartao, double valor){
         System.out.println("Pagamento no cartão confirmado.");
     }
     
+    /**
+     * Verifica e confirma se o pagamento foi feito
+     */
     public void confirmarPagamento(){
         System.out.println("Pagamento confirmado com sucesso.");
     }
     
+    
+    /**
+     * Solicita o pagamento
+     * @param valor
+     * @param tipo
+     */
     public void solicitarPagamento(double valor, String tipo){
         confirmarPagamento();
     }
     
+    /**
+     * Para solicitar o pagamento de agendamento
+     * @param agendamento
+     * @return Agendamento
+     */
     public Agendamento solicitarPagamentoAgendamento(Agendamento agendamento){
         GerenciarPagamentos gerenciarPagamentos = new GerenciarPagamentos();
         
@@ -76,6 +98,9 @@ public class GerenciarPagamentos{
                             }                
     }
     
+    /**
+     * Para confimar um agendamento de alguma mensalidade de um cliente especificado
+     */
     public void confirmarPagamentoMensalidade() {
         System.out.println("Informe o e-mail do cliente para cadastrar sua mensalidade: ");
         String email = scanner.nextLine();
@@ -125,8 +150,6 @@ public class GerenciarPagamentos{
     
     public GerenciarPagamentos() {
     }
-    
-    
     
     @Override
     public String toString() {

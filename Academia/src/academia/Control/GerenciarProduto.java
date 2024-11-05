@@ -17,13 +17,8 @@ import java.util.Scanner;
  * Classe para o cadastro, alteração e remoção de algum produto dentro do sistema.
  */
 public class GerenciarProduto implements Cadastro, PadraoObserver{
-    
     private static final String FILE_PRODUTOS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\produtos.json";
-    private String cadastroNovo;
     String estado;
-    //as duas
-    
-    
     
     /** 
      Cadastra um novo produto no sistema
@@ -407,10 +402,17 @@ public class GerenciarProduto implements Cadastro, PadraoObserver{
         }
     }
     
+    /**
+     * Método para remover os produtos do estoque a partir de uma venda realizada
+     */
     public void RemoverProdutosEstoque(){
         System.out.println("\nProdutos removidos do estoque\n");
     }
-    
+    /**
+     * Método para implementar Observer
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(PadraoObservable o, Object arg){
         Carrinho carrinho = (Carrinho)o;

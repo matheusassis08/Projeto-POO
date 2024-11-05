@@ -39,7 +39,7 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
         System.out.println("Qual o tipo de funcionário deseja cadastrar?\n1. Recepcionista\n2. Instrutor\n3. Vendedor\n4. Gerente\n5. Voltar ao inicio");
         int num = scanner.nextInt();
         scanner.nextLine();
-
+        
         switch (num) {
             case 1 -> cadastrarFuncionario(scanner, Recepcionista.class, FILE_RECEPCIONISTAS);
             case 2 -> cadastrarFuncionario(scanner, Instrutor.class, FILE_INSTRUTORES);
@@ -51,7 +51,13 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
             default -> System.out.println("Opção inválida.");
         }
     }
-
+    
+    /**
+     * Método para criar um novo funcionário e chamar outro método para salvar esta funcionário.
+     * @param scanner
+     * @param funcionarioClass
+     * @param filePath
+     */
     private <T> void cadastrarFuncionario(Scanner scanner, Class<T> funcionarioClass, String filePath) {
         List<T> funcionarios = carregarFuncionarios(filePath, funcionarioClass);
         String continuar;
@@ -67,7 +73,10 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
 
         salvarFuncionarios(funcionarios, filePath);
     }
-
+    
+    /**
+     * Método para carregar toda a lista de funcionários cadastrados.
+     */
     private <T> List<T> carregarFuncionarios(String filePath, Class<T> funcionarioClass) {
         File arquivo = new File(filePath);
 
@@ -84,7 +93,13 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
 
         return new ArrayList<>();
     }
-
+    
+    /**
+     * Método para salvar uma lista de funcionários em um arquivo JSON.
+     * @param funcionarios
+     * @param filePath
+     * @return filePath
+     */
     private <T> void salvarFuncionarios(List<T> funcionarios, String filePath) {
         File arquivo = new File(filePath);
 
@@ -96,7 +111,11 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Cria uma nova intância de funcionário a partir do parametro de qual classe que será de funcionário criado.
+     * @param funcionarioClass
+     */
     private <T> T criarFuncionario(Scanner scanner, Class<T> funcionarioClass) {
         System.out.print("Digite o nome: ");
         String nome = scanner.nextLine();
@@ -153,8 +172,7 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
         return null;
     }
     /** 
-     Exibe todos os Funcionários e pergunta se deseja alterar algum dado.
-     
+     * Exibe todos os Funcionários e pergunta se deseja alterar algum dado, dando a opção de selecionar qual deles deve ser alterado.
      */
     @Override
     public void alterarCadastro(){
@@ -282,7 +300,7 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
     }
     }
     /** 
-     Exibe a lista de possiveis funcionários e da a opção de apagar o cadastro de algum selecionado.
+     Exibe a lista de possiveis funcionários e da a opção de apagar o cadastro de algum que seja informado.
      
      */
     @Override
@@ -379,7 +397,10 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
         }
     }
     
-    
+    /**
+     * Gera um id unico para o funcionário, garantindo que não haverá repetição com os já existentes.
+     * @return int id
+     */
     private static int gerarIdFuncionario() {
         int novoId;
         do {
@@ -390,10 +411,15 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
         return novoId;
     }
     
+    /**
+     * Método para alterar a comissao de venda do funcionário(metodo para exemplificar um uso de observer)
+     */
     private void alterarComissaoVenda(){
         System.out.println("\nA comissão de venda do funcionário foi atualizada.\n");
     }
-    
+    /**
+     * Metodo para implementar Observer
+     */
     @Override
     public void update(PadraoObservable o, Object arg){
         Carrinho carrinho = (Carrinho)o;

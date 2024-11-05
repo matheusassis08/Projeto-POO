@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,14 +19,13 @@ import java.util.stream.Collectors;
  * Classe para gerenciar todos os relátorios, balanços, e notas do sistema.
  */
     public class GerenciarRelatorios implements PadraoObserver{
-        
     private final String FILE_RELATORIOSVENDA = "C:\\POO\\Projeto-POO\\Academia\\src\\relatorios\\relatoriosVenda.json";
     private final String FILE_RELATORIOSAGENDAMENTO = "C:\\POO\\Projeto-POO\\Academia\\src\\relatorios\\relatoriosAgendamento.json";
     private static final String FILE_RELATORIOSMENSALIDADES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\relatoriosMensalidades.json";
+    //usado no padrao de projeto
     String estado;
-    //só essa^
     
-    
+    //Usados para os metodos
     private final Scanner scanner = new Scanner(System.in);
     private final File arquivoRelatoriosVenda = new File(FILE_RELATORIOSVENDA);
     private final File arquivoRelatoriosAgendamento = new File(FILE_RELATORIOSAGENDAMENTO);
@@ -66,7 +64,10 @@ import java.util.stream.Collectors;
             e.printStackTrace();
         }
     }
-    
+    /**
+     * Metodo para carrega a lista de todos RelatorioMensalidades
+     * @return List RelatorioMensalidades
+     */
     public List<RelatorioMensalidades> carregarJSONRelatorioMensalidades(){
         List<RelatorioMensalidades> relatoriosMensalidades = new ArrayList<>();
         if (arquivoRelatoriosMensalidades.exists()) {
@@ -77,7 +78,10 @@ import java.util.stream.Collectors;
         }
         return relatoriosMensalidades;
     }
-    
+    /**
+     * Método para salvar o JSON dos relatorios de venda.
+     * @param relatoriosMensalidades
+     */
     public void salvarJSONRelatorioMensalidades(List<RelatorioMensalidades> relatoriosMensalidades){
         try {
             mapper.writeValue(arquivoRelatoriosMensalidades, relatoriosMensalidades);
@@ -120,7 +124,20 @@ import java.util.stream.Collectors;
                 .filter(relatorio -> relatorio.getDataDeRealizacao().equals(data))
                 .collect(Collectors.toList());
     }
-    
+    /**
+     * Método para gerar um relatorio de venda quando alguma venda for finalizada no carrinho
+     * @param nome
+     * @param dataDeRealizacao
+     * @param horarioDeRealizacao
+     * @param idRelatorio
+     * @param numeroPedido
+     * @param valorTotalPedido
+     * @param nomeCliente
+     * @param emailCliente
+     * @param nomeProdutos
+     * @param valorUnitarioItemsPedido
+     * @param codigoProdutosPedido
+     */
     public void gerarRelotorioVenda(String nome, String dataDeRealizacao, String horarioDeRealizacao, int idRelatorio,int numeroPedido, double valorTotalPedido, String nomeCliente, String emailCliente, List<String> nomeProdutos, List<Double> valorUnitarioItemsPedido, List<Integer> codigoProdutosPedido){
         List<RelatorioVenda> relatoriosVenda = new ArrayList<>();
         relatoriosVenda = carregarJSONRelatorioVenda(relatoriosVenda);
@@ -218,7 +235,13 @@ import java.util.stream.Collectors;
             e.printStackTrace();
         }
     }
-    
+    /**
+     * Método para buscar todos os relatorios de agendamentos a partir de um mes e ano informandos nos parametros
+     * @param relatorios
+     * @param mes
+     * @param ano
+     * @return List RelatorioAgendamento
+     */
     public List<RelatorioAgendamento> buscarRelatorioAgendamentoMensal(List<RelatorioAgendamento> relatorios, int mes, int ano) {
         return relatorios.stream()
                 .filter(relatorio -> {
@@ -229,7 +252,13 @@ import java.util.stream.Collectors;
                 })
                 .collect(Collectors.toList());
     }
-    
+    /**
+     * Método para buscar todos os relatorios de mensalidades de um mes e ano informados como parametros.
+     * @param relatorios
+     * @param mes
+     * @param ano
+     * @return List RelatorioMensalidades
+     */
     public List<RelatorioMensalidades> buscarRelatorioMensalidades(List<RelatorioMensalidades> relatorios, int mes, int ano) {
         return relatorios.stream()
                 .filter(relatorio -> {
@@ -281,7 +310,10 @@ import java.util.stream.Collectors;
                     .mapToDouble(valorExtractor::apply) // usa a função para extrair o valor
                     .sum();
     }
-    
+    /**
+     * Método para solicitar uma data ao usuário
+     * @return LocalDate
+     */
     public LocalDate solicitarData(){
         LocalDate data = null;
         while (data == null) {
@@ -294,7 +326,9 @@ import java.util.stream.Collectors;
         }
         return data;
     }
-    
+    /**
+     * Método que pega todos os relátorios de um mês informando pelo usuário e gera um balanço com estátisticas básicas.
+     */
     public void gerarBalançoMensalEstatisticas() {
         List<RelatorioAgendamento> relatoriosAgendamentos = carregarJSONRelatorioAgendamento(new ArrayList<>());
         List<RelatorioVenda> relatoriosVendas = carregarJSONRelatorioVenda(new ArrayList<>());
@@ -351,64 +385,11 @@ import java.util.stream.Collectors;
 
         System.out.println("==========================================================");
     }
-
-    
-    /*
-    public void gerarBalançoMensalEstatisticas() {
-        List<RelatorioAgendamento> relatoriosAgendamentos = new ArrayList<>();
-        List<RelatorioVenda> relatoriosVendas = new ArrayList<>();
-        List<RegistroDespesas> registrosDespesas = new ArrayList<>();
-        GerenciarDespesas gerenciarDespesas = new GerenciarDespesas();
-        
-        relatoriosVendas = carregarJSONRelatorioVenda(relatoriosVendas);
-        relatoriosAgendamentos = carregarJSONRelatorioAgendamento(relatoriosAgendamentos);
-        registrosDespesas = gerenciarDespesas.carregarJSONRegistroDespesas(registrosDespesas);
-        
-        // Solicita o ano e o mês desejados
-        System.out.println("Qual o ano do balanço desejado: ");
-        int ano = scanner.nextInt();
-        System.out.println("Qual o mês do balanço desejado: ");
-        int mes = scanner.nextInt();
-        
-        // Filtra relatórios e despesas para o mês/ano informados
-        relatoriosVendas = buscarRelatorioVendaMensal(relatoriosVendas, mes, ano);
-        relatoriosAgendamentos = buscarRelatorioAgendamentoMensal(relatoriosAgendamentos, mes, ano);
-        registrosDespesas = gerenciarDespesas.buscarDespesasMensais(registrosDespesas, mes, ano);
-        
-        // Soma os valores
-        double valorReceitas = somarValores(relatoriosVendas, RelatorioVenda::getValor) 
-                             + somarValores(relatoriosAgendamentos, RelatorioAgendamento::getValor);
-        double valorDespesas = somarValores(registrosDespesas, RegistroDespesas::getValor);
-        double valorBalanço = valorReceitas - valorDespesas;
-        
-        // Estatísticas adicionais
-        int totalVendas = relatoriosVendas.size();
-        int totalAgendamentos = relatoriosAgendamentos.size();
-        int totalDespesas = registrosDespesas.size();
-
-        // Exibe o balanço mensal com estatísticas
-        System.out.println("\n========== Balanço Mensal - " + mes + "/" + ano + " ==========");
-        System.out.println("Receitas totais: R$" + String.format("%.2f", valorReceitas));
-        System.out.println("Despesas totais: R$" + String.format("%.2f", valorDespesas));
-        System.out.println("Balanço final: R$" + String.format("%.2f", valorBalanço));
-        System.out.println("------------------------------------------------------");
-        System.out.println("Número de vendas: " + totalVendas);
-        System.out.println("Número de agendamentos: " + totalAgendamentos);
-        System.out.println("Número de despesas: " + totalDespesas);
-
-        System.out.println("\nDetalhes de Despesas:");
-        registrosDespesas.forEach(despesa -> {
-            System.out.println("Descrição: " + despesa.getDescricaoDaDespesa() + " | Tipo: " + despesa.getTipoDeDespesa() + " | Valor: R$" + String.format("%.2f", despesa.getValor()));
-        });
-
-        System.out.println("\nDetalhes de Vendas:");
-        relatoriosVendas.forEach(venda -> {
-            System.out.println("Cliente: " + venda.getNomeCliente() + " | Valor: R$" + String.format("%.2f", venda.getValor()) + " | Número do Pedido: " + venda.getNumeroPedido());
-        });
-        
-        System.out.println("====================================================");
-    }*/
-    
+    /**
+     * Usado para implementar o padrão Observer
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(PadraoObservable o, Object arg){
         Carrinho carrinho = (Carrinho)o;

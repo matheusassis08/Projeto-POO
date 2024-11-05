@@ -1,19 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package academia;
 
 import academia.Control.PadraoObservable;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -30,9 +22,8 @@ public class Carrinho extends PadraoObservable{
     private String nomeVendedor;
     private int numeroPedido;
     private final String FILE_CARRINHO = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\carrinho.json";
-    //as de cimas apenas
-    
-    
+
+    //para gerar instancias, e manipular os objetos dentro do carrinho.
     private List<Produto> produtos;
     private List<Carrinho> produtosCarrinho = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
@@ -41,7 +32,13 @@ public class Carrinho extends PadraoObservable{
     private String FILE_PRODUTOS = cadastroProduto.getFILE_PRODUTOS();
     private File arquivo = new File(FILE_PRODUTOS);
     
-    public List<Carrinho> adicionarProduto(List<Carrinho> Carrinho){
+    /**
+     * Adiciona carrinhos a instância de carrinho.
+     * @param carrinho
+     * @return List Carrinho
+     * 
+     */
+    public List<Carrinho> adicionarProduto(List<Carrinho> carrinho){
         
         String continuar = "s";
         do{
@@ -72,6 +69,11 @@ public class Carrinho extends PadraoObservable{
         return produtosCarrinho;
     }
     
+    /**
+     * Soma todos os produtos que estão intanciados em carrinho, retornando o valor total do pedido.
+     * @param somaProdutosCarrinho
+     * @return double
+     */
     public double somarPedido(List<Carrinho> somaProdutosCarrinho){
         double valorTotalSomado = 0;
         for (Carrinho carrinho : produtosCarrinho) {
@@ -104,16 +106,17 @@ public class Carrinho extends PadraoObservable{
         return numeroPedido;
     }
     
-    void cancelarPedido(){
-        
-    }
+    
+    //Para implementação do observer
     String estado = "";
     public void finalizarPedido(){
         estado = "Feita";
         System.out.println("\nFoi concluida a venda.");
         this.mudaEstado();
     }
-    
+    /**
+     * Para notificar os Observers
+     */
     public void mudaEstado(){
         foiAlterado();
         notificarObservers(estado);

@@ -2,8 +2,7 @@ package academia;
 import java.util.Comparator;
 
 /**
- *
- * 
+ * Classe para usar o comparador por Id do cliente
  */
 public class ComparadorPorIdCliente implements Comparator<Cliente>{
         @Override
