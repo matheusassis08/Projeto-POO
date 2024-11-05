@@ -270,16 +270,21 @@ public class GerenciarCliente implements Cadastro{
         };
     }
     
-    public Cliente findPorId(int idCliente, List<Cliente> clientes) {
-        Iterator<Cliente> iterator = clientes.iterator();
-        while (iterator.hasNext()) {
-            Cliente cliente = iterator.next();
-            if (cliente.getIdCliente() == idCliente) {
+    public Cliente findPorId(int idCliente, List<Cliente> clientes, Comparator<Cliente> comparator) {
+        for (Cliente cliente : clientes) {
+            if (comparator.comparar(cliente, new Cliente("", "", "", "", "", idCliente)) == 0) {
                 return cliente;
             }
         }
         return null;
     }
+    
+    Comparator<Cliente> comparatorPorId = new Comparator<Cliente>() {
+    @Override
+    public int comparar(Cliente c1, Cliente c2) {
+        return Integer.compare(c1.getIdCliente(), c2.getIdCliente());
+    }
+};
     
     public GerenciarCliente() {
     }

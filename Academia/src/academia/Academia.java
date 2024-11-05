@@ -509,7 +509,7 @@ public class Academia {
                     List<Cliente> clientes = new ArrayList<>();
                     clientes = new GerenciarCliente().carregarJSONClientes(clientes);
                     
-                    
+                    GerenciarCliente gerenciarCliente = new GerenciarCliente();
                     // Ordenando por idCliente
                     ComparadorPorIdCliente comparatorPorIdCliente = new ComparadorPorIdCliente();
                     Collections.sort(clientes, comparatorPorIdCliente);
@@ -523,21 +523,27 @@ public class Academia {
                     clientes.forEach(System.out::println);
                 }
                 case 17 -> {
+                    GerenciarCliente gerenciarCliente = new GerenciarCliente();
                     List<Cliente> clientes = new ArrayList<>();
-                    clientes = new GerenciarCliente().carregarJSONClientes(clientes);
+                    clientes = gerenciarCliente.carregarJSONClientes(clientes);
                     
+                    //Buscando o cliente a partir do find com iterator e comparator implementados.
+                    System.out.println("Qual o id do cliente que está buscando?");
+                    scanner.nextLine();
+                    int idCliente = scanner.nextInt();
+                    Cliente cliente = gerenciarCliente.findPorId(idCliente, clientes, gerenciarCliente.comparatorPorId);
+                    System.out.println("Cliente: " + cliente);
                     
-                    // Ordenando por idCliente
-                    ComparadorPorIdCliente comparatorPorIdCliente = new ComparadorPorIdCliente();
-                    Collections.sort(clientes, comparatorPorIdCliente);
-                    System.out.println("\nLista ordenada por ID do Cliente:");
-                    clientes.forEach(System.out::println);
-
-                    // Ordenando por nome
-                    CompararPorNome compararPorNome = new CompararPorNome();
-                    Collections.sort(clientes, compararPorNome);
-                    System.out.println("\nLista ordenada por Nome do Cliente:");
-                    clientes.forEach(System.out::println);
+                    //Com Binary Search agora
+                    Collections.sort(clientes, new ComparadorPorIdCliente());
+                    int index = Collections.binarySearch(clientes, new Cliente("", "", "", "", "", idCliente), new ComparadorPorIdCliente());
+                    
+                    if (index >= 0) {
+                        System.out.println("Cliente encontrado via binarySearch: " + clientes.getFirst());
+                    } else {
+                        System.out.println("Cliente não encontrado via binarySearch.");
+                    }
+                    
                 }
                 case 18 -> {
                     System.out.println("Encerrando o sistema...");
