@@ -1,8 +1,7 @@
 package academia;
 
 /**
- *
- * 
+ * Classe para representar relatorios de mensalidades dentro do sistema
  */
 public class RelatorioMensalidades extends Relatorios{
     private String nomeCliente;

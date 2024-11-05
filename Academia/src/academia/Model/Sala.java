@@ -3,8 +3,7 @@ package academia;
 import java.util.List;
 
 /**
- *
- * 
+ *  Classe para representar uma sala da academia dentro do sistema
  */
 public class Sala {
     private int capacidadeMaxima;

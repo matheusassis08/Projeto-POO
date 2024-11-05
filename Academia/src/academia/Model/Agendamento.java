@@ -1,8 +1,7 @@
 package academia;
 
 /**
- *
- * 
+ *  Classe para representar um agendamento dentro do sistema
  */
 public class Agendamento {
     private String data;

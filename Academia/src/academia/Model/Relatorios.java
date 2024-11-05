@@ -2,7 +2,7 @@ package academia;
 
 /**
  *
- * Classe para representar um relatorio dentro do sistema.
+ * Classe Abstrata para representar um relatorio dentro do sistema a ser especificado em outras subclasses.
  */
 public abstract class Relatorios {
     private String nome;

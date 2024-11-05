@@ -7,8 +7,7 @@ package academia;
 import java.time.LocalDate;
 
 /**
- *
- * 
+ * Classe para representar uma mensalidade dentro do sistema
  */
 public class Mensalidade {
     private double valor;

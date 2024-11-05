@@ -3,7 +3,6 @@ package academia;
  * A classe Cliente representa um cliente da academia.
  * Ela herda os atributos e comportamentos da classe abstrata Pessoa.
  */
-
 public class Cliente extends Pessoa {
     private static int instanciasClientes = 0;
     protected static int instanciasClientesProtected = 0;
@@ -49,8 +48,6 @@ public class Cliente extends Pessoa {
     public static void setInstanciasClientesProtected(int instanciasClientesProtected) {
         Cliente.instanciasClientesProtected = instanciasClientesProtected;
     }
-    
-    
     
     @Override
     public String toString() {

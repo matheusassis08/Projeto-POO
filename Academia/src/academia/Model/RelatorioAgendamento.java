@@ -1,7 +1,6 @@
 package academia;
 /**
- *
- * 
+ *  Classe para representar um relatorio de agendamento de aula dentro do sistema
  */
 public class RelatorioAgendamento extends Relatorios{
     private String nomeCliente;
