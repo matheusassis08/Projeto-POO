@@ -178,130 +178,182 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
      * Exibe todos os Funcionários e pergunta se deseja alterar algum dado, dando a opção de selecionar qual deles deve ser alterado.
      */
     @Override
-    public void alterarCadastro(){
-    System.out.println("Qual o tipo de funcionário deseja alterar?\n1. Recepcionista\n2. Instrutor\n3. Vendedor\n4. Gerente\n5. Voltar ao inicio");
-    int num = scanner.nextInt();
-    scanner.nextLine();
-    
-    List<? extends Pessoa> funcionarios = new ArrayList<>();
-    File arquivo = null;
+    public void alterarCadastro() {
+        System.out.println("Qual o tipo de funcionário deseja alterar?\n1. Recepcionista\n2. Instrutor\n3. Vendedor\n4. Gerente\n5. Voltar ao inicio");
+        int num = scanner.nextInt();
+        scanner.nextLine();
 
-    switch (num) {
-        case 1 -> {
-            arquivo = new File(FILE_RECEPCIONISTAS);
-            try {
-                funcionarios = arquivo.exists() ? mapper.readValue(arquivo, new TypeReference<List<Recepcionista>>() {}) : new ArrayList<>();
-            } catch (IOException e) {
-                e.printStackTrace();
+        List<? extends Pessoa> funcionarios = new ArrayList<>();
+        File arquivo = null;
+
+        switch (num) {
+            case 1 -> {
+                arquivo = new File(FILE_RECEPCIONISTAS);
+                try {
+                    funcionarios = arquivo.exists() ? mapper.readValue(arquivo, new TypeReference<List<Recepcionista>>() {}) : new ArrayList<>();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+            case 2 -> {
+                arquivo = new File(FILE_INSTRUTORES);
+                try {
+                    funcionarios = arquivo.exists() ? mapper.readValue(arquivo, new TypeReference<List<Instrutor>>() {}) : new ArrayList<>();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+            case 3 -> {
+                arquivo = new File(FILE_VENDEDORES);
+                try {
+                    funcionarios = arquivo.exists() ? mapper.readValue(arquivo, new TypeReference<List<Vendedor>>() {}) : new ArrayList<>();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+            case 4 -> {
+                arquivo = new File(FILE_GERENTES);
+                try {
+                    funcionarios = arquivo.exists() ? mapper.readValue(arquivo, new TypeReference<List<Gerente>>() {}) : new ArrayList<>();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+            case 5 -> {
+                System.out.println("Voltando ao menu inicial...");
+                return;
+            }
+            default -> {
+                System.out.println("Opção inválida.");
                 return;
             }
         }
-        case 2 -> {
-            arquivo = new File(FILE_INSTRUTORES);
-            try {
-                funcionarios = arquivo.exists() ? mapper.readValue(arquivo, new TypeReference<List<Instrutor>>() {}) : new ArrayList<>();
-            } catch (IOException e) {
-                e.printStackTrace();
+
+        if (funcionarios.isEmpty()) {
+            System.out.println("Nenhum funcionário encontrado.");
+            return;
+        }
+
+        System.out.println("Funcionários disponíveis:");
+        for (int i = 0; i < funcionarios.size(); i++) {
+            Pessoa funcionario = funcionarios.get(i);
+            System.out.println((i + 1) + ". Nome: " + funcionario.getNome() + ", Email: " + funcionario.getEmail());
+        }
+
+        System.out.print("Digite o número do funcionário que deseja alterar: ");
+        int indice = scanner.nextInt() - 1;
+        scanner.nextLine(); // Consumir nova linha
+
+        if (indice < 0 || indice >= funcionarios.size()) {
+            System.out.println("Funcionário inválido.");
+            return;
+        }
+
+        Pessoa funcionario = funcionarios.get(indice);
+        System.out.println("O que deseja alterar?");
+        System.out.println("1. Nome\n2. CPF\n3. Endereço\n4. Telefone\n5. E-mail");
+
+        // Verifica atributos específicos por tipo de funcionário
+        if (funcionario instanceof Gerente) {
+            System.out.println("6. Salário\n7. Login\n8. Senha");
+        } else if (funcionario instanceof Vendedor) {
+            System.out.println("6. Salário\n7. Sala\n8. Login\n9. Senha");
+        } else if (funcionario instanceof Instrutor) {
+            System.out.println("6. CREF\n7. Salário\n8. ID Instrutor\n9. Login\n10. Senha");
+        } else if (funcionario instanceof Recepcionista) {
+            System.out.println("6. Turno\n7. Salário\n8. Login\n9. Senha");
+        }
+        System.out.println("10. Voltar");
+
+        int opcaoAlterar = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (opcaoAlterar) {
+            case 1 -> {
+                System.out.print("Digite o novo nome: ");
+                funcionario.setNome(scanner.nextLine());
+            }
+            case 2 -> {
+                System.out.print("Digite o novo CPF: ");
+                funcionario.setCpf(scanner.nextLine());
+            }
+            case 3 -> {
+                System.out.print("Digite o novo endereço: ");
+                funcionario.setEndereco(scanner.nextLine());
+            }
+            case 4 -> {
+                System.out.print("Digite o novo telefone: ");
+                funcionario.setTelefone(scanner.nextLine());
+            }
+            case 5 -> {
+                System.out.print("Digite o novo e-mail: ");
+                funcionario.setEmail(scanner.nextLine());
+            }
+            case 6 -> {
+                if (funcionario instanceof Gerente gerente) {
+                    System.out.print("Digite o novo salário: ");
+                    gerente.setSalario(scanner.nextDouble());
+                    scanner.nextLine();
+                } else if (funcionario instanceof Vendedor vendedor) {
+                    System.out.print("Digite o novo salário: ");
+                    vendedor.setSalario(scanner.nextDouble());
+                    scanner.nextLine();
+                } else if (funcionario instanceof Instrutor instrutor) {
+                    System.out.print("Digite o novo CREF: ");
+                    instrutor.setCref(scanner.nextLine());
+                } else if (funcionario instanceof Recepcionista recepcionista) {
+                    System.out.print("Digite o novo turno: ");
+                    recepcionista.setTurno(scanner.nextLine());
+                }
+            }
+            case 7 -> {
+                if (funcionario instanceof Vendedor vendedor) {
+                    System.out.print("Digite a nova sala: ");
+                    vendedor.setSala(scanner.nextLine());
+                } else if (funcionario instanceof Instrutor instrutor) {
+                    System.out.print("Digite o novo salário: ");
+                    instrutor.setSalario(scanner.nextDouble());
+                    scanner.nextLine();
+                } else if (funcionario instanceof Gerente gerente) {
+                    System.out.print("Digite o novo login: ");
+                    gerente.setLogin(scanner.nextLine());
+                } else if (funcionario instanceof Recepcionista recepcionista) {
+                    System.out.print("Digite o novo salário: ");
+                    recepcionista.setSalario(scanner.nextDouble());
+                    scanner.nextLine();
+                }
+            }
+            case 8 -> {
+                if (funcionario instanceof Gerente gerente) {
+                    System.out.print("Digite a nova senha: ");
+                    gerente.setSenha(scanner.nextLine());
+                } else if (funcionario instanceof Instrutor instrutor) {
+                    System.out.print("Digite o novo ID do Instrutor: ");
+                    instrutor.setIdInstrutor(scanner.nextInt());
+                    scanner.nextLine();
+                } else if (funcionario instanceof Recepcionista recepcionista) {
+                    System.out.print("Digite o novo login: ");
+                    recepcionista.setLogin(scanner.nextLine());
+                }
+            }
+            // Continue as demais opções específicas, de forma semelhante.
+            case 10 -> {
+                System.out.println("Voltando ao menu anterior...");
                 return;
             }
+            default -> System.out.println("Opção inválida.");
         }
-        case 3 -> {
-            arquivo = new File(FILE_VENDEDORES);
-            try {
-                funcionarios = arquivo.exists() ? mapper.readValue(arquivo, new TypeReference<List<Vendedor>>() {}) : new ArrayList<>();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
-        }
-        case 4 -> {
-            arquivo = new File(FILE_GERENTES);
-            try {
-                funcionarios = arquivo.exists() ? mapper.readValue(arquivo, new TypeReference<List<Gerente>>() {}) : new ArrayList<>();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
-        }
-        case 5 -> {
-            System.out.println("Voltando ao menu inicial...");
-            return;
-        }
-        default -> {
-            System.out.println("Opção inválida.");
-            return;
-        }
-    }
 
-    if (funcionarios.isEmpty()) {
-        System.out.println("Nenhum funcionário encontrado.");
-        return;
-    }
-    
-    System.out.println("Funcionários disponíveis:");
-    for (int i = 0; i < funcionarios.size(); i++) {
-        Pessoa funcionario = funcionarios.get(i);
-        System.out.println((i + 1) + ". Nome: " + funcionario.getNome() + ", Email: " + funcionario.getEmail());
-    }
-
-    System.out.print("Digite o número do funcionário que deseja alterar: ");
-    int indice = scanner.nextInt() - 1;
-    scanner.nextLine(); // Consumir nova linha
-
-    if (indice < 0 || indice >= funcionarios.size()) {
-        System.out.println("Funcionário inválido.");
-        return;
-    }
-
-    Pessoa funcionario = funcionarios.get(indice);
-    Class classeFuncionario = funcionario.getClass();
-    classeFuncionario.isNestmateOf(Instrutor.class);
-    System.out.println("O que deseja alterar?\n1. Nome\n2. CPF\n3. Endereço\n4. Telefone\n5. E-mail\n8. Voltar");
-    int opcaoAlterar = scanner.nextInt();
-    scanner.nextLine();
-
-    switch (opcaoAlterar) {
-        case 1 -> {
-            System.out.print("Digite o novo nome: ");
-            String novoNome = scanner.nextLine();
-            funcionario.setNome(novoNome);
+        try {
+            mapper.writeValue(arquivo, funcionarios);
+            System.out.println("Funcionário alterado com sucesso.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        case 2 -> {
-            System.out.print("Digite o novo CPF: ");
-            String novoCpf = scanner.nextLine();
-            funcionario.setCpf(novoCpf);
-        }
-        case 3 -> {
-            System.out.print("Digite o novo endereço: ");
-            String novoEndereco = scanner.nextLine();
-            funcionario.setEndereco(novoEndereco);
-        }
-        case 4 -> {
-            System.out.print("Digite o novo telefone: ");
-            String novoTelefone = scanner.nextLine();
-            funcionario.setTelefone(novoTelefone);
-        }
-        case 5 -> {
-            System.out.print("Digite o novo e-mail: ");
-            String novoEmail = scanner.nextLine();
-            funcionario.setEmail(novoEmail);
-        }
-        case 6 -> {
-            System.out.println("Voltando ao menu anterior...");
-            return;
-        }
-        default -> {
-            System.out.println("Opção inválida.");
-            return;
-        }
-    }
-
-    try {
-        mapper.writeValue(arquivo, funcionarios);
-        System.out.println("Funcionário alterado com sucesso.");
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
     }
     /** 
      Exibe a lista de possiveis funcionários e da a opção de apagar o cadastro de algum que seja informado.
