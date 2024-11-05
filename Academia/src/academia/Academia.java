@@ -442,17 +442,23 @@ public class Academia {
                 }
                 case 10 -> {
 
+                            /**
+                            * Sistema de controle de acesso da academia.
+                            */
+                    
                             System.out.println("=== Sistema de Acesso da Academia ===");
 
                             while (true) {
                                 System.out.print("Digite o ID do cliente para entrada (positivo), saída (negativo) ou 0 para encerrar: ");
                                 int idCliente = scanner.nextInt();
 
+                                // Verifica se o usuário deseja encerrar o sistema
                                 if (idCliente == 0) {
                                     System.out.println("Encerrando sistema...");
                                     break;
                                 }
 
+                                // Condição para registrar entrada (ID positivo)
                                 if (idCliente > 0) {
                                     if (gerenciarCatraca.validarAcessoPorId(idCliente)) {
                                         gerenciarCatraca.registrarEntrada(idCliente);
@@ -460,6 +466,7 @@ public class Academia {
                                         System.out.println("Acesso negado. ID inválido.");
                                     }
                                 } else {
+                                    // Condição para registrar saída (ID negativo)
                                     gerenciarCatraca.registrarSaida(-idCliente);
                                 }
                             }
