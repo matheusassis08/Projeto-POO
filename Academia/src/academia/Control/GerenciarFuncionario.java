@@ -131,6 +131,12 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
 
         System.out.print("Digite o e-mail: ");
         String email = scanner.nextLine();
+        
+        System.out.print("Digite o login: ");
+        String login = scanner.nextLine();
+        
+        System.out.print("Digite a senha: ");
+        String senha = scanner.nextLine();
 
         if (funcionarioClass.equals(Recepcionista.class)) {
             System.out.print("Digite o turno: ");
@@ -139,7 +145,7 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
             System.out.print("Digite o salário: ");
             double salario = scanner.nextDouble();
             scanner.nextLine();
-            return (T) new Recepcionista(nome, cpf, endereco, telefone, email, turno, salario);
+            return (T) new Recepcionista(nome, cpf, endereco, telefone, email, turno, salario, login, senha);
 
         } else if (funcionarioClass.equals(Instrutor.class)) {
             System.out.print("Digite o CREF: ");
@@ -148,7 +154,7 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
             System.out.print("Digite o salário: ");
             double salario = scanner.nextDouble();
             scanner.nextLine();
-            return (T) new Instrutor(nome, cpf, endereco, telefone, email, cref, salario, gerarIdFuncionario());
+            return (T) new Instrutor(nome, cpf, endereco, telefone, email, cref, salario, gerarIdFuncionario(), login, senha);
 
         } else if (funcionarioClass.equals(Vendedor.class)) {
             System.out.print("Digite a sala: ");
@@ -157,16 +163,13 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
             System.out.print("Digite o salário: ");
             double salario = scanner.nextDouble();
             scanner.nextLine();
-            return (T) new Vendedor(nome, cpf, endereco, telefone, email, sala, salario);
+            return (T) new Vendedor(nome, cpf, endereco, telefone, email, sala, salario, login, senha);
 
         } else if (funcionarioClass.equals(Gerente.class)) {
-            System.out.print("Digite a senha: ");
-            String senha = scanner.nextLine();
-
             System.out.print("Digite o salário: ");
             double salario = scanner.nextDouble();
             scanner.nextLine();
-            return (T) new Gerente(nome, cpf, endereco, telefone, email, senha, salario);
+            return (T) new Gerente(nome, cpf, endereco, telefone, email, salario, login, senha);
         }
 
         return null;
@@ -251,8 +254,9 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
     }
 
     Pessoa funcionario = funcionarios.get(indice);
-    
-    System.out.println("O que deseja alterar?\n1. Nome\n2. CPF\n3. Endereço\n4. Telefone\n5. E-mail\n6. Voltar");
+    Class classeFuncionario = funcionario.getClass();
+    classeFuncionario.isNestmateOf(Instrutor.class);
+    System.out.println("O que deseja alterar?\n1. Nome\n2. CPF\n3. Endereço\n4. Telefone\n5. E-mail\n8. Voltar");
     int opcaoAlterar = scanner.nextInt();
     scanner.nextLine();
 

@@ -13,9 +13,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * Ela herda os atributos e comportamentos da classe abstrata Pessoa.
  */
 public class Gerente extends Pessoa {
-
-    private String senha;
     private double salario;
+    private String login;
+    private String senha;
 
     /**
      * Construtor da classe Gerente.
@@ -25,13 +25,15 @@ public class Gerente extends Pessoa {
      * @param endereco   O endereço residencial do gerente.
      * @param telefone   O número de telefone do gerente.
      * @param email      O endereço de email do gerente.
-     * @param senha A senha de acesso do gerente.
      * @param salario O salario do gerente
+     * @param login O login do gerente
+     * @param senha A senha de acesso do gerente.
      */
-    public Gerente(String nome, String cpf, String endereco, String telefone, String email, String senha, double salario) {
+    public Gerente(String nome, String cpf, String endereco, String telefone, String email, double salario, String login, String senha) {
         super(nome, cpf, endereco, telefone, email); // Chama o construtor da superclasse Pessoa
-        this.senha = senha;
         this.salario = salario;
+        this.login = login;
+        this.senha = senha;
     }
     
     public Gerente() {
@@ -55,9 +57,21 @@ public class Gerente extends Pessoa {
     public void setSalario(double salario) {
         this.salario = salario;
     }
-    
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     @Override
     public String toString() {
-        return "Gerente{" + "senha=" + senha + ", salario=" + salario + '}';
+        return "Gerente{" + "salario=" + salario + ", login=" + login + ", senha=" + senha + '}';
     }
+    
+    
+    
+    
 }
