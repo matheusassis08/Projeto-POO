@@ -4,8 +4,12 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import academia.ComparadorPorIdCliente;
+import academia.CompararPorNome;
 
 public class Academia {
     /**
@@ -38,7 +42,10 @@ public class Academia {
                                12. Questão 13, Comparator Agendamento/Cliente
                                13. Questão 12, Método de classe para ver instâncias de clientes/produtos
                                14. Questão 11, Dois tipos Variaveis private e protected.
-                               15. Sair""");
+                               15. Questão 15, Instanciar um iterator para a arraylist
+                               16. Questão 16, Apresentar no main testes do comparator implementado.
+                               17. Questão 17, Criar um método find para clientes utilizando o interator e comparator.
+                               18. Sair""");
             
             int n = scanner.nextInt();
             
@@ -484,6 +491,55 @@ public class Academia {
                     //O private tem acesso em outras classe apenas com o get, o protected em suas subclasses não é necessario uso de get.
                 }
                 case 15 -> {
+                    //Percorrendo todo os clientes a partir do Iterator
+                     System.out.println("Percorrendo com Iterator: \n");
+                    List<Cliente> clientes = new ArrayList<>();
+                    clientes = new GerenciarCliente().carregarJSONClientes(clientes);
+                    
+                    Iterator<Cliente> iterator = clientes.iterator();
+                    while(iterator.hasNext()){
+                        imprimir(iterator.next());
+                    }
+                    
+                    System.out.println("\nAgora percorrendo com o for-each: \n");
+                    clientes.forEach(System.out::println);
+
+                }
+                case 16 -> {
+                    List<Cliente> clientes = new ArrayList<>();
+                    clientes = new GerenciarCliente().carregarJSONClientes(clientes);
+                    
+                    
+                    // Ordenando por idCliente
+                    ComparadorPorIdCliente comparatorPorIdCliente = new ComparadorPorIdCliente();
+                    Collections.sort(clientes, comparatorPorIdCliente);
+                    System.out.println("\nLista ordenada por ID do Cliente:");
+                    clientes.forEach(System.out::println);
+
+                    // Ordenando por nome
+                    CompararPorNome compararPorNome = new CompararPorNome();
+                    Collections.sort(clientes, compararPorNome);
+                    System.out.println("\nLista ordenada por Nome do Cliente:");
+                    clientes.forEach(System.out::println);
+                }
+                case 17 -> {
+                    List<Cliente> clientes = new ArrayList<>();
+                    clientes = new GerenciarCliente().carregarJSONClientes(clientes);
+                    
+                    
+                    // Ordenando por idCliente
+                    ComparadorPorIdCliente comparatorPorIdCliente = new ComparadorPorIdCliente();
+                    Collections.sort(clientes, comparatorPorIdCliente);
+                    System.out.println("\nLista ordenada por ID do Cliente:");
+                    clientes.forEach(System.out::println);
+
+                    // Ordenando por nome
+                    CompararPorNome compararPorNome = new CompararPorNome();
+                    Collections.sort(clientes, compararPorNome);
+                    System.out.println("\nLista ordenada por Nome do Cliente:");
+                    clientes.forEach(System.out::println);
+                }
+                case 18 -> {
                     System.out.println("Encerrando o sistema...");
                     continuar = false;
                 }
@@ -507,4 +563,9 @@ public class Academia {
         String resultado = "A quantidade de instancias de Clientes e de : " + instanciasClientes + "\nA quantidade de instancias de Produtos e de: " + instanciasProdutos;
         return resultado;
     }
+    
+    private static void imprimir(Cliente cliente){
+        System.out.println(cliente);
+    }
+    
 }

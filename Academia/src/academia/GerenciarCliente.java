@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -267,6 +268,17 @@ public class GerenciarCliente implements Cadastro{
                 return t;
             }
         };
+    }
+    
+    public Cliente findPorId(int idCliente, List<Cliente> clientes) {
+        Iterator<Cliente> iterator = clientes.iterator();
+        while (iterator.hasNext()) {
+            Cliente cliente = iterator.next();
+            if (cliente.getIdCliente() == idCliente) {
+                return cliente;
+            }
+        }
+        return null;
     }
     
     public GerenciarCliente() {
