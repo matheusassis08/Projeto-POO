@@ -40,7 +40,10 @@ public class Academia {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
     
-    
+    /**
+     * A main do sistema
+     * @param args
+     */
     public static void main(String[] args) {
         //Para gerenciar entrada e saida da catraca
         GerenciarCatraca gerenciarCatraca = new GerenciarCatraca();
@@ -53,15 +56,16 @@ public class Academia {
         List<Instrutor> instrutores = gerenciarFuncionario.carregarFuncionarios(GerenciarFuncionario.getFILE_INSTRUTORES(), Instrutor.class);
         List<Vendedor> vendedores = gerenciarFuncionario.carregarFuncionarios(GerenciarFuncionario.getFILE_VENDEDORES(), Vendedor.class);
         List<Gerente> gerentes = gerenciarFuncionario.carregarFuncionarios(GerenciarFuncionario.getFILE_GERENTES(), Gerente.class);
-        SistemaLogin sistemaLogin = new SistemaLogin(gerentes, instrutores, vendedores, recepcionistas, "");
+        SistemaLogin sistemaLogin = new SistemaLogin(gerentes, instrutores, vendedores, recepcionistas);
         
+        //Verificando e autenticando login, e dependendo do tipo de funcionario mostra os acessos disponiveis do sistema
         System.out.println("Qual o login para acesso?");
         String login = scanner.nextLine();
         System.out.println("Qual a senha para acesso?");
         String senha = scanner.nextLine();
         sistemaLogin.verificarLogin(login, senha);
-        System.out.print(sistemaLogin.getTipoFuncionario());
         if(sistemaLogin.verificarLogin(login, senha)==true){
+            //acesso do Gerente
             if(sistemaLogin.getTipoFuncionario().equalsIgnoreCase("Gerente")){
                 while (continuar) {
                     System.out.println("""
@@ -598,6 +602,7 @@ public class Academia {
                 }
                 scanner.close();
             }
+            //acesso do Instrutor
             if(sistemaLogin.getTipoFuncionario().equalsIgnoreCase("Instrutor")){
                 while (continuar) {
                     System.out.println("""
@@ -664,6 +669,7 @@ public class Academia {
                 }
                 scanner.close();
             }
+            //acesso do Vendedor
             if(sistemaLogin.getTipoFuncionario().equalsIgnoreCase("Vendedor")){
                 while (continuar) {
                     System.out.println("""
@@ -820,6 +826,7 @@ public class Academia {
                 }
                 scanner.close();
             }
+            //acesso do recepcionista
             if(sistemaLogin.getTipoFuncionario().equalsIgnoreCase("Recepcionista")){
                 while (continuar) {
                     System.out.println("""
@@ -951,14 +958,16 @@ public class Academia {
                 }
                 scanner.close();
             }
+        }else{
+            System.out.println("Login inválido");
         }
         scanner.close();
     }
-
+    
     public static DateTimeFormatter getDATE_FORMATTER() {
         return DATE_FORMATTER;
     }
-
+    
     public static DateTimeFormatter getTIME_FORMATTER() {
         return TIME_FORMATTER;
     }
