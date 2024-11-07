@@ -1,4 +1,4 @@
-package academia;
+package academia.Model;
 
 import java.time.Duration;
 import java.time.LocalTime;

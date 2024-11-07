@@ -1,5 +1,7 @@
-package academia;
+package academia.Control;
 
+import academia.Model.Catraca;
+import academia.Model.Cliente;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

@@ -1,4 +1,4 @@
-package academia;
+package academia.Model;
 
 /**
  * A classe Recepcionista representa um recepcionista que trabalha na academia.

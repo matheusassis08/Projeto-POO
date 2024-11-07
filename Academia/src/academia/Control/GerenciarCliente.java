@@ -1,4 +1,7 @@
-package academia;
+package academia.Control;
+import academia.Academia;
+import academia.Model.Cliente;
+import academia.Model.RelatorioVenda;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -304,7 +307,7 @@ public class GerenciarCliente implements Cadastro{
     /**
      * Comparator para o find
      */
-    Comparator<Cliente> comparatorPorId = new Comparator<Cliente>() {
+    public Comparator<Cliente> comparatorPorId = new Comparator<Cliente>() {
     @Override
     public int comparar(Cliente c1, Cliente c2) {
         return Integer.compare(c1.getIdCliente(), c2.getIdCliente());

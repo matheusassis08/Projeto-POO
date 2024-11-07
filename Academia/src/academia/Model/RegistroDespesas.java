@@ -1,4 +1,4 @@
-package academia;
+package academia.Model;
 
 /**
  *Classe para representar uma despesa registrada no sistema.

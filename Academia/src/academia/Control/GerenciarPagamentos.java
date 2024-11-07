@@ -1,5 +1,9 @@
-package academia;
+package academia.Control;
 
+import academia.Academia;
+import academia.Model.Agendamento;
+import academia.Model.Cliente;
+import academia.Model.Mensalidade;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;

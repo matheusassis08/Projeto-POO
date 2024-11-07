@@ -1,4 +1,4 @@
-package academia;
+package academia.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

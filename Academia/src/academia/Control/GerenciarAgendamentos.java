@@ -1,5 +1,10 @@
-package academia;
+package academia.Control;
 
+import academia.Academia;
+import academia.Model.Agendamento;
+import academia.Model.Cliente;
+import academia.Model.Mensalidade;
+import academia.Model.RegistroDespesas;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -24,7 +29,7 @@ public class GerenciarAgendamentos{
     /** 
      * Para agendar um horário para um aluno ter aula
      */
-    void realizarAgendamentoPrevio() {
+    public void realizarAgendamentoPrevio() {
         System.out.println("Informe o e-mail do cliente para o agendamento: ");
         String email = scanner.nextLine();
         GerenciarCliente gerenciarCliente = new GerenciarCliente();
@@ -281,7 +286,7 @@ public class GerenciarAgendamentos{
     /**
      * Cadastra um novo mensalista no sistema salvando em JSON o registro da mensalidade
      */
-    void cadastarMensalista() {
+    public void cadastarMensalista() {
         System.out.println("Informe o e-mail do cliente para cadastra sua mensalidade: ");
         String email = scanner.nextLine();
         GerenciarCliente gerenciarCliente = new GerenciarCliente();

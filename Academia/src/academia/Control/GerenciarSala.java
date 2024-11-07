@@ -1,5 +1,6 @@
-package academia;
+package academia.Control;
 
+import academia.Model.Sala;
 import java.util.Arrays;
 import java.util.List;
 

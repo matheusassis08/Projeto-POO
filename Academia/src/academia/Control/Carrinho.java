@@ -1,6 +1,8 @@
-package academia;
+package academia.Control;
 
 import academia.Control.PadraoObservable;
+import academia.Model.Produto;
+import academia.Model.RelatorioVenda;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.File;
 import java.io.IOException;

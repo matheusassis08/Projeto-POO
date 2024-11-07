@@ -1,7 +1,13 @@
-package academia;
+package academia.Control;
 
+import academia.Academia;
 import academia.Control.PadraoObserver;
 import academia.Control.PadraoObservable;
+import academia.Model.RelatorioMensalidades;
+import academia.Model.RelatorioVenda;
+import academia.Model.RelatorioAgendamento;
+import academia.Model.RegistroDespesas;
+import academia.Model.Relatorios;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;

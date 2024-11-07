@@ -1,7 +1,11 @@
-package academia;
+package academia.Control;
 
+import academia.Academia;
 import academia.Control.PadraoObserver;
 import academia.Control.PadraoObservable;
+import academia.Model.Cliente;
+import academia.Model.ListaEspera;
+import academia.Model.Produto;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;

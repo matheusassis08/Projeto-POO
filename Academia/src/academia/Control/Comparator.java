@@ -1,4 +1,4 @@
-package academia;
+package academia.Control;
 /**
  * Interface para implementar Comparator
  */

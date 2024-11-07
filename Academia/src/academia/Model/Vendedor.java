@@ -1,4 +1,5 @@
-package academia;
+package academia.Model;
+
 /**
  * A classe Vendedor representa um vendedor que trabalha na academia.
  * Ela herda os atributos e comportamentos da classe abstrata Pessoa.

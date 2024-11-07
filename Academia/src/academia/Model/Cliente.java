@@ -1,4 +1,4 @@
-package academia;
+package academia.Model;
 /**
  * A classe Cliente representa um cliente da academia.
  * Ela herda os atributos e comportamentos da classe abstrata Pessoa.

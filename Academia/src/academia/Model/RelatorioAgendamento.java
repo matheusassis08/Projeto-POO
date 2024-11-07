@@ -1,4 +1,4 @@
-package academia;
+package academia.Model;
 /**
  *  Classe para representar um relatorio de agendamento de aula dentro do sistema
  */

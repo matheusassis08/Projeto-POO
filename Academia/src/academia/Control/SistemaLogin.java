@@ -2,8 +2,8 @@ package academia.Control;
 
 import academia.Model.Gerente;
 import academia.Model.Instrutor;
-import academia.Recepcionista;
-import academia.Vendedor;
+import academia.Model.Recepcionista;
+import academia.Model.Vendedor;
 import java.util.List;
 
 public class SistemaLogin {

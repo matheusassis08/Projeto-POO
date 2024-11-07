@@ -1,4 +1,4 @@
-package academia;
+package academia.Model;
 /**
  * A classe Produto representa um produto para ser vendido na loja.
  */

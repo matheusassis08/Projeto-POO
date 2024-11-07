@@ -1,4 +1,5 @@
-package academia;
+package academia.Control;
+import academia.Model.Cliente;
 import java.util.Comparator;
 /**
  *  Classe para usar o comparador por Id do cliente

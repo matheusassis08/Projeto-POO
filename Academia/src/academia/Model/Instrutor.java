@@ -1,6 +1,5 @@
 package academia.Model;
 
-import academia.Pessoa;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
