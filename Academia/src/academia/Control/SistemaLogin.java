@@ -6,7 +6,9 @@ import academia.Model.Pessoa;
 import academia.Model.Recepcionista;
 import academia.Model.Vendedor;
 import java.util.List;
-
+/**
+ * Classe para realizar os login do sistema
+ */
 public class SistemaLogin {
     
     private List<Gerente> gerentes;
@@ -29,7 +31,12 @@ public class SistemaLogin {
         this.recepcionistas = recepcionistas;
     }
 
-    // Método para verificar o login e senha fornecidos
+    /**
+     * Método para verificar o login e senha fornecidos
+     * @param login
+     * @param senha
+     * @return 
+     */
     public boolean verificarLogin(String login, String senha) {
         if (verificarLoginParaTipo(login, senha, gerentes, "Gerente")) return true;
         if (verificarLoginParaTipo(login, senha, instrutores, "Instrutor")) return true;
@@ -40,7 +47,13 @@ public class SistemaLogin {
         return false;
     }
 
-    // Método genérico para verificar login em uma lista de funcionários
+    /**
+     * Método genérico para verificar login em uma lista de funcionários
+     * @param login
+     * @param senha
+     * @param listaFuncionarios
+     * @param tipo
+     */
     private boolean verificarLoginParaTipo(String login, String senha, List<? extends Pessoa> listaFuncionarios, String tipo) {
         for (Pessoa funcionario : listaFuncionarios) {
             switch (funcionario) {
