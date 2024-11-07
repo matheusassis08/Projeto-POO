@@ -1,4 +1,7 @@
 package academia;
+import academia.Model.Gerente;
+import academia.Model.Instrutor;
+import academia.Control.SistemaLogin;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -8,7 +11,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * A classe main do nosso sistema.
+ */
 public class Academia {
     /**
      Atributo para definir a formatação das datas(dd/MM/yyyy).
@@ -22,7 +27,34 @@ public class Academia {
         GerenciarCatraca gerenciarCatraca = new GerenciarCatraca();
         Scanner scanner = new Scanner(System.in);
         boolean continuar = true;
-
+        
+        //Listas para pegar a senha e login para autenticar login
+        GerenciarFuncionario gerenciarFuncionario = new GerenciarFuncionario();
+        List<Recepcionista> recepcionistas = gerenciarFuncionario.carregarFuncionarios(GerenciarFuncionario.getFILE_RECEPCIONISTAS(), Recepcionista.class);
+        List<Instrutor> instrutores = gerenciarFuncionario.carregarFuncionarios(GerenciarFuncionario.getFILE_INSTRUTORES(), Instrutor.class);
+        List<Vendedor> vendedores = gerenciarFuncionario.carregarFuncionarios(GerenciarFuncionario.getFILE_VENDEDORES(), Vendedor.class);
+        List<Gerente> gerentes = gerenciarFuncionario.carregarFuncionarios(GerenciarFuncionario.getFILE_GERENTES(), Gerente.class);
+        SistemaLogin sistemaLogin = new SistemaLogin(gerentes, instrutores, vendedores, recepcionistas, "");
+        
+        
+        String login = "LeoInstrutor123";
+        String senha = "LeoInstrutor123";
+        sistemaLogin.verificarLogin(login, senha);
+        System.out.print(sistemaLogin.getTipoFuncionario());
+        if(sistemaLogin.verificarLogin(login, senha)==true){
+            if(sistemaLogin.getTipoFuncionario().equalsIgnoreCase("Gerente")){
+                
+            }
+            if(sistemaLogin.getTipoFuncionario().equalsIgnoreCase("Instrutor")){
+                
+            }
+            if(sistemaLogin.getTipoFuncionario().equalsIgnoreCase("Vendedor")){
+                
+            }
+            if(sistemaLogin.getTipoFuncionario().equalsIgnoreCase("Recepcionista")){
+                
+            }
+        }
         while (continuar) {
             System.out.println("""
                                Qual opção você deseja acessar?
@@ -197,7 +229,6 @@ public class Academia {
                             gerenciarPagamento.solicitarPagamento(carrinho.somarPedido(carrinhos), "");
                             
                             GerenciarProduto gerenciarProduto = new GerenciarProduto();
-                            GerenciarFuncionario gerenciarFuncionario = new GerenciarFuncionario();
                             //padrao de projeto observer
                             carrinho.adicionarObserver(gerenciarProduto);
                             carrinho.adicionarObserver(gerenciarFuncionario);

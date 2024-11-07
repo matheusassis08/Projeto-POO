@@ -19,10 +19,10 @@ import java.util.Set;
  * Classe para o cadastro, alteração e remoção de algum funcionário dentro do sistema.
  */
 public class GerenciarFuncionario implements Cadastro, PadraoObserver {
-    private final String FILE_RECEPCIONISTAS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\recepcionistas.json";
-    private final String FILE_INSTRUTORES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\instrutores.json";
-    private final String FILE_VENDEDORES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\vendedores.json";
-    private final String FILE_GERENTES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\gerentes.json";
+    private static final String FILE_RECEPCIONISTAS = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\recepcionistas.json";
+    private static final String FILE_INSTRUTORES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\instrutores.json";
+    private static final String FILE_VENDEDORES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\vendedores.json";
+    private static final String FILE_GERENTES = "C:\\POO\\Projeto-POO\\Academia\\src\\arquivos\\gerentes.json";
     String estado;
     Scanner scanner = new Scanner(System.in);
     ObjectMapper mapper = new ObjectMapper();
@@ -77,7 +77,7 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
     /**
      * Método para carregar toda a lista de funcionários cadastrados.
      */
-    private <T> List<T> carregarFuncionarios(String filePath, Class<T> funcionarioClass) {
+    public <T> List<T> carregarFuncionarios(String filePath, Class<T> funcionarioClass) {
         File arquivo = new File(filePath);
 
         if (!arquivo.exists()) {
@@ -484,4 +484,22 @@ public class GerenciarFuncionario implements Cadastro, PadraoObserver {
             this.alterarComissaoVenda();
         }
      }
+
+    public static String getFILE_RECEPCIONISTAS() {
+        return FILE_RECEPCIONISTAS;
+    }
+
+    public static String getFILE_INSTRUTORES() {
+        return FILE_INSTRUTORES;
+    }
+
+    public static String getFILE_VENDEDORES() {
+        return FILE_VENDEDORES;
+    }
+
+    public static String getFILE_GERENTES() {
+        return FILE_GERENTES;
+    }
+    
+    
 }
