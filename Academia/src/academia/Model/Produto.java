@@ -105,6 +105,4 @@ public class Produto {
     public String toString() {
         return "Produto{" + "nome=" + nome + ", quantidadeEstoque=" + quantidadeEstoque + ", valor=" + valor + ", codigo=" + codigo + ", prazoValidade=" + prazoValidade + ", tipo=" + tipo + ", filaEspera=" + filaEspera + '}';
     }
-    
-    
 }

@@ -1,1 +1,1 @@
-[{"nome":"Leonardo","cpf":"120312312","endereco":"Rua do g","telefone":"38 92121312","email":"leo@gmail.com","salario":1500.0,"sala":"2"}]
+[{"nome":"Leonardo","cpf":"120312312","endereco":"Rua do g","telefone":"38 92121312","email":"leo@gmail.com","salario":1500.0,"sala":"2","login":"LeoVend","senha":123},{"nome":"Matheus","cpf":"41414","endereco":"Rua h","telefone":"145525","email":"msilva@gmail.com","salario":1500.0,"sala":"musculação","login":"MatheusVend","senha":"123"}]

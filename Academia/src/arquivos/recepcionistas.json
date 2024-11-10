@@ -1,1 +1,1 @@
-[{"nome":"leonardo","cpf":"93123123","endereco":"rua 1","telefone":"38 93123123","email":"leonardo@gmail.com","turno":"tarde","salario":1500.0}]
+[{"nome":"leonardo","cpf":"93123123","endereco":"rua 1","telefone":"38 93123123","email":"leonardo@gmail.com","turno":"tarde","salario":1500.0,"login":"LeoRecep","senha":"123"},{"nome":"Matheus","cpf":"434345","endereco":"Rua x","telefone":"4441234","email":"massi@gmail.com","turno":"tarde","salario":1000.0,"login":"MatheusRecep","senha":"123"}]

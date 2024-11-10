@@ -49,6 +49,8 @@ public class Academia {
         GerenciarCatraca gerenciarCatraca = new GerenciarCatraca();
         Scanner scanner = new Scanner(System.in);
         boolean continuar = true;
+        boolean catr = true;
+
         
         //Listas para pegar a senha e login para autenticar login
         GerenciarFuncionario gerenciarFuncionario = new GerenciarFuncionario();
@@ -918,37 +920,38 @@ public class Academia {
                                 default -> System.out.println("Opção inválida.");
                             }
                         }
+                                    
                         case 3 -> {
-                            
-                                    /**
-                                    * Sistema de controle de acesso da academia.
-                                    */
+                            System.out.println("=== Sistema de Acesso da Academia ===");
 
-                                    System.out.println("=== Sistema de Acesso da Academia ===");
+                            while (true) {
+                                System.out.print("Digite o ID do cliente para entrada ou saída, ou 0 para encerrar: ");
+                                int idCliente = scanner.nextInt();
 
-                                    while (true) {
-                                        System.out.print("Digite o ID do cliente para entrada (positivo), saída (negativo) ou 0 para encerrar: ");
-                                        int idCliente = scanner.nextInt();
+                                // Verifica se o usuário deseja encerrar o sistema diretamente
+                                if (idCliente == 0) {
+                                    System.out.println("Encerrando sistema...");
+                                    break; // Encerra o loop
+                                }
 
-                                        // Verifica se o usuário deseja encerrar o sistema
-                                        if (idCliente == 0) {
-                                            System.out.println("Encerrando sistema...");
-                                            break;
-                                        }
+                                // Verifica se o cliente existe na base de dados antes de registrar a entrada ou saída
+                                if (!gerenciarCatraca.validarAcessoPorId(idCliente)) {
+                                    System.out.println("ID inválido ou cliente não registrado.");
+                                    continue; // Solicita um novo ID caso o atual seja inválido
+                                }
 
-                                        // Condição para registrar entrada (ID positivo)
-                                        if (idCliente > 0) {
-                                            if (gerenciarCatraca.validarAcessoPorId(idCliente)) {
-                                                gerenciarCatraca.registrarEntrada(idCliente);
-                                            } else {
-                                                System.out.println("Acesso negado. ID inválido.");
-                                            }
-                                        } else {
-                                            // Condição para registrar saída (ID negativo)
-                                            gerenciarCatraca.registrarSaida(-idCliente);
-                                        }
-                                    }
+                                // Se o cliente já está na academia, registra a saída; caso contrário, registra a entrada
+                                gerenciarCatraca.registrarEntrada(idCliente);
+
+                                // Encerra o loop após o registro de entrada ou saída
+                                break;
+                            }
+
+                            scanner.close();
                         }
+
+                                   
+                        
                         case 4 -> {
                             System.out.println("Encerrando o sistema...");
                             continuar = false;
